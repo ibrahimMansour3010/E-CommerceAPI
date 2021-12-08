@@ -24,66 +24,112 @@ namespace API.Controllers
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            return Ok((await PdrImgRepo.Get()).Select(i=>i.ToViewModel()));
+            try
+            {
+                return Ok((await PdrImgRepo.Get()).Select(i => i.ToViewModel()));
+
+            }
+            catch (Exception ex)
+            {
+                Result.IsSuccess = false;
+                Result.Data = ex.Data;
+                Result.Message = ex.Message;
+                return Ok(Result);
+            }
+
         }
         [HttpGet("{id}")]
         public async Task<IActionResult> Get([FromRoute]string id)
         {
-            var res = await PdrImgRepo.Get(id);
-            if (res == null)
+            try
+            {
+                var res = await PdrImgRepo.Get(id);
+                if (res == null)
+                {
+                    Result.IsSuccess = false;
+                    Result.Data = "";
+                    Result.Message = "Cannot Find This Image";
+                }
+                else
+                {
+                    Result.IsSuccess = true;
+                    Result.Data = res.ToViewModel();
+                    Result.Message = "The Image Has Been Retrieved Successfully";
+                }
+                return Ok(Result);
+            }
+            catch (Exception ex)
             {
                 Result.IsSuccess = false;
-                Result.Data = "";
-                Result.Message = "Cannot Find This Image";
+                Result.Data = ex.Data;
+                Result.Message = ex.Message;
+                return Ok(Result);
             }
-            else
-            {
-                Result.IsSuccess = true;
-                Result.Data = res.ToViewModel();
-                Result.Message = "The Image Has Been Retrieved Successfully";
-            }
-            return Ok(Result);
+
+            
         }
         [HttpPost]
         public async Task<IActionResult> Post([FromBody]AddProductImageViewModel productImageViewModel)
         {
-            var res = await PdrImgRepo.Add(productImageViewModel.ToModel());
-            if (res == null)
+            try
+            {
+                var res = await PdrImgRepo.Add(productImageViewModel.ToModel());
+                if (res == null)
+                {
+                    Result.IsSuccess = false;
+                    Result.Data = "";
+                    Result.Message = "Cannot Add This Image";
+                }
+                else
+                {
+                    Result.IsSuccess = true;
+                    Result.Data = res.ToViewModel();
+                    Result.Message = "The Image Has Been Added Successfully";
+                }
+
+                return Ok(Result);
+            }
+            catch (Exception ex)
             {
                 Result.IsSuccess = false;
-                Result.Data = "";
-                Result.Message = "Cannot Add This Image";
+                Result.Data = ex.Data;
+                Result.Message = ex.Message;
+                return Ok(Result);
             }
-            else
-            {
-                Result.IsSuccess = true;
-                Result.Data = res.ToViewModel();
-                Result.Message = "The Image Has Been Added Successfully";
-            }
-           
-            return Ok(Result);
+
         }
         [HttpPut]
         public async Task<IActionResult> Edit([FromBody]GetEditProductImageViewModel getEditProductImageViewModel)
         {
-            var productImage = await PdrImgRepo.Get(getEditProductImageViewModel.ID);
-            if (productImage == null)
+            try
+            {
+                var productImage = await PdrImgRepo.Get(getEditProductImageViewModel.ID);
+                if (productImage == null)
+                {
+                    Result.IsSuccess = false;
+                    Result.Data = "";
+                    Result.Message = "Cannot Find This Image";
+                }
+                else
+                {
+                    productImage.ProductID = getEditProductImageViewModel.ProductID;
+                    productImage.ImageURL = getEditProductImageViewModel.ImageURL;
+                    productImage = await PdrImgRepo.Update(productImage);
+                    Result.IsSuccess = true;
+                    Result.Data = productImage;
+                    Result.Message = "The Image Has Been Updated Successfully";
+                }
+
+                return Ok(Result);
+            }
+            catch (Exception ex)
             {
                 Result.IsSuccess = false;
-                Result.Data = "";
-                Result.Message = "Cannot Find This Image";
+                Result.Data = ex.Data;
+                Result.Message = ex.Message;
+                return Ok(Result);
             }
-            else
-            {
-                productImage.ProductID = getEditProductImageViewModel.ProductID;
-                productImage.ImageURL = getEditProductImageViewModel.ImageURL;
-                productImage = await PdrImgRepo.Update(productImage);
-                Result.IsSuccess = true;
-                Result.Data = productImage;
-                Result.Message = "The Image Has Been Updated Successfully";
-            }
-           
-            return Ok(Result);
+            
         }
     }
 }

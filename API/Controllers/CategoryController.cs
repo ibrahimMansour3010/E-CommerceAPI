@@ -29,100 +29,156 @@ namespace API.Controllers
         [HttpGet]
         public async Task<Result> Get()
         {
-            var allCats = await CatRepo.Get();
-            Result.Data = allCats.Select(i => i.ToViewModel());
-            return Result;
+            try
+            {
+                var allCats = await CatRepo.Get();
+                Result.Data = allCats.Select(i => i.ToViewModel());
+                return Result;
+            }
+            catch (Exception ex)
+            {
+                Result.IsSuccess = false;
+                Result.Data = ex.Data;
+                Result.Message = ex.Message;
+                return Result;
+            }
+
         }
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(string id)
         {
-            var cat = await CatRepo.Get(id);
-            if (cat == null)
+            try
+            {
+                var cat = await CatRepo.Get(id);
+                if (cat == null)
+                {
+                    Result.IsSuccess = false;
+                    Result.Data = "";
+                    Result.Message = "There IS No Category Has This ID";
+                }
+                else
+                {
+                    Result.IsSuccess = true;
+                    Result.Data = cat.ToViewModel();
+                    Result.Message = "Success";
+                }
+                return Ok(Result);
+            }
+            catch (Exception ex)
             {
                 Result.IsSuccess = false;
-                Result.Data = "";
-                Result.Message = "There IS No Category Has This ID";
+                Result.Data = ex.Data;
+                Result.Message = ex.Message;
+                return Ok(Result);
             }
-            else
-            {
-                Result.IsSuccess = true;
-                Result.Data = cat.ToViewModel();
-                Result.Message = "Success";
-            }
-            return Ok(Result);
+
         }
         [HttpGet("Department/{id}")]
         public async Task<IActionResult> GetCatsByDeptID(string id)
         {
-            var department = await DeptRepo.Get(id);
-            if (department == null)
+            try
+            {
+                var department = await DeptRepo.Get(id);
+                if (department == null)
+                {
+                    Result.IsSuccess = false;
+                    Result.Data = "";
+                    Result.Message = "There IS No Department Has This ID";
+                }
+                else
+                {
+                    var allCats = await CatRepo.Get();
+                    Result.IsSuccess = true;
+                    Result.Data = allCats.Where(i => i.DepartmentID == id)
+                        .Select(i => i.ToViewModel());
+                    Result.Message = "These All Categories In This Deparmtent";
+                }
+                return Ok(Result);
+            }
+            catch (Exception ex)
             {
                 Result.IsSuccess = false;
-                Result.Data = "";
-                Result.Message = "There IS No Department Has This ID";
+                Result.Data = ex.Data;
+                Result.Message = ex.Message;
+                return Ok(Result);
             }
-            else
-            {
-                var allCats = await CatRepo.Get();
-                Result.IsSuccess = true;
-                Result.Data = allCats.Where(i => i.DepartmentID == id)
-                    .Select(i => i.ToViewModel());
-                Result.Message = "These All Categories In This Deparmtent";
-            }
-            return Ok(Result);
+           
         }
         [HttpPost()]
         public async Task<IActionResult> Post(AddCategoryViewModel categoryViewModel)
         {
-            // map vm to model
-            var cat = categoryViewModel.ToCategoryModel();
-            // get department entity by dept id and assign it to cat
-            cat.Department = await DeptRepo.Get(categoryViewModel.DepartmentID);
-            if (cat.Department == null)
+            try
+            {
+                // map vm to model
+                var cat = categoryViewModel.ToCategoryModel();
+                // get department entity by dept id and assign it to cat
+                cat.Department = await DeptRepo.Get(categoryViewModel.DepartmentID);
+                if (cat.Department == null)
+                {
+                    Result.IsSuccess = false;
+                    Result.Data = "";
+                    Result.Message = "Cannot Find Department With This ID";
+                }
+                else
+                {
+                    // add category into cat table in database
+                    var catAdd = await CatRepo.Add(cat);
+
+                    Result.IsSuccess = true;
+
+                    Result.Data = new
+                    {
+                        ID = catAdd.ID,
+                        CategoryName = catAdd.CategoryName,
+                        ImageURL = catAdd.ImageURL,
+                    };
+                    Result.Message = "Category Has Been Added Successfully";
+                }
+                return Ok(Result);
+            }
+            catch (Exception ex)
             {
                 Result.IsSuccess = false;
-                Result.Data = "";
-                Result.Message = "Cannot Find Department With This ID";
+                Result.Data = ex.Data;
+                Result.Message = ex.Message;
+                return Ok(Result);
             }
-            else
-            {
-                // add category into cat table in database
-                var catAdd = await CatRepo.Add(cat);
 
-                Result.IsSuccess = true;
-
-                Result.Data = new
-                {
-                    ID = catAdd.ID,
-                    CategoryName = catAdd.CategoryName,
-                    ImageURL = catAdd.ImageURL,
-                };
-                Result.Message = "Category Has Been Added Successfully";
-            }
-            return Ok(Result);
         }
         [HttpPut()]
         public async Task<IActionResult> Edit(GetEditCategoryViewModel getEditCategoryViewModel)
         {
-            // get cat
-            var cat = await CatRepo.Get(getEditCategoryViewModel.ID);
-            if (cat == null)
+            try
+            {
+                // get cat
+                var cat = await CatRepo.Get(getEditCategoryViewModel.ID);
+                if (cat == null)
+                {
+                    Result.IsSuccess = false;
+                    Result.Data = "";
+                    Result.Message = "There is No Category Has This ID";
+                }
+                else
+                {
+                    cat.CategoryName = getEditCategoryViewModel.CategoryName;
+                    cat.DepartmentID = getEditCategoryViewModel.DepartmentID;
+                    cat.ImageURL = getEditCategoryViewModel.ImageURL;
+                    cat = await CatRepo.Update(cat);
+                    Result.IsSuccess = true;
+                    Result.Data = cat;
+                    Result.Message = "Category Data Has Been Updated Successfully";
+                }
+                return Ok(Result);
+            }
+            catch (Exception ex)
             {
                 Result.IsSuccess = false;
-                Result.Data = "";
-                Result.Message = "There is No Category Has This ID";
+                Result.Data = ex.Data;
+                Result.Message = ex.Message;
+                return Ok(Result);
             }
-            else
-            {
-                cat.CategoryName = getEditCategoryViewModel.CategoryName;
-                cat.DepartmentID = getEditCategoryViewModel.DepartmentID;
-                cat.ImageURL = getEditCategoryViewModel.ImageURL;
-                cat = await CatRepo.Update(cat);
-                Result.IsSuccess = true;
-                Result.Data = cat;
-                Result.Message = "Category Data Has Been Updated Successfully";
-            }
-            return Ok(Result);
+
+           
         }
     }
 }

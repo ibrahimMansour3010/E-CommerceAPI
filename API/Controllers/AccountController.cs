@@ -122,59 +122,102 @@ namespace API.Controllers
         [HttpPost("SignUp")]
         public async Task<IActionResult> SignUP(SignUpViewModel signUpViewModel)
         {
-            Result = await appUserRepository.Signup(signUpViewModel);
-            if (Result.IsSuccess == false)
-                return Unauthorized(Result);
-            if(signUpViewModel.UserRole == "Customer") {
-                // create a cart for each customer
-                CartEntity cartEntity = new CartEntity()
+            try
+            {
+                Result = await appUserRepository.Signup(signUpViewModel);
+                if (Result.IsSuccess == false)
+                    return Unauthorized(Result);
+                if (signUpViewModel.UserRole == "Customer")
                 {
-                    CustomerID = (Result.Data as ApplicationUserEntity).Id,
-                    Status = CartStatus.Cleared,
-                    CustomerEntity = (Result.Data as ApplicationUserEntity),
-                    TotalPrice = 0.0f
-                };
-                // add cart in database
-                cartEntity = await CartRepository.Add(cartEntity);
-                object obj = new
-                {
-                    Customer = Result.Data,
-                    Cart = cartEntity.ToViewModel()
-                };
-                // return new user and its car
-                string jsonObject = JsonConvert.SerializeObject(obj, Formatting.None, new JsonSerializerSettings()
-                {
-                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore
-                });
-                Result.Data = jsonObject;
+                    // create a cart for each customer
+                    CartEntity cartEntity = new CartEntity()
+                    {
+                        CustomerID = (Result.Data as ApplicationUserEntity).Id,
+                        Status = CartStatus.Cleared,
+                        CustomerEntity = (Result.Data as ApplicationUserEntity),
+                        TotalPrice = 0.0f
+                    };
+                    // add cart in database
+                    cartEntity = await CartRepository.Add(cartEntity);
+                    object obj = new
+                    {
+                        Customer = Result.Data,
+                        Cart = cartEntity.ToViewModel()
+                    };
+                    // return new user and its car
+                    string jsonObject = JsonConvert.SerializeObject(obj, Formatting.None, new JsonSerializerSettings()
+                    {
+                        ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                    });
+                    Result.Data = jsonObject;
+                }
+                return Ok(Result);
             }
-            return Ok(Result);
+            catch (Exception ex)
+            {
+                Result.IsSuccess = false;
+                Result.Data = ex.Data;
+                Result.Message = ex.Message;
+                return Ok(Result);
+            }
         }
         
         [HttpPost("Login")]
         public async Task<IActionResult> Login([FromQuery]LoginViewModel loginViewModel)
         {
-            Result = await appUserRepository.Login(loginViewModel);
+            try
+            {
+                Result = await appUserRepository.Login(loginViewModel);
 
-            if (Result.IsSuccess == false)
-                return Unauthorized(Result);
-            return Ok(Result);
+                if (Result.IsSuccess == false)
+                    return Unauthorized(Result);
+                return Ok(Result);
+
+            }
+            catch (Exception ex)
+            {
+                Result.IsSuccess = false;
+                Result.Data = ex.Data;
+                Result.Message = ex.Message;
+                return Ok(Result);
+            }
         }     
         [HttpPost("ForegetPassword")]
         public async Task<IActionResult> ForgetPassword([FromQuery]string Email)
         {
-            Result = await appUserRepository.ForegetPassword(Email);
-            if (Result.IsSuccess == false)
-                return Unauthorized(Result);
-            return Ok(Result);
+
+            try
+            {
+                Result = await appUserRepository.ForegetPassword(Email);
+                if (Result.IsSuccess == false)
+                    return Unauthorized(Result);
+                return Ok(Result);
+            }
+            catch (Exception ex)
+            {
+                Result.IsSuccess = false;
+                Result.Data = ex.Data;
+                Result.Message = ex.Message;
+                return Ok(Result);
+            }
         }       
         [HttpPost("ResetPassword")]
         public async Task<IActionResult> ResetPassword([FromQuery]ResetPasswordViewModel resetPasswordViewModel)
         {
-            Result = await appUserRepository.RestPassword(resetPasswordViewModel);
-            if (Result.IsSuccess == false)
-                return Unauthorized(Result);
-            return Ok(Result);
+            try
+            {
+                Result = await appUserRepository.RestPassword(resetPasswordViewModel);
+                if (Result.IsSuccess == false)
+                    return Unauthorized(Result);
+                return Ok(Result);
+            }
+            catch (Exception ex)
+            {
+                Result.IsSuccess = false;
+                Result.Data = ex.Data;
+                Result.Message = ex.Message;
+                return Ok(Result);
+            }
         }    
     }
 }

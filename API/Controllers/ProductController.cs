@@ -31,88 +31,143 @@ namespace API.Controllers
         [HttpGet()]
         public async Task<IActionResult> Get()
         {
-            var allProducts = (await ProductRepo.Get());
-            var allProductModels = allProducts.Select(i => i.ToUserViewModel(AllProdctImages));
-            Result.Data = allProductModels;
-            return Ok(Result);
+            try
+            {
+                var allProducts = (await ProductRepo.Get());
+                var allProductModels = allProducts.Select(i => i.ToUserViewModel(AllProdctImages));
+                Result.Data = allProductModels;
+                return Ok(Result);
+            }
+            catch (Exception ex)
+            {
+                Result.IsSuccess = false;
+                Result.Data = ex.Data;
+                Result.Message = ex.Message;
+                return Ok(Result);
+            }
+
         }
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(string id)
         {
-            var product = await ProductRepo.Get(id);
-            if(product == null)
+            try
+            {
+                var product = await ProductRepo.Get(id);
+                if (product == null)
+                {
+                    Result.IsSuccess = false;
+                    Result.Data = "";
+                    Result.Message = "There is no Product With This ID";
+                }
+                else
+                {
+                    Result.IsSuccess = true;
+                    Result.Data = product.ToUserViewModel(AllProdctImages);
+                    Result.Message = "There is no Product With This ID";
+
+                }
+                return Ok(Result);
+            }
+            catch (Exception ex)
             {
                 Result.IsSuccess = false;
-                Result.Data = "";
-                Result.Message = "There is no Product With This ID";
+                Result.Data = ex.Data;
+                Result.Message = ex.Message;
+                return Ok(Result);
             }
-            else
-            {
-                Result.IsSuccess = true;
-                Result.Data = product.ToUserViewModel(AllProdctImages);
-                Result.Message = "There is no Product With This ID";
-
-            }
-            return Ok(Result);
+            
         }
         [HttpGet("Category/{CategoryID}")]
         public async Task<IActionResult> GetProductsByCatID(string CategoryID)
         {
-            var allProducts = (await ProductRepo.Get()).Where(i => i.CategoryID == CategoryID);
-            if(allProducts == null)
+            try
+            {
+                var allProducts = (await ProductRepo.Get()).Where(i => i.CategoryID == CategoryID);
+                if (allProducts == null)
+                {
+                    Result.IsSuccess = false;
+                    Result.Data = "";
+                    Result.Message = "There is No Category With This iD";
+                }
+                else
+                {
+                    var allproductUserModel = allProducts.Select(i => i.ToUserViewModel(AllProdctImages));
+                    Result.Data = allproductUserModel;
+                    Result.IsSuccess = true;
+                    Result.Data = allproductUserModel;
+                    Result.Message = "All Product In This Category Have Been Retrieved Successfully";
+                }
+                return Ok(Result);
+            }
+            catch (Exception ex)
             {
                 Result.IsSuccess = false;
-                Result.Data = "";
-                Result.Message = "There is No Category With This iD";
+                Result.Data = ex.Data;
+                Result.Message = ex.Message;
+                return Ok(Result);
             }
-            else
-            {
-                var allproductUserModel = allProducts.Select(i => i.ToUserViewModel(AllProdctImages));
-                Result.Data = allproductUserModel;
-                Result.IsSuccess = true;
-                Result.Data = allproductUserModel;
-                Result.Message = "All Product In This Category Have Been Retrieved Successfully";
-            }
-            return Ok(Result);
+
         }
         [HttpPost]
         public async Task<IActionResult> Post(AddProductViewModel productViewModel)
         {
-            ProductEntity prodcutEntity = await ProductRepo.Add(productViewModel.ToModel());
-            AddProductImageViewModel productImageViewModel = new AddProductImageViewModel()
+            try
             {
-                ProductID = prodcutEntity.ID,
-                ImageURL = productViewModel.MainImage,
-            };
-            ProductImageEntity productImageEntity = productImageViewModel.ToModel();
-            ProductImageEntity addImageEntity = await ProductImageRepo.Add(productImageEntity);
-            Result.Data = prodcutEntity.ToUserViewModel(AllProdctImages);
-            return Ok(Result);
+                ProductEntity prodcutEntity = await ProductRepo.Add(productViewModel.ToModel());
+                AddProductImageViewModel productImageViewModel = new AddProductImageViewModel()
+                {
+                    ProductID = prodcutEntity.ID,
+                    ImageURL = productViewModel.MainImage,
+                };
+                ProductImageEntity productImageEntity = productImageViewModel.ToModel();
+                ProductImageEntity addImageEntity = await ProductImageRepo.Add(productImageEntity);
+                Result.Data = prodcutEntity.ToUserViewModel(AllProdctImages);
+                return Ok(Result);
+            }
+            catch (Exception ex)
+            {
+                Result.IsSuccess = false;
+                Result.Data = ex.Data;
+                Result.Message = ex.Message;
+                return Ok(Result);
+            }
+           
         }
         [HttpPut]
         public async Task<IActionResult> Edit(GetEditProductViewModel getEditProductViewModel)
         {
-            ProductEntity prodcutEntity = await ProductRepo.Get(getEditProductViewModel.ID);
-            if(prodcutEntity == null)
+            try
+            {
+                ProductEntity prodcutEntity = await ProductRepo.Get(getEditProductViewModel.ID);
+                if (prodcutEntity == null)
+                {
+                    Result.IsSuccess = false;
+                    Result.Data = "";
+                    Result.Message = "There Is No Product Has This ID";
+                }
+                else
+                {
+                    prodcutEntity.Name = getEditProductViewModel.Name;
+                    prodcutEntity.Price = getEditProductViewModel.Price;
+                    prodcutEntity.Quantity = getEditProductViewModel.Quantity;
+                    prodcutEntity.Description = getEditProductViewModel.Description;
+                    prodcutEntity.Discount = getEditProductViewModel.Discount;
+                    prodcutEntity.CategoryID = getEditProductViewModel.CategoryID;
+                    prodcutEntity = await ProductRepo.Update(prodcutEntity);
+                    Result.IsSuccess = true;
+                    Result.Data = prodcutEntity;
+                    Result.Message = "This Product Has Been updated Successfully";
+                }
+                return Ok(Result);
+            }
+            catch (Exception ex)
             {
                 Result.IsSuccess = false;
-                Result.Data = "";
-                Result.Message = "There Is No Product Has This ID";
+                Result.Data = ex.Data;
+                Result.Message = ex.Message;
+                return Ok(Result);
             }
-            else
-            {
-                prodcutEntity.Name = getEditProductViewModel.Name;
-                prodcutEntity.Price = getEditProductViewModel.Price;
-                prodcutEntity.Quantity = getEditProductViewModel.Quantity;
-                prodcutEntity.Description = getEditProductViewModel.Description;
-                prodcutEntity.Discount = getEditProductViewModel.Discount;
-                prodcutEntity.CategoryID = getEditProductViewModel.CategoryID;
-                prodcutEntity =  await ProductRepo.Update(prodcutEntity);
-                Result.IsSuccess = true;
-                Result.Data = prodcutEntity;
-                Result.Message = "This Product Has Been updated Successfully";
-            }
-            return Ok(Result);
+
         }
     }
 }

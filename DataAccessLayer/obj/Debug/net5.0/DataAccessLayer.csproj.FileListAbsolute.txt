@@ -4,14 +4,15 @@ C:\Users\Ibrahim Mansour\source\repos\E-Commerce\DataAccessLayer\bin\Debug\net5.
 C:\Users\Ibrahim Mansour\source\repos\E-Commerce\DataAccessLayer\bin\Debug\net5.0\DataAccessLayer.dll
 C:\Users\Ibrahim Mansour\source\repos\E-Commerce\DataAccessLayer\bin\Debug\net5.0\ref\DataAccessLayer.dll
 C:\Users\Ibrahim Mansour\source\repos\E-Commerce\DataAccessLayer\bin\Debug\net5.0\DataAccessLayer.pdb
+C:\Users\Ibrahim Mansour\source\repos\E-Commerce\DataAccessLayer\bin\Debug\net5.0\Models.dll
+C:\Users\Ibrahim Mansour\source\repos\E-Commerce\DataAccessLayer\bin\Debug\net5.0\Models.pdb
 C:\Users\Ibrahim Mansour\source\repos\E-Commerce\DataAccessLayer\obj\Debug\net5.0\DataAccessLayer.csproj.AssemblyReference.cache
 C:\Users\Ibrahim Mansour\source\repos\E-Commerce\DataAccessLayer\obj\Debug\net5.0\DataAccessLayer.GeneratedMSBuildEditorConfig.editorconfig
 C:\Users\Ibrahim Mansour\source\repos\E-Commerce\DataAccessLayer\obj\Debug\net5.0\DataAccessLayer.AssemblyInfoInputs.cache
 C:\Users\Ibrahim Mansour\source\repos\E-Commerce\DataAccessLayer\obj\Debug\net5.0\DataAccessLayer.AssemblyInfo.cs
 C:\Users\Ibrahim Mansour\source\repos\E-Commerce\DataAccessLayer\obj\Debug\net5.0\DataAccessLayer.csproj.CoreCompileInputs.cache
+C:\Users\Ibrahim Mansour\source\repos\E-Commerce\DataAccessLayer\obj\Debug\net5.0\DataAccessLayer.csproj.CopyComplete
 C:\Users\Ibrahim Mansour\source\repos\E-Commerce\DataAccessLayer\obj\Debug\net5.0\DataAccessLayer.dll
 C:\Users\Ibrahim Mansour\source\repos\E-Commerce\DataAccessLayer\obj\Debug\net5.0\ref\DataAccessLayer.dll
 C:\Users\Ibrahim Mansour\source\repos\E-Commerce\DataAccessLayer\obj\Debug\net5.0\DataAccessLayer.pdb
 C:\Users\Ibrahim Mansour\source\repos\E-Commerce\DataAccessLayer\obj\Debug\net5.0\DataAccessLayer.genruntimeconfig.cache
-C:\Users\Ibrahim Mansour\source\repos\E-Commerce\DataAccessLayer\bin\Debug\net5.0\Models.dll
-C:\Users\Ibrahim Mansour\source\repos\E-Commerce\DataAccessLayer\bin\Debug\net5.0\Models.pdb
