@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Ibrahim Mansour\\source\\repos\\E-Commerce\\DataAccessLayer\\DataAccessLayer.csproj": {}
+    "C:\\Users\\Ibrahim Mansour\\Desktop\\New folder (10)\\.git\\DataAccessLayer\\DataAccessLayer.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Ibrahim Mansour\\source\\repos\\E-Commerce\\DataAccessLayer\\DataAccessLayer.csproj": {
+    "C:\\Users\\Ibrahim Mansour\\Desktop\\New folder (10)\\.git\\DataAccessLayer\\DataAccessLayer.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Ibrahim Mansour\\source\\repos\\E-Commerce\\DataAccessLayer\\DataAccessLayer.csproj",
+        "projectUniqueName": "C:\\Users\\Ibrahim Mansour\\Desktop\\New folder (10)\\.git\\DataAccessLayer\\DataAccessLayer.csproj",
         "projectName": "DataAccessLayer",
-        "projectPath": "C:\\Users\\Ibrahim Mansour\\source\\repos\\E-Commerce\\DataAccessLayer\\DataAccessLayer.csproj",
+        "projectPath": "C:\\Users\\Ibrahim Mansour\\Desktop\\New folder (10)\\.git\\DataAccessLayer\\DataAccessLayer.csproj",
         "packagesPath": "C:\\Users\\Ibrahim Mansour\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Ibrahim Mansour\\source\\repos\\E-Commerce\\DataAccessLayer\\obj\\",
+        "outputPath": "C:\\Users\\Ibrahim Mansour\\Desktop\\New folder (10)\\.git\\DataAccessLayer\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Ibrahim Mansour\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -28,8 +28,8 @@
           "net5.0": {
             "targetAlias": "net5.0",
             "projectReferences": {
-              "C:\\Users\\Ibrahim Mansour\\source\\repos\\E-Commerce\\Models\\Models.csproj": {
-                "projectPath": "C:\\Users\\Ibrahim Mansour\\source\\repos\\E-Commerce\\Models\\Models.csproj"
+              "C:\\Users\\Ibrahim Mansour\\Desktop\\New folder (10)\\.git\\Models\\Models.csproj": {
+                "projectPath": "C:\\Users\\Ibrahim Mansour\\Desktop\\New folder (10)\\.git\\Models\\Models.csproj"
               }
             }
           }
@@ -92,14 +92,14 @@
         }
       }
     },
-    "C:\\Users\\Ibrahim Mansour\\source\\repos\\E-Commerce\\Models\\Models.csproj": {
+    "C:\\Users\\Ibrahim Mansour\\Desktop\\New folder (10)\\.git\\Models\\Models.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Ibrahim Mansour\\source\\repos\\E-Commerce\\Models\\Models.csproj",
+        "projectUniqueName": "C:\\Users\\Ibrahim Mansour\\Desktop\\New folder (10)\\.git\\Models\\Models.csproj",
         "projectName": "Models",
-        "projectPath": "C:\\Users\\Ibrahim Mansour\\source\\repos\\E-Commerce\\Models\\Models.csproj",
+        "projectPath": "C:\\Users\\Ibrahim Mansour\\Desktop\\New folder (10)\\.git\\Models\\Models.csproj",
         "packagesPath": "C:\\Users\\Ibrahim Mansour\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Ibrahim Mansour\\source\\repos\\E-Commerce\\Models\\obj\\",
+        "outputPath": "C:\\Users\\Ibrahim Mansour\\Desktop\\New folder (10)\\.git\\Models\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Ibrahim Mansour\\AppData\\Roaming\\NuGet\\NuGet.Config",
