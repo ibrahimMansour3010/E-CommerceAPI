@@ -25,7 +25,6 @@ namespace API.Controllers
             Result = new Result();
         }
         [HttpGet("MyProfile")]
-        [Authorize(Roles ="Admin")]
         public async Task<IActionResult> GetUserProfile()
         {
             try

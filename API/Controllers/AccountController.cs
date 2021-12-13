@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Models.Cart;
 using Models.Customer;
@@ -126,7 +127,7 @@ namespace API.Controllers
             {
                 Result = await appUserRepository.Signup(signUpViewModel);
                 if (Result.IsSuccess == false)
-                    return Unauthorized(Result);
+                    return Ok(Result);
                 if (signUpViewModel.UserRole == "Customer")
                 {
                     // create a cart for each customer
@@ -168,9 +169,6 @@ namespace API.Controllers
             try
             {
                 Result = await appUserRepository.Login(loginViewModel);
-
-                if (Result.IsSuccess == false)
-                    return Unauthorized(Result);
                 return Ok(Result);
 
             }
@@ -189,8 +187,6 @@ namespace API.Controllers
             try
             {
                 Result = await appUserRepository.ForegetPassword(Email);
-                if (Result.IsSuccess == false)
-                    return Unauthorized(Result);
                 return Ok(Result);
             }
             catch (Exception ex)
@@ -207,8 +203,6 @@ namespace API.Controllers
             try
             {
                 Result = await appUserRepository.RestPassword(resetPasswordViewModel);
-                if (Result.IsSuccess == false)
-                    return Unauthorized(Result);
                 return Ok(Result);
             }
             catch (Exception ex)
@@ -218,6 +212,6 @@ namespace API.Controllers
                 Result.Message = ex.Message;
                 return Ok(Result);
             }
-        }    
+        }
     }
 }

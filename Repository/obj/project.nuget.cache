@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "ytcJnKqpd6UjqhOhDJfbaxMe4+i+pOn9sEK92Y2c7iYootItMPn4PNWCo4YoXuxApQREF4MOb4mZ1d6GxWc/Bg==",
+  "dgSpecHash": "tXK9eg9GhgNGv2n+beF3PU+I6V8NoBQunW+jRx1AVaXc24MjByEOpywZXlMaFy2XIKwvpFd+lLAXsPrNWh1BKA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Ibrahim Mansour\\Desktop\\New folder (10)\\.git\\Repository\\Repository.csproj",
+  "projectFilePath": "C:\\Users\\Ibrahim Mansour\\source\\repos\\E-Commerce\\Repository\\Repository.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Ibrahim Mansour\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\Ibrahim Mansour\\.nuget\\packages\\microsoft.aspnet.identity.core\\2.2.3\\microsoft.aspnet.identity.core.2.2.3.nupkg.sha512",

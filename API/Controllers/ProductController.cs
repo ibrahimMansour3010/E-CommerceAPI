@@ -29,11 +29,11 @@ namespace API.Controllers
             AllProdctImages = productImageRepo.Get().Result.ToList();
         }
         [HttpGet()]
-        public async Task<IActionResult> Get()
+        public async Task<IActionResult> Get([FromQuery]int PageNumber, int PageSize)
         {
             try
             {
-                var allProducts = (await ProductRepo.Get());
+                var allProducts = (await ProductRepo.Get()).Skip(PageNumber * PageSize ).Take(PageSize);
                 var allProductModels = allProducts.Select(i => i.ToUserViewModel(AllProdctImages));
                 Result.Data = allProductModels;
                 return Ok(Result);
@@ -92,10 +92,38 @@ namespace API.Controllers
                 else
                 {
                     var allproductUserModel = allProducts.Select(i => i.ToUserViewModel(AllProdctImages));
-                    Result.Data = allproductUserModel;
                     Result.IsSuccess = true;
                     Result.Data = allproductUserModel;
                     Result.Message = "All Product In This Category Have Been Retrieved Successfully";
+                }
+                return Ok(Result);
+            }
+            catch (Exception ex)
+            {
+                Result.IsSuccess = false;
+                Result.Data = ex.Data;
+                Result.Message = ex.Message;
+                return Ok(Result);
+            }
+
+        } 
+        [HttpGet("Name/{Name}")]
+        public async Task<IActionResult> GetProductsByName(string Name)
+        {
+            try
+            {
+                var product = (await ProductRepo.Get()).FirstOrDefault(i => i.Name == Name);
+                if (product == null)
+                {
+                    Result.IsSuccess = false;
+                    Result.Data = "";
+                    Result.Message = "There is No Product With This Name";
+                }
+                else
+                {
+                    Result.IsSuccess = true;
+                    Result.Data = product.ToUserViewModel(AllProdctImages);
+                    Result.Message = " Product Has Been Retrieved Successfully";
                 }
                 return Ok(Result);
             }

@@ -15,7 +15,16 @@ namespace ViewModels.Cart
     }
     public static class GetEditCartViewModelExtensions
     {
-        public static GetEditCartViewModel ToViewModel(this CartEntity cartEntity)
+        public static CartEntity ToModel(this GetEditCartViewModel getEditCartViewModel)
+        {
+            return new CartEntity()
+            {
+                ID = getEditCartViewModel.ID,
+                Status = getEditCartViewModel.Status,
+                TotalPrice = getEditCartViewModel.TotalPrice
+            };
+        }
+        public static GetEditCartViewModel ToViewModel(this  CartEntity cartEntity)
         {
             return new GetEditCartViewModel()
             {

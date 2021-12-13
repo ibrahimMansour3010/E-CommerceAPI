@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Ibrahim Mansour\\Desktop\\New folder (10)\\.git\\API\\API.csproj": {}
+    "C:\\Users\\Ibrahim Mansour\\source\\repos\\E-Commerce\\API\\API.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Ibrahim Mansour\\Desktop\\New folder (10)\\.git\\API\\API.csproj": {
+    "C:\\Users\\Ibrahim Mansour\\source\\repos\\E-Commerce\\API\\API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Ibrahim Mansour\\Desktop\\New folder (10)\\.git\\API\\API.csproj",
+        "projectUniqueName": "C:\\Users\\Ibrahim Mansour\\source\\repos\\E-Commerce\\API\\API.csproj",
         "projectName": "API",
-        "projectPath": "C:\\Users\\Ibrahim Mansour\\Desktop\\New folder (10)\\.git\\API\\API.csproj",
+        "projectPath": "C:\\Users\\Ibrahim Mansour\\source\\repos\\E-Commerce\\API\\API.csproj",
         "packagesPath": "C:\\Users\\Ibrahim Mansour\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Ibrahim Mansour\\Desktop\\New folder (10)\\.git\\API\\obj\\",
+        "outputPath": "C:\\Users\\Ibrahim Mansour\\source\\repos\\E-Commerce\\API\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Ibrahim Mansour\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -28,14 +28,14 @@
           "net5.0": {
             "targetAlias": "net5.0",
             "projectReferences": {
-              "C:\\Users\\Ibrahim Mansour\\Desktop\\New folder (10)\\.git\\DataAccessLayer\\DataAccessLayer.csproj": {
-                "projectPath": "C:\\Users\\Ibrahim Mansour\\Desktop\\New folder (10)\\.git\\DataAccessLayer\\DataAccessLayer.csproj"
+              "C:\\Users\\Ibrahim Mansour\\source\\repos\\E-Commerce\\DataAccessLayer\\DataAccessLayer.csproj": {
+                "projectPath": "C:\\Users\\Ibrahim Mansour\\source\\repos\\E-Commerce\\DataAccessLayer\\DataAccessLayer.csproj"
               },
-              "C:\\Users\\Ibrahim Mansour\\Desktop\\New folder (10)\\.git\\Repository\\Repository.csproj": {
-                "projectPath": "C:\\Users\\Ibrahim Mansour\\Desktop\\New folder (10)\\.git\\Repository\\Repository.csproj"
+              "C:\\Users\\Ibrahim Mansour\\source\\repos\\E-Commerce\\Repository\\Repository.csproj": {
+                "projectPath": "C:\\Users\\Ibrahim Mansour\\source\\repos\\E-Commerce\\Repository\\Repository.csproj"
               },
-              "C:\\Users\\Ibrahim Mansour\\Desktop\\New folder (10)\\.git\\ViewModels\\ViewModels.csproj": {
-                "projectPath": "C:\\Users\\Ibrahim Mansour\\Desktop\\New folder (10)\\.git\\ViewModels\\ViewModels.csproj"
+              "C:\\Users\\Ibrahim Mansour\\source\\repos\\E-Commerce\\ViewModels\\ViewModels.csproj": {
+                "projectPath": "C:\\Users\\Ibrahim Mansour\\source\\repos\\E-Commerce\\ViewModels\\ViewModels.csproj"
               }
             }
           }
@@ -109,18 +109,18 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.402\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.403\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\Ibrahim Mansour\\Desktop\\New folder (10)\\.git\\DataAccessLayer\\DataAccessLayer.csproj": {
+    "C:\\Users\\Ibrahim Mansour\\source\\repos\\E-Commerce\\DataAccessLayer\\DataAccessLayer.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Ibrahim Mansour\\Desktop\\New folder (10)\\.git\\DataAccessLayer\\DataAccessLayer.csproj",
+        "projectUniqueName": "C:\\Users\\Ibrahim Mansour\\source\\repos\\E-Commerce\\DataAccessLayer\\DataAccessLayer.csproj",
         "projectName": "DataAccessLayer",
-        "projectPath": "C:\\Users\\Ibrahim Mansour\\Desktop\\New folder (10)\\.git\\DataAccessLayer\\DataAccessLayer.csproj",
+        "projectPath": "C:\\Users\\Ibrahim Mansour\\source\\repos\\E-Commerce\\DataAccessLayer\\DataAccessLayer.csproj",
         "packagesPath": "C:\\Users\\Ibrahim Mansour\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Ibrahim Mansour\\Desktop\\New folder (10)\\.git\\DataAccessLayer\\obj\\",
+        "outputPath": "C:\\Users\\Ibrahim Mansour\\source\\repos\\E-Commerce\\DataAccessLayer\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Ibrahim Mansour\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -137,8 +137,8 @@
           "net5.0": {
             "targetAlias": "net5.0",
             "projectReferences": {
-              "C:\\Users\\Ibrahim Mansour\\Desktop\\New folder (10)\\.git\\Models\\Models.csproj": {
-                "projectPath": "C:\\Users\\Ibrahim Mansour\\Desktop\\New folder (10)\\.git\\Models\\Models.csproj"
+              "C:\\Users\\Ibrahim Mansour\\source\\repos\\E-Commerce\\Models\\Models.csproj": {
+                "projectPath": "C:\\Users\\Ibrahim Mansour\\source\\repos\\E-Commerce\\Models\\Models.csproj"
               }
             }
           }
@@ -197,18 +197,18 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.402\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.403\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\Ibrahim Mansour\\Desktop\\New folder (10)\\.git\\Models\\Models.csproj": {
+    "C:\\Users\\Ibrahim Mansour\\source\\repos\\E-Commerce\\Models\\Models.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Ibrahim Mansour\\Desktop\\New folder (10)\\.git\\Models\\Models.csproj",
+        "projectUniqueName": "C:\\Users\\Ibrahim Mansour\\source\\repos\\E-Commerce\\Models\\Models.csproj",
         "projectName": "Models",
-        "projectPath": "C:\\Users\\Ibrahim Mansour\\Desktop\\New folder (10)\\.git\\Models\\Models.csproj",
+        "projectPath": "C:\\Users\\Ibrahim Mansour\\source\\repos\\E-Commerce\\Models\\Models.csproj",
         "packagesPath": "C:\\Users\\Ibrahim Mansour\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Ibrahim Mansour\\Desktop\\New folder (10)\\.git\\Models\\obj\\",
+        "outputPath": "C:\\Users\\Ibrahim Mansour\\source\\repos\\E-Commerce\\Models\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Ibrahim Mansour\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -281,18 +281,18 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.402\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.403\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\Ibrahim Mansour\\Desktop\\New folder (10)\\.git\\Repository\\Repository.csproj": {
+    "C:\\Users\\Ibrahim Mansour\\source\\repos\\E-Commerce\\Repository\\Repository.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Ibrahim Mansour\\Desktop\\New folder (10)\\.git\\Repository\\Repository.csproj",
+        "projectUniqueName": "C:\\Users\\Ibrahim Mansour\\source\\repos\\E-Commerce\\Repository\\Repository.csproj",
         "projectName": "Repository",
-        "projectPath": "C:\\Users\\Ibrahim Mansour\\Desktop\\New folder (10)\\.git\\Repository\\Repository.csproj",
+        "projectPath": "C:\\Users\\Ibrahim Mansour\\source\\repos\\E-Commerce\\Repository\\Repository.csproj",
         "packagesPath": "C:\\Users\\Ibrahim Mansour\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Ibrahim Mansour\\Desktop\\New folder (10)\\.git\\Repository\\obj\\",
+        "outputPath": "C:\\Users\\Ibrahim Mansour\\source\\repos\\E-Commerce\\Repository\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Ibrahim Mansour\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -309,11 +309,11 @@
           "net5.0": {
             "targetAlias": "net5.0",
             "projectReferences": {
-              "C:\\Users\\Ibrahim Mansour\\Desktop\\New folder (10)\\.git\\DataAccessLayer\\DataAccessLayer.csproj": {
-                "projectPath": "C:\\Users\\Ibrahim Mansour\\Desktop\\New folder (10)\\.git\\DataAccessLayer\\DataAccessLayer.csproj"
+              "C:\\Users\\Ibrahim Mansour\\source\\repos\\E-Commerce\\DataAccessLayer\\DataAccessLayer.csproj": {
+                "projectPath": "C:\\Users\\Ibrahim Mansour\\source\\repos\\E-Commerce\\DataAccessLayer\\DataAccessLayer.csproj"
               },
-              "C:\\Users\\Ibrahim Mansour\\Desktop\\New folder (10)\\.git\\ViewModels\\ViewModels.csproj": {
-                "projectPath": "C:\\Users\\Ibrahim Mansour\\Desktop\\New folder (10)\\.git\\ViewModels\\ViewModels.csproj"
+              "C:\\Users\\Ibrahim Mansour\\source\\repos\\E-Commerce\\ViewModels\\ViewModels.csproj": {
+                "projectPath": "C:\\Users\\Ibrahim Mansour\\source\\repos\\E-Commerce\\ViewModels\\ViewModels.csproj"
               }
             }
           }
@@ -380,18 +380,18 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.402\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.403\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\Ibrahim Mansour\\Desktop\\New folder (10)\\.git\\ViewModels\\ViewModels.csproj": {
+    "C:\\Users\\Ibrahim Mansour\\source\\repos\\E-Commerce\\ViewModels\\ViewModels.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Ibrahim Mansour\\Desktop\\New folder (10)\\.git\\ViewModels\\ViewModels.csproj",
+        "projectUniqueName": "C:\\Users\\Ibrahim Mansour\\source\\repos\\E-Commerce\\ViewModels\\ViewModels.csproj",
         "projectName": "ViewModels",
-        "projectPath": "C:\\Users\\Ibrahim Mansour\\Desktop\\New folder (10)\\.git\\ViewModels\\ViewModels.csproj",
+        "projectPath": "C:\\Users\\Ibrahim Mansour\\source\\repos\\E-Commerce\\ViewModels\\ViewModels.csproj",
         "packagesPath": "C:\\Users\\Ibrahim Mansour\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Ibrahim Mansour\\Desktop\\New folder (10)\\.git\\ViewModels\\obj\\",
+        "outputPath": "C:\\Users\\Ibrahim Mansour\\source\\repos\\E-Commerce\\ViewModels\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Ibrahim Mansour\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -408,8 +408,8 @@
           "net5.0": {
             "targetAlias": "net5.0",
             "projectReferences": {
-              "C:\\Users\\Ibrahim Mansour\\Desktop\\New folder (10)\\.git\\Models\\Models.csproj": {
-                "projectPath": "C:\\Users\\Ibrahim Mansour\\Desktop\\New folder (10)\\.git\\Models\\Models.csproj"
+              "C:\\Users\\Ibrahim Mansour\\source\\repos\\E-Commerce\\Models\\Models.csproj": {
+                "projectPath": "C:\\Users\\Ibrahim Mansour\\source\\repos\\E-Commerce\\Models\\Models.csproj"
               }
             }
           }
@@ -468,7 +468,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.402\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.403\\RuntimeIdentifierGraph.json"
         }
       }
     }

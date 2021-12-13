@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "lHVrZhTs1hXCvcsLQ0WRcCz2kGoJJCRpegM9dS4A+m6PQWupSwxQfKrhjHq8bZk6t7Om/gVwwUTnT+WUgSGaUA==",
+  "dgSpecHash": "0FnmIq+DHT8MU5pcvRPEualwM1Kucd8oZDOhvAVl9o+kteErgnh23fKfM0CdNHo9kN2LDEENpu3pQDvAuH0XLw==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Ibrahim Mansour\\Desktop\\New folder (10)\\.git\\ViewModels\\ViewModels.csproj",
+  "projectFilePath": "C:\\Users\\Ibrahim Mansour\\source\\repos\\E-Commerce\\ViewModels\\ViewModels.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Ibrahim Mansour\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\Ibrahim Mansour\\.nuget\\packages\\microsoft.aspnetcore.cryptography.internal\\5.0.11\\microsoft.aspnetcore.cryptography.internal.5.0.11.nupkg.sha512",

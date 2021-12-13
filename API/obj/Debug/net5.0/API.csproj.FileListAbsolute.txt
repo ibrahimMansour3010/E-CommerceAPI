@@ -77,8 +77,8 @@ C:\Users\Ibrahim Mansour\source\repos\E-Commerce\API\obj\Debug\net5.0\staticweba
 C:\Users\Ibrahim Mansour\source\repos\E-Commerce\API\obj\Debug\net5.0\staticwebassets\API.StaticWebAssets.xml
 C:\Users\Ibrahim Mansour\source\repos\E-Commerce\API\obj\Debug\net5.0\scopedcss\bundle\API.styles.css
 C:\Users\Ibrahim Mansour\source\repos\E-Commerce\API\obj\Debug\net5.0\API.RazorTargetAssemblyInfo.cache
-C:\Users\Ibrahim Mansour\source\repos\E-Commerce\API\obj\Debug\net5.0\API.csproj.CopyComplete
 C:\Users\Ibrahim Mansour\source\repos\E-Commerce\API\obj\Debug\net5.0\API.dll
 C:\Users\Ibrahim Mansour\source\repos\E-Commerce\API\obj\Debug\net5.0\ref\API.dll
 C:\Users\Ibrahim Mansour\source\repos\E-Commerce\API\obj\Debug\net5.0\API.pdb
 C:\Users\Ibrahim Mansour\source\repos\E-Commerce\API\obj\Debug\net5.0\API.genruntimeconfig.cache
+C:\Users\Ibrahim Mansour\source\repos\E-Commerce\API\obj\Debug\net5.0\API.csproj.CopyComplete

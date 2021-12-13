@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Models.Cart;
 using Models.CartItem;
@@ -15,6 +16,7 @@ namespace API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles ="Customer")]
     public class CartItemController : ControllerBase
     {
         IMainRepository<CartItemEntity> CartItemRepo;
