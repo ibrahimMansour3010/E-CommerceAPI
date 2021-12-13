@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "+Qe92FIE3lp4rBcPVN1dmwMLYvhDf/mSSGRyDVm4+/ITE3BuV2+d1ikhV0SDROKfFRnpOgDTJp74Kz6ZE8EMGA==",
+  "dgSpecHash": "bfSb+V6l7Ke2Plwy5nGCoqDCF2e95BSFTgCucx1s08sxsyBB0iPlWNb+X1jaINlwosAkkdsB6lR4dlEuXj/sKg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Ibrahim Mansour\\source\\repos\\E-Commerce\\API\\API.csproj",
+  "projectFilePath": "C:\\Users\\Ibrahim Mansour\\Desktop\\New folder (10)\\.git\\API\\API.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Ibrahim Mansour\\.nuget\\packages\\devexpress.data\\21.2.3\\devexpress.data.21.2.3.nupkg.sha512",
     "C:\\Users\\Ibrahim Mansour\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",

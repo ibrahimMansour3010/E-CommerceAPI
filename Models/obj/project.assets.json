@@ -5960,11 +5960,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Ibrahim Mansour\\source\\repos\\E-Commerce\\Models\\Models.csproj",
+      "projectUniqueName": "C:\\Users\\Ibrahim Mansour\\Desktop\\New folder (10)\\.git\\Models\\Models.csproj",
       "projectName": "Models",
-      "projectPath": "C:\\Users\\Ibrahim Mansour\\source\\repos\\E-Commerce\\Models\\Models.csproj",
+      "projectPath": "C:\\Users\\Ibrahim Mansour\\Desktop\\New folder (10)\\.git\\Models\\Models.csproj",
       "packagesPath": "C:\\Users\\Ibrahim Mansour\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Ibrahim Mansour\\source\\repos\\E-Commerce\\Models\\obj\\",
+      "outputPath": "C:\\Users\\Ibrahim Mansour\\Desktop\\New folder (10)\\.git\\Models\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Ibrahim Mansour\\AppData\\Roaming\\NuGet\\NuGet.Config",
