@@ -1,0 +1,49 @@
+﻿
+@{
+    ViewData["Title"] = "Add";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using ViewModels.Category
+@model AddCategoryViewModel
+
+
+<div class="container  ">
+    <div class="row">
+        <div class="col-12">
+            <form asp-controller="Category" asp-action="Add" method="post" class="w-50 m-auto mt-5" enctype="multipart/form-data">
+                <table class="w-100" >
+
+                    <tr class="text-right">
+                        <td><label for="deptName" class="form-label p-1">Department Name :  </label></td>
+                        <td>
+                            <select name="DepartmentID" class="custom-select">
+                                @foreach (var item in @ViewBag.Depts)
+                                {
+                                    <option value="@item.ID">@item.DepartmentName </option>
+                                }
+                            </select>
+                        </td>
+                    </tr>
+
+                    <tr class="text-right">
+                        <td><label for="catName" class="form-label p-1">Category Name :  </label></td>
+                        <td><input type="text" id="catName" name="CategoryName" class="form-control"></td>
+                    </tr>
+                    
+                    <tr class="text-right">
+                        <td><label for="ImageFile" class="form-label p-1">Image Name :  </label></td>
+                        <td><input type="file" id="ImageFile"  asp-for="ImageFile" accept="Image/*" ></td>
+                    </tr>
+
+                    <tr class="text-right">
+                        <td class="text-center" colspan="2">
+                            <input type="submit" class="btn btn-success m-2" value="Add">
+                            <input type="reset" class="btn btn-danger m-2" value="Cancel">
+                        </td>
+
+                </table>
+            </form>
+        </div>
+    </div>
+</div>

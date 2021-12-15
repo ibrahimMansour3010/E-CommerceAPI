@@ -1,0 +1,54 @@
+﻿
+@{
+    ViewData["Title"] = "Login";
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - AdminPanel</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
+<body>
+    <div class="container h-100 " >
+        <div class="row" style="margin-top:20vh">
+            <h1 class="m-auto text-center mb-3">Login</h1>
+            <div class="col-12">
+                <form asp-controller="Home" asp-action="Login" method="post" class="w-50 m-auto mt-5">
+                    <table class="w-100">
+
+                        <tr class="text-right">
+                            <td><label for="Username" class="form-label p-1">Username  </label></td>
+                            <td><input type="text" id="Username" name="Username" class="form-control"></td>
+                        </tr>
+                        <tr class="text-right">
+                            <td><label for="Password" class="form-label p-1">Password  </label></td>
+                            <td><input type="password" id="Password" name="Password" class="form-control"></td>
+                        </tr>
+                        <tr>
+                            <td class="text-right"><input type="checkbox" id="IsRemembered" name="IsRemembered" value="true" class="text-st"></td>
+                            <td><label for="IsRemembered" class="form-label p-1">Remeber Me  </label></td>
+                        </tr>
+
+                        <tr class="text-right">
+                            <td class="text-right">
+                                <a href="forgetPassword.html">Foreget Password</a>
+                            </td>
+                        </tr>
+                        <tr class="text-right">
+                            <td class="text-center" colspan="2">
+                                <input type="submit" class="btn btn-success m-2" value="Login">
+                                <input type="reset" class="btn btn-danger m-2" value="Cancel">
+                            </td>
+
+                    </table>
+                </form>
+                @*<script src="js/login.js"></script>*@
+            </div>
+        </div>
+    </div>
+
+</body>
