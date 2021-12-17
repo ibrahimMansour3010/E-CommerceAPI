@@ -1,0 +1,33 @@
+﻿
+@{
+    ViewData["Title"] = "EditAsync";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container  ">
+    <div class="row">
+        <div class="col-12">
+            <form asp-controller="Department" asp-action="Edit" method="post" class="w-50 m-auto mt-5">
+                <table class="w-100">
+
+                    <tr class="text-right">
+                        @*<td><label for="deptID" class="form-label p-1">Department Id :  </label></td>*@
+                        <td><input type="text" id="deptID" name="ID" class="form-control" value="@ViewBag.DeptID" hidden></td>
+                    </tr>
+
+                    <tr class="text-right">
+                        <td><label for="deptName" class="form-label p-1">Department Name :  </label></td>
+                        <td><input type="text" id="deptName" name="DepartmentName" class="form-control"></td>
+                    </tr>
+
+                    <tr class="text-right">
+                        <td class="text-center" colspan="2">
+                            <input type="submit" class="btn btn-success m-2" value="Edit">
+                            <input type="reset" class="btn btn-danger m-2" value="Cancel">
+                        </td>
+
+                </table>
+            </form>
+        </div>
+    </div>
+</div>

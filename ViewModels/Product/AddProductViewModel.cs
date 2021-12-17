@@ -18,7 +18,7 @@ namespace ViewModels.Product
         public string MainImage { get; set; }
         public string CategoryID { get; set; }
         public string AdmainID { get; set; }
-        //public List<string>  Images { get; set; }
+        public List<string>  Images { get; set; }
     }
     public static class ProductViewModelExtensions
     {

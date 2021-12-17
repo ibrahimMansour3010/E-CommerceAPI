@@ -1,4 +1,5 @@
-﻿using Models.ProductCategory;
+﻿using Microsoft.AspNetCore.Http;
+using Models.ProductCategory;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,7 @@ namespace ViewModels.Category
         public string CategoryName { get; set; }
         public string ImageURL { get; set; }
         public string DepartmentID { get; set; }
+        public IFormFile ImageFile { get; set; }
     }
     public static class GetEditCategoryViewModelExtensions
     {
@@ -24,6 +26,15 @@ namespace ViewModels.Category
             vm.ImageURL = categoryEntity.ImageURL;
             vm.DepartmentID = categoryEntity.DepartmentID;
             return vm;
+        }
+        public static CategoryEntity  ToEntityModel(this GetEditCategoryViewModel vm)
+        {
+            CategoryEntity enity = new CategoryEntity();
+            enity.ID = vm.ID;
+            enity.CategoryName = vm.CategoryName;
+            enity.ImageURL = vm.ImageURL;
+            enity.DepartmentID = vm.DepartmentID;
+            return enity;
         }
     }
 }

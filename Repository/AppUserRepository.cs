@@ -12,6 +12,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using ViewModels.Customer;
+using ViewModels.User;
 
 namespace Repository
 {
@@ -45,10 +46,12 @@ namespace Repository
             {
                 var appUser = await UserManager.FindByNameAsync(user.UserName);
                 result = await UserManager.AddToRoleAsync(appUser, signUpViewModel.UserRole);
+
                 if (result.Succeeded)
                 {
+
                     Result.IsSuccess = true;
-                    Result.Data = user;
+                    Result.Data = user.ToViewModel();
                     Result.Message = "User Has Been Created Successfully";
 
                 }
@@ -77,39 +80,50 @@ namespace Repository
             }
             else
             {
-
-                // create claims 
-                var claims = new List<Claim>(){
+                var roles = await UserManager.GetRolesAsync(user);
+                if (roles.Contains(loginViewModel.UserRole))
+                {
+                    // create claims 
+                    var claims = new List<Claim>(){
                 new Claim("UserID" , user.Id),
                 new Claim(ClaimTypes.Role , loginViewModel.UserRole),
                 };
-                // create key
-                var key =
-                    new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["JWT:Secret"]));
-                // create token
-                var Token = new JwtSecurityToken
-                    (
-                        issuer: Configuration["JWT:ValidIssuer"],
-                        audience: Configuration["JWT:ValidAudiene"],
-                        expires: DateTime.Now.AddDays(30),
-                        signingCredentials:
-                        new SigningCredentials(key, SecurityAlgorithms.HmacSha256),
-                        claims: claims
-                    );
+                    // create key
+                    var key =
+                        new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["JWT:Secret"]));
+                    // create token
+                    var Token = new JwtSecurityToken
+                        (
+                            issuer: Configuration["JWT:ValidIssuer"],
+                            audience: Configuration["JWT:ValidAudiene"],
+                            expires: DateTime.Now.AddDays(30),
+                            signingCredentials:
+                            new SigningCredentials(key, SecurityAlgorithms.HmacSha256),
+                            claims: claims
+                        );
 
-                Result.IsSuccess = true;
-                // return token
-                Result.Data = new JwtSecurityTokenHandler().WriteToken(Token);
-                Result.Message = "Login Successfully ";
+                    Result.IsSuccess = true;
+                    // return token
+                    Result.Data = new JwtSecurityTokenHandler().WriteToken(Token);
+                    Result.Message = "Login Successfully ";
+
+                }
+                else
+                {
+                    Result.IsSuccess = false;
+                    // return token
+                    Result.Data = "";
+                    Result.Message = "Invalid Role";
+                }
 
             }
-            var role = await UserManager.GetRolesAsync(user);
-
             return Result;
         }
         public async Task<Result> GetCustomerData(string id)
         {
             var user = await UserManager.FindByIdAsync(id);
+            GetUserViewModel vm = user.ToViewModel();
+
             if (user == null)
             {
                 Result.IsSuccess = false;
@@ -121,7 +135,7 @@ namespace Repository
                 Result.IsSuccess = true;
                 Result.Data = new
                 {
-                    User = user,
+                    User = vm,
                     Role = await UserManager.GetRolesAsync(user)
                 };
                 Result.Message = "User Data Retrieved Successfully";
@@ -131,6 +145,7 @@ namespace Repository
         public async Task<Result> EditProfile(EditCusomerViewModel editCusomerViewModel)
         {
             var user = await UserManager.FindByIdAsync(editCusomerViewModel.Id);
+            GetUserViewModel vm = user.ToViewModel();
             if (user == null)
             {
                 Result.IsSuccess = false;
@@ -152,7 +167,7 @@ namespace Repository
                 if (res.Succeeded)
                 {
                     Result.IsSuccess = true;
-                    Result.Data = user;
+                    Result.Data = vm;
                     Result.Message = "User Data Has Been Updated Successfully";
                 }
                 else
@@ -212,6 +227,10 @@ namespace Repository
                 Result.Message = "Cannot Find User With This Email";
             }
             return Result;
+        }
+        public async Task Logout()
+        {
+            await SignInManager.SignOutAsync();
         }
     }
 }

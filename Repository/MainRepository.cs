@@ -24,7 +24,7 @@ namespace Repository
         }
         public async Task<T> Get(string id)
         {
-            return await Table.FindAsync(id);
+            return await Table.Where(i=>i.ID == id).AsNoTracking<T>().FirstOrDefaultAsync();
         }
         public async Task<T> Add(T entity)
         {
@@ -32,9 +32,21 @@ namespace Repository
             await Context.SaveChangesAsync();
             return entity;
         }
+        public async Task<IEnumerable<T>> AddRange(IEnumerable<T> entity)
+        {
+            await Table.AddRangeAsync(entity);
+            await Context.SaveChangesAsync();
+            return entity;
+        }
         public async Task<T> Update(T entity)
         {
-            Table.Update(entity);
+            Context.Update(entity);
+            await Context.SaveChangesAsync();
+            return entity;
+        }
+        public async Task<IEnumerable<T>> Update(IEnumerable<T> entity)
+        {
+            Table.UpdateRange(entity);
             await Context.SaveChangesAsync();
             return entity;
         }
@@ -42,6 +54,12 @@ namespace Repository
         {
             T entity = Get(id).Result;
             Table.Remove(entity);
+            await Context.SaveChangesAsync();
+            return entity;
+        }
+        public async Task<IEnumerable<T>> Delete(IEnumerable<T> entity)
+        {
+            Table.RemoveRange(entity);
             await Context.SaveChangesAsync();
             return entity;
         }

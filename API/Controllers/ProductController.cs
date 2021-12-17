@@ -29,11 +29,20 @@ namespace API.Controllers
             AllProdctImages = productImageRepo.Get().Result.ToList();
         }
         [HttpGet()]
-        public async Task<IActionResult> Get([FromQuery]int PageNumber, int PageSize)
+        public async Task<IActionResult> Get([FromQuery] int PageNumber, int PageSize)
         {
             try
             {
-                var allProducts = (await ProductRepo.Get()).Skip(PageNumber * PageSize ).Take(PageSize);
+                IEnumerable<ProductEntity> allProducts;
+                if (PageSize == 0)
+                {
+                    allProducts = await ProductRepo.Get();
+                }
+                else
+                {
+                    allProducts = (await ProductRepo.Get()).Skip(--PageNumber * PageSize).Take(PageSize);
+
+                }
                 var allProductModels = allProducts.Select(i => i.ToUserViewModel(AllProdctImages));
                 Result.Data = allProductModels;
                 return Ok(Result);
@@ -75,7 +84,7 @@ namespace API.Controllers
                 Result.Message = ex.Message;
                 return Ok(Result);
             }
-            
+
         }
         [HttpGet("Category/{CategoryID}")]
         public async Task<IActionResult> GetProductsByCatID(string CategoryID)
@@ -106,13 +115,13 @@ namespace API.Controllers
                 return Ok(Result);
             }
 
-        } 
+        }
         [HttpGet("Name/{Name}")]
         public async Task<IActionResult> GetProductsByName(string Name)
         {
             try
             {
-                var product = (await ProductRepo.Get()).FirstOrDefault(i => i.Name == Name);
+                var product = (await ProductRepo.Get()).Where(i => i.Name.Contains(Name));
                 if (product == null)
                 {
                     Result.IsSuccess = false;
@@ -122,7 +131,7 @@ namespace API.Controllers
                 else
                 {
                     Result.IsSuccess = true;
-                    Result.Data = product.ToUserViewModel(AllProdctImages);
+                    Result.Data = product.Select(i => i.ToUserViewModel(AllProdctImages)).ToList();
                     Result.Message = " Product Has Been Retrieved Successfully";
                 }
                 return Ok(Result);
@@ -159,7 +168,7 @@ namespace API.Controllers
                 Result.Message = ex.Message;
                 return Ok(Result);
             }
-           
+
         }
         [HttpPut]
         public async Task<IActionResult> Edit(GetEditProductViewModel getEditProductViewModel)

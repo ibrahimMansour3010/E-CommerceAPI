@@ -1,5 +1,4 @@
-﻿using Models.Cart;
-using Models.Customer;
+﻿using Models.Customer;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;

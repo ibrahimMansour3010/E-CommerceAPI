@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Ibrahim Mansour\\source\\repos\\E-Commerce\\ViewModels\\ViewModels.csproj": {}
+    "C:\\Users\\Ibrahim Mansour\\source\\repos\\E-CommerceAPI\\ViewModels\\ViewModels.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Ibrahim Mansour\\source\\repos\\E-Commerce\\Models\\Models.csproj": {
+    "C:\\Users\\Ibrahim Mansour\\source\\repos\\E-CommerceAPI\\Models\\Models.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Ibrahim Mansour\\source\\repos\\E-Commerce\\Models\\Models.csproj",
+        "projectUniqueName": "C:\\Users\\Ibrahim Mansour\\source\\repos\\E-CommerceAPI\\Models\\Models.csproj",
         "projectName": "Models",
-        "projectPath": "C:\\Users\\Ibrahim Mansour\\source\\repos\\E-Commerce\\Models\\Models.csproj",
+        "projectPath": "C:\\Users\\Ibrahim Mansour\\source\\repos\\E-CommerceAPI\\Models\\Models.csproj",
         "packagesPath": "C:\\Users\\Ibrahim Mansour\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Ibrahim Mansour\\source\\repos\\E-Commerce\\Models\\obj\\",
+        "outputPath": "C:\\Users\\Ibrahim Mansour\\source\\repos\\E-CommerceAPI\\Models\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Ibrahim Mansour\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -88,14 +88,14 @@
         }
       }
     },
-    "C:\\Users\\Ibrahim Mansour\\source\\repos\\E-Commerce\\ViewModels\\ViewModels.csproj": {
+    "C:\\Users\\Ibrahim Mansour\\source\\repos\\E-CommerceAPI\\ViewModels\\ViewModels.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Ibrahim Mansour\\source\\repos\\E-Commerce\\ViewModels\\ViewModels.csproj",
+        "projectUniqueName": "C:\\Users\\Ibrahim Mansour\\source\\repos\\E-CommerceAPI\\ViewModels\\ViewModels.csproj",
         "projectName": "ViewModels",
-        "projectPath": "C:\\Users\\Ibrahim Mansour\\source\\repos\\E-Commerce\\ViewModels\\ViewModels.csproj",
+        "projectPath": "C:\\Users\\Ibrahim Mansour\\source\\repos\\E-CommerceAPI\\ViewModels\\ViewModels.csproj",
         "packagesPath": "C:\\Users\\Ibrahim Mansour\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Ibrahim Mansour\\source\\repos\\E-Commerce\\ViewModels\\obj\\",
+        "outputPath": "C:\\Users\\Ibrahim Mansour\\source\\repos\\E-CommerceAPI\\ViewModels\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Ibrahim Mansour\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -112,8 +112,8 @@
           "net5.0": {
             "targetAlias": "net5.0",
             "projectReferences": {
-              "C:\\Users\\Ibrahim Mansour\\source\\repos\\E-Commerce\\Models\\Models.csproj": {
-                "projectPath": "C:\\Users\\Ibrahim Mansour\\source\\repos\\E-Commerce\\Models\\Models.csproj"
+              "C:\\Users\\Ibrahim Mansour\\source\\repos\\E-CommerceAPI\\Models\\Models.csproj": {
+                "projectPath": "C:\\Users\\Ibrahim Mansour\\source\\repos\\E-CommerceAPI\\Models\\Models.csproj"
               }
             }
           }
@@ -128,6 +128,10 @@
         "net5.0": {
           "targetAlias": "net5.0",
           "dependencies": {
+            "Microsoft.AspNetCore.Http.Features": {
+              "target": "Package",
+              "version": "[5.0.13, )"
+            },
             "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
               "target": "Package",
               "version": "[5.0.11, )"

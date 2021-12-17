@@ -30,8 +30,8 @@ namespace API.Controllers
             try
             {
                 string id = User.Claims.FirstOrDefault(i => i.Type == "UserID").Value;
-                var user = await CustomerRepository.GetCustomerData(id);
-                return Ok(user);
+                Result = await CustomerRepository.GetCustomerData(id);
+                return Ok(Result);
             }
             catch (Exception ex)
             {
@@ -47,10 +47,8 @@ namespace API.Controllers
             try
             {
                 editCusomerViewModel.Id = User.Claims.FirstOrDefault(i => i.Type == "UserID").Value;
-                var user = await CustomerRepository.EditProfile(editCusomerViewModel);
-                if (user == null)
-                    return Ok("Empty");
-                return Ok(user);
+                Result = await CustomerRepository.EditProfile(editCusomerViewModel);
+                return Ok(Result);
             }
             catch (Exception ex)
             {
@@ -59,7 +57,6 @@ namespace API.Controllers
                 Result.Message = ex.Message;
                 return Ok(Result);
             }
-
         }
     }
 }

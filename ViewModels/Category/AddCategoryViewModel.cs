@@ -1,4 +1,5 @@
-﻿using Models.Department;
+﻿using Microsoft.AspNetCore.Http;
+using Models.Department;
 using Models.ProductCategory;
 using System;
 using System.Collections.Generic;
@@ -13,6 +14,7 @@ namespace ViewModels.Category
         public string CategoryName { get; set; }
         public string ImageURL { get; set; }
         public string DepartmentID { get; set; }
+        public IFormFile ImageFile { get; set; }
     }
     public static class CategoryViewModelExtensions
     {

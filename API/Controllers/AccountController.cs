@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Models.Cart;
 using Models.Customer;
 using Newtonsoft.Json;
 using Repository;
@@ -11,7 +10,6 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text.Json;
 using System.Threading.Tasks;
-using ViewModels.Cart;
 using ViewModels.Customer;
 using JsonSerializer = Newtonsoft.Json.JsonSerializer;
 
@@ -22,13 +20,10 @@ namespace API.Controllers
     public class AccountController : ControllerBase
     {
         IAppUserRepository appUserRepository;
-        IMainRepository<CartEntity> CartRepository;
         Result Result;
-        public AccountController(IAppUserRepository _appUserRepository,
-            IMainRepository<CartEntity> cartRepo)
+        public AccountController(IAppUserRepository _appUserRepository)
         {
             appUserRepository = _appUserRepository;
-            CartRepository = cartRepo;
             Result = new Result();
         }
 
@@ -126,32 +121,6 @@ namespace API.Controllers
             try
             {
                 Result = await appUserRepository.Signup(signUpViewModel);
-                if (Result.IsSuccess == false)
-                    return Ok(Result);
-                if (signUpViewModel.UserRole == "Customer")
-                {
-                    // create a cart for each customer
-                    CartEntity cartEntity = new CartEntity()
-                    {
-                        CustomerID = (Result.Data as ApplicationUserEntity).Id,
-                        Status = CartStatus.Cleared,
-                        CustomerEntity = (Result.Data as ApplicationUserEntity),
-                        TotalPrice = 0.0f
-                    };
-                    // add cart in database
-                    cartEntity = await CartRepository.Add(cartEntity);
-                    object obj = new
-                    {
-                        Customer = Result.Data,
-                        Cart = cartEntity.ToViewModel()
-                    };
-                    // return new user and its car
-                    string jsonObject = JsonConvert.SerializeObject(obj, Formatting.None, new JsonSerializerSettings()
-                    {
-                        ReferenceLoopHandling = ReferenceLoopHandling.Ignore
-                    });
-                    Result.Data = jsonObject;
-                }
                 return Ok(Result);
             }
             catch (Exception ex)

@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using Models.Cart;
 using Models.CartItem;
+using Models.Order;
 using Models.Product;
 using System;
 using System.Collections.Generic;
@@ -25,8 +25,7 @@ namespace Models.Customer
         public string Address { get; set; }
 
 
-        public virtual IEnumerable<CartItemEntity> CartItemEntities { get; set; }
+        public virtual IEnumerable<OrderEntity> OrderEntities { get; set; }
         public virtual IEnumerable<ProductEntity> Products { get; set; }
-        public CartEntity CartEntity { get; set; }
     }
 }

@@ -1,0 +1,37 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using Models.Department
+@model IEnumerable<DepartmentEntity>
+
+
+<div class="w-50 m-auto">
+
+    <a class="btn btn-success" asp-controller="Department" asp-action="Add">New</a>
+    <table class="table table-bordered table-hover">
+
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th class="text-center" >Settigns</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.DepartmentName</td>
+                    <td class="text-center">
+
+                        <a class="btn btn-info" href="~/Department/Edit?id=@item.ID">Edit</a>
+                        <a class="btn btn-danger" href="~/Department/delete?id=@item.ID">Delete</a>
+
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+</div>

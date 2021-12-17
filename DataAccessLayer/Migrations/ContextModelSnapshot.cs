@@ -150,32 +150,6 @@ namespace DataAccessLayer.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("Models.Cart.CartEntity", b =>
-                {
-                    b.Property<string>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("CustomerID")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("Status")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasDefaultValue(2);
-
-                    b.Property<float>("TotalPrice")
-                        .HasColumnType("real");
-
-                    b.HasKey("ID");
-
-                    b.HasIndex("CustomerID")
-                        .IsUnique()
-                        .HasFilter("[CustomerID] IS NOT NULL");
-
-                    b.ToTable("Cart");
-                });
-
             modelBuilder.Entity("Models.CartItem.CartItemEntity", b =>
                 {
                     b.Property<string>("ID")
@@ -185,26 +159,18 @@ namespace DataAccessLayer.Migrations
                     b.Property<int>("Amount")
                         .HasColumnType("int");
 
-                    b.Property<string>("CartID")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("CustomerID")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("OrderID")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ProductID")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<float>("TotalPrice")
-                        .HasColumnType("real");
-
                     b.HasKey("ID");
 
-                    b.HasIndex("CartID");
-
-                    b.HasIndex("CustomerID");
+                    b.HasIndex("OrderID");
 
                     b.HasIndex("ProductID");
 
@@ -316,6 +282,33 @@ namespace DataAccessLayer.Migrations
                         .IsUnique();
 
                     b.ToTable("Department");
+                });
+
+            modelBuilder.Entity("Models.Order.OrderEntity", b =>
+                {
+                    b.Property<string>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("CustomerID")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("OrderDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
+
+                    b.Property<float>("TotalPrice")
+                        .HasColumnType("real");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("CustomerID");
+
+                    b.ToTable("Order");
                 });
 
             modelBuilder.Entity("Models.Product.ProductEntity", b =>
@@ -455,36 +448,30 @@ namespace DataAccessLayer.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Models.Cart.CartEntity", b =>
-                {
-                    b.HasOne("Models.Customer.ApplicationUserEntity", "CustomerEntity")
-                        .WithOne("CartEntity")
-                        .HasForeignKey("Models.Cart.CartEntity", "CustomerID")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.Navigation("CustomerEntity");
-                });
-
             modelBuilder.Entity("Models.CartItem.CartItemEntity", b =>
                 {
-                    b.HasOne("Models.Cart.CartEntity", "CartEntity")
+                    b.HasOne("Models.Order.OrderEntity", "OrderEntity")
                         .WithMany("CartItemEntities")
-                        .HasForeignKey("CartID");
-
-                    b.HasOne("Models.Customer.ApplicationUserEntity", "CustomerEntity")
-                        .WithMany("CartItemEntities")
-                        .HasForeignKey("CustomerID")
+                        .HasForeignKey("OrderID")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("Models.Product.ProductEntity", "ProductEntity")
                         .WithMany("CartItemEntities")
                         .HasForeignKey("ProductID");
 
-                    b.Navigation("CartEntity");
-
-                    b.Navigation("CustomerEntity");
+                    b.Navigation("OrderEntity");
 
                     b.Navigation("ProductEntity");
+                });
+
+            modelBuilder.Entity("Models.Order.OrderEntity", b =>
+                {
+                    b.HasOne("Models.Customer.ApplicationUserEntity", "CustomerEntity")
+                        .WithMany("OrderEntities")
+                        .HasForeignKey("CustomerID")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.Navigation("CustomerEntity");
                 });
 
             modelBuilder.Entity("Models.Product.ProductEntity", b =>
@@ -524,16 +511,9 @@ namespace DataAccessLayer.Migrations
                     b.Navigation("ProductEntity");
                 });
 
-            modelBuilder.Entity("Models.Cart.CartEntity", b =>
-                {
-                    b.Navigation("CartItemEntities");
-                });
-
             modelBuilder.Entity("Models.Customer.ApplicationUserEntity", b =>
                 {
-                    b.Navigation("CartEntity");
-
-                    b.Navigation("CartItemEntities");
+                    b.Navigation("OrderEntities");
 
                     b.Navigation("Products");
                 });
@@ -541,6 +521,11 @@ namespace DataAccessLayer.Migrations
             modelBuilder.Entity("Models.Department.DepartmentEntity", b =>
                 {
                     b.Navigation("CategoryEntities");
+                });
+
+            modelBuilder.Entity("Models.Order.OrderEntity", b =>
+                {
+                    b.Navigation("CartItemEntities");
                 });
 
             modelBuilder.Entity("Models.Product.ProductEntity", b =>

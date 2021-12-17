@@ -1,0 +1,77 @@
+﻿
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using ViewModels.Category
+@model GetEditCategoryViewModel
+
+
+<div class="container  ">
+    <div class="row">
+        <div class="col-12">
+            <form asp-controller="Category" asp-action="Edit" method="post" class="w-50 m-auto mt-5" enctype="multipart/form-data">
+                <table class="w-100">
+
+                    <tr class="text-right" hidden>
+                        <td><label for="catID" class="form-label p-1">Category ID :  </label></td>
+                        <td><input type="text" id="catID" asp-for="ID" name="ID" value="@Model.ID" class="form-control"></td>
+                    </tr>
+                    <tr class="text-right">
+                        <td><label for="deptName" class="form-label p-1">Department Name :  </label></td>
+                        <td>
+                            <select name="DepartmentID" asp-for="DepartmentID" class="custom-select" id="depts">
+                                @foreach (var item in @ViewBag.Depts)
+                                {
+                                    @if (item.ID == Model.DepartmentID)
+                                    {
+
+                                        <option value="@item.ID" selected>@item.DepartmentName </option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@item.ID">@item.DepartmentName </option>
+
+                                    }
+                                }
+                            </select>
+                        </td>
+                    </tr>
+
+                    <tr class="text-right">
+                        <td><label for="catName" class="form-label p-1">Category Name :  </label></td>
+                        <td><input type="text" id="catName" asp-for="CategoryName" name="CategoryName" value="@Model.CategoryName" class="form-control"></td>
+                    </tr>
+
+                    <tr class="text-right">
+                        <td><label for="ImageFile" class="form-label p-1">Image :  </label></td>
+                        <td>
+                            <img id="prevImg" src="@("~/Image/"+Model.ImageURL)" width="200px" class="img-fluid" asp-append-version="true" />
+                            <br />
+                            <input type="file" asp-for="ImageFile" id="ImageFile" accept="Image/*">
+                        </td>
+                    </tr>
+
+                    <tr class="text-right">
+                        <td class="text-center" colspan="2">
+                            <input type="submit" class="btn btn-success m-2" value="Save">
+                            <input type="reset" class="btn btn-danger m-2" value="Cancel">
+                        </td>
+
+                </table>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    var file = document.getElementById("ImageFile");
+    file.onchange = evt => {
+        var reader = new FileReader();
+        reader.readAsDataURL(file.files[0]);
+        reader.onload = evt => {
+            document.getElementById("prevImg").src = evt.target.result;
+        }
+    }
+</script>

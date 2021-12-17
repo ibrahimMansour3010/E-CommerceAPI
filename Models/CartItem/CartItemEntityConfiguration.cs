@@ -16,7 +16,6 @@ namespace Models.CartItem
             builder.HasKey(i => i.ID);
             builder.Property(i => i.ID).ValueGeneratedOnAdd();
             builder.Property(i => i.Amount).IsRequired();
-            builder.Property(i => i.TotalPrice).IsRequired();
             builder.Property(i => i.Date).IsRequired();
         }
     }

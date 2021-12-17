@@ -93,6 +93,8 @@ namespace API
             });
             app.UseRouting();
             app.UseCors();
+            
+            app.UseStaticFiles();
 
             app.UseAuthentication();
             app.UseAuthorization();

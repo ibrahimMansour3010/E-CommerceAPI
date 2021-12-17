@@ -16,5 +16,6 @@ namespace Repository
         Task<Result> EditProfile(EditCusomerViewModel signUpViewModel);
         Task<Result> ForegetPassword(string Email);
         Task<Result> RestPassword(ResetPasswordViewModel resetPasswordViewModel);
+        Task Logout();
     }
 }
