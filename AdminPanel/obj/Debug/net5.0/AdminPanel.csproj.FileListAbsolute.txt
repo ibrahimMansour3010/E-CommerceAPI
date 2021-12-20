@@ -183,3 +183,4 @@ C:\Users\Ibrahim Mansour\source\repos\E-CommerceAPI\AdminPanel\obj\Debug\net5.0\
 C:\Users\Ibrahim Mansour\source\repos\E-CommerceAPI\AdminPanel\obj\Debug\net5.0\Razor\Views\Admin\ForgetPassword.cshtml.g.cs
 C:\Users\Ibrahim Mansour\source\repos\E-CommerceAPI\AdminPanel\obj\Debug\net5.0\Razor\Views\Admin\ResetPassword.cshtml.g.cs
 C:\Users\Ibrahim Mansour\source\repos\E-CommerceAPI\AdminPanel\obj\Debug\net5.0\Razor\Views\Product\image.cshtml.g.cs
+C:\Users\Ibrahim Mansour\source\repos\E-CommerceAPI\AdminPanel\obj\Debug\net5.0\Razor\Views\Order\Details.cshtml.g.cs

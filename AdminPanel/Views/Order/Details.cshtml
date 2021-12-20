@@ -1,0 +1,57 @@
+﻿
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@using ViewModels.Order
+@model GetOrderViewModel
+
+<div class="m-auto">
+
+    <div class="container  ">
+        <div class="row">
+            <div class="col-12">
+                <table class="w-100">
+                    <tr class="text-right">
+                        <td><label for="CustomerName" class="form-label p-1">AdmainID :  </label></td>
+                        <td><input type="text" readonly id="CustomerName" value="@ViewBag.Name" class="form-control"></td>
+                    </tr>
+                    <tr class="text-right">
+                        <td><label for="Status" class="form-label p-1">Status :  </label></td>
+                        <td><input type="text" readonly id="Status" value="@Model.Status" class="form-control"></td>
+                    </tr>
+                    <tr class="text-right">
+                        <td><label for="Date" class="form-label p-1">Date :  </label></td>
+                        <td><input type="text" readonly id="Date" value="@Model.OrderDate" class="form-control"></td>
+                    </tr>
+                    <tr class="text-right">
+                        <td><label for="TotalPrice" class="form-label p-1">TotalPrice :  </label></td>
+                        <td><input type="text" readonly id="TotalPrice" value="@Model.TotalPrice" class="form-control"></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" >
+                            <table>
+                                <tr>
+                                    <th>Product</th>
+                                    <th>Amout</th>
+                                    <th>Price</th>
+                                </tr>
+                                @foreach (var item in Model.Items)
+                                {
+                                    <tr>
+                                        <td>@item.ProductID</td>
+                                        <td>@item.Amount</td>
+                                        <td>@item.Price</td>
+                                    </tr>
+                                }
+                            </table>
+                        </td>
+                    </tr>                
+
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
