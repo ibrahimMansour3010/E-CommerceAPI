@@ -18,14 +18,14 @@ namespace ViewModels.CartItem
     }
     public static class GetEditCartItemViewModelExtensions
     {
-        public static GetCartItemViewModel ToViewModel(this CartItemEntity cartItemEntity,float price)
+        public static GetCartItemViewModel ToViewModel(this CartItemEntity cartItemEntity,float price,int? discount)
         {
             var vm = new GetCartItemViewModel();
             vm.ID = cartItemEntity.ID;
             vm.Amount = cartItemEntity.Amount;
             vm.Date = cartItemEntity.Date;
             vm.ProductID = cartItemEntity.ProductID;
-            vm.Price = cartItemEntity.Amount * price;
+            vm.Price = cartItemEntity.Amount * (price - ( price*discount??0)/100) ;
 
             return vm;
         }

@@ -1,7 +1,6 @@
 ﻿using CloudinaryDotNet;
 using CloudinaryDotNet.Actions;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Models.Product;
 using Models.ProductCategory;
@@ -89,6 +88,18 @@ namespace AdminPanel.Controllers
         public async Task<IActionResult> Delete(string id)
         {
             await ProductRepo.Delete(id);
+            return View();
+        }
+        [HttpGet]
+        public async Task<IActionResult> image(string id)
+        {
+            ViewBag.ProductID = id;
+            return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> image(List<AddProductImageViewModel> models)
+        {
+
             return View();
         }
     }

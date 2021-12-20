@@ -42,10 +42,10 @@ namespace AdminPanel.Controllers
             Cloudinary = new Cloudinary(account);
         }
         [HttpGet]
-        public async Task<IActionResult> Index([FromQuery]string id)
+        public async Task<IActionResult> Index()
         {
             var allusers = await UserManager.GetUsersInRoleAsync("Admin");
-            return View(allusers.Where(i=>i.Id != id ).Select(i=>i.ToViewModel()).ToList());
+            return View(allusers.Select(i=>i.ToViewModel()).ToList());
         }
 
         [HttpGet]

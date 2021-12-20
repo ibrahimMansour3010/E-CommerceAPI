@@ -53,7 +53,7 @@ namespace API.Controllers
                             .Select(i =>
                             {
                                 var pdr = ProducRepo.Get(i.ProductID).Result;
-                                return i.ToViewModel(pdr.Price);
+                                return i.ToViewModel(pdr.Price,pdr.Discount);
                             }).ToList();
                         ordersData.Add(order.ToViewModel(itemsVM));
                     }
@@ -92,7 +92,7 @@ namespace API.Controllers
                         .Select(i =>
                         {
                             var pdr = ProducRepo.Get(i.ProductID).Result;
-                            return i.ToViewModel(pdr.Price);
+                            return i.ToViewModel(pdr.Price,pdr.Discount);
                         }).ToList();
                     ordersData.Add(order.ToViewModel(itemsVM));
                 }
@@ -122,7 +122,7 @@ namespace API.Controllers
                         .Select(i =>
                         {
                             var pdr = ProducRepo.Get(i.ProductID).Result;
-                            return i.ToViewModel(pdr.Price);
+                            return i.ToViewModel(pdr.Price, pdr.Discount);
                         }).ToList();
                     ordersData.Add(order.ToViewModel(itemsVM));
                 }
@@ -166,7 +166,7 @@ namespace API.Controllers
                     var itemsVMT = items.Select(async i =>
                     {
                         var PDR = await ProducRepo.Get(i.ProductID);
-                        return i.ToViewModel(PDR.Price);
+                        return i.ToViewModel(PDR.Price, PDR.Discount);
                     }).ToList();
                     var itemsVM = itemsVMT.Select(i => i.Result);
                     Items.Clear();
@@ -243,7 +243,7 @@ namespace API.Controllers
                 var itemsVMT = orderItems.Select(async i =>
                  {
                      var PDR = await ProducRepo.Get(i.ProductID);
-                     return i.ToViewModel(PDR.Price);
+                     return i.ToViewModel(PDR.Price, PDR.Discount);
                  }).ToList();
                 var itemsVM = itemsVMT.Select(i => i.Result);
                 order.TotalPrice = itemsVM.Sum(i => i.Price);
@@ -277,7 +277,7 @@ namespace API.Controllers
                 var itemsVMT = orderItems.Select(async i =>
                  {
                      var PDR = await ProducRepo.Get(i.ProductID);
-                     return i.ToViewModel(PDR.Price);
+                     return i.ToViewModel(PDR.Price, PDR.Discount);
                  }).ToList();
                 var itemsVM = itemsVMT.Select(i => i.Result);
                 order.TotalPrice = itemsVM.Sum(i => i.Price);
@@ -315,7 +315,7 @@ namespace API.Controllers
                     var itemsVM = items.Select(i =>
                     {
                         var pdr = ProducRepo.Get(i.ProductID).Result;
-                        return i.ToViewModel(pdr.Price);
+                        return i.ToViewModel(pdr.Price,pdr.Discount);
                     }).ToList();
                     order = await OrderRepo.Delete(id);
                     Result.IsSuccess = true;

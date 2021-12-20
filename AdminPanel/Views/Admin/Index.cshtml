@@ -56,10 +56,6 @@
         window.addEventListener("load", () => {
             if (!localStorage.getItem("Token")) {
                 window.location.href = '@Url.Action("Login","Admin")';
-            } else {
-                var id = String(JSON.parse(atob(localStorage
-                    .getItem("Token").split('.')[1])).UserID);
-                window.location.href = '@Url.Action("Login","Admin")?id=' + id;
-            }
+            } 
     });
 </script>

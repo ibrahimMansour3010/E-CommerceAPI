@@ -1,0 +1,84 @@
+﻿
+@{
+    ViewData["Title"] = "image";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@using ViewModels.ProductImage
+@model List<AddProductImageViewModel>
+
+
+<div class="container  ">
+    <div class="row">
+        <div class="col-12">
+            <button class="btn btn-secondary" type="button" onclick="addImage()">New One</button>
+            <form  asp-action="image" asp-controller="Product" method="post" class="w-50 m-auto mt-5" enctype="multipart/form-data">
+                <table class="w-100" id="tbl">
+
+                    <tr class="text-right" hidden>
+                        <td><label for="Description" class="form-label p-1">Description :  </label></td>
+                        <td> <input type="text" value="" /> </td>
+                    </tr>
+                    <tr class="text-right">
+                        <td><label for="Image" class="form-label p-1">Image :  </label></td>
+                        <td>
+                            <input id="Image" type="file" class="imageFile" accept="Image/*" />
+                        </td>
+                    </tr>
+                    <tr class="text-right" id="endOfTbl">
+                        <td class="text-center" colspan="2">
+                            <input type="submit" class="btn btn-success m-2" value="Add">
+                            <input type="reset" class="btn btn-danger m-2" value="Cancel">
+                        </td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    window.addEventListener("load", () => {
+        if (localStorage.getItem("Token")) {
+            var id = String(JSON.parse(atob(localStorage
+                .getItem("Token").split('.')[1])).UserID);
+            document.getElementById("AdmainID").value = id;
+        }
+    });
+
+</script>
+
+@section Scripts{
+
+    <script>
+        function addImage() {
+            alert("hi");
+
+            var tr = document.createElement("tr");
+            tr.innerHTML = `
+
+                            <td><label for="Image" class="form-label p-1">Image :  </label></td>
+                            <td>
+                                <input id="Image" type="file" class="imageFile" accept="Image/*" />
+                            </td>
+
+                `;
+            tr.classList.add("text-right");
+            document.getElementById("tbl").insertBefore(tr, document.getElementById("tbl").lastChild);
+        }
+        document.forms[0].addEventListener("submit", (e) => {
+            e.preventDefault();
+            var files = document.querySelectorAll(".imageFile");
+            @*for (var file in files) {
+                @{ 
+                    var model = new AddProductImageViewModel();
+                    model.ProductID = ViewBag.ProductID;
+                    model.ImageFile = file;
+                }
+            }*@
+            document.forms[0].submit();
+        })
+    </script>
+
+}
