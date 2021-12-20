@@ -24,7 +24,7 @@ using System.Threading.Tasks;
 
 namespace AdminPanel
 {
-    public class Startup
+    public class Startup 
     {
         public Startup(IConfiguration configuration)
         {
@@ -58,23 +58,11 @@ namespace AdminPanel
                .AddEntityFrameworkStores<Context>()
                .AddDefaultTokenProviders();
 
-            //services.AddMvc(opions =>
-            //{
-            //    var police = new AuthorizationPolicyBuilder()
-            //    .RequireAuthenticatedUser()
-            //    .Build();
-            //    opions.Filters.Add(new AuthorizeFilter(police));
-            //}).AddXmlSerializerFormatters()
-            //.AddSessionStateTempDataProvider()
-            //.SetCompatibilityVersion(CompatibilityVersion.Latest);
-            //services.AddSession();
+           
+            services.AddSession();
 
             services.AddTransient<IAppUserRepository, AppUserRepository>();
-            //services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-            //    .AddCookie(options=>
-            //    {
-            //        options.LoginPath = "/Home/Login";
-            //    });
+
             services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -102,7 +90,6 @@ namespace AdminPanel
                     police.RequireRole("Admin");
                 });
             });
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -125,25 +112,24 @@ namespace AdminPanel
             app.UseStaticFiles();
 
             app.UseAuthentication();
-            //app.UseAuthorization();
+            app.UseAuthorization();
 
-            //app.UseSession();
-            //app.Use(async (context, next) =>
-            //{
-            //    var JWToken = context.Session.GetString("JWToken");
-            //    if (!string.IsNullOrEmpty(JWToken))
-            //    {
-            //        context.Request.Headers.Add("Authorization", "Bearer " + JWToken);
-            //    }
-            //    await next();
-            //});
+            app.UseSession();
+            app.Use(async (context, next) =>
+            {
+                var JWToken = context.Session.GetString("JWToken");
+                if (!string.IsNullOrEmpty(JWToken))
+                {
+                    context.Request.Headers.Add("Authorization", "Bearer " + JWToken);
+                }
+                await next();
+            });
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Login}/{id?}");
+                    pattern: "{controller=Admin}/{action=Login}/{id?}");
             });
-
         }
     }
 }

@@ -84,7 +84,19 @@ namespace API.Controllers
             else
             {
                 Result.IsSuccess = true;
-                Result.Data = orders;
+                List<GetOrderViewModel> ordersData = new List<GetOrderViewModel>();
+                foreach (var order in orders.ToList())
+                {
+                    var items = await CartITemRepo.Get();
+                    var itemsVM = items.Where(i => i.OrderID == order.ID).ToList()
+                        .Select(i =>
+                        {
+                            var pdr = ProducRepo.Get(i.ProductID).Result;
+                            return i.ToViewModel(pdr.Price);
+                        }).ToList();
+                    ordersData.Add(order.ToViewModel(itemsVM));
+                }
+                Result.Data = ordersData;
                 Result.Message = "Success";
             }
             return Ok(Result);
@@ -102,7 +114,19 @@ namespace API.Controllers
             else
             {
                 Result.IsSuccess = true;
-                Result.Data = orders;
+                List<GetOrderViewModel> ordersData = new List<GetOrderViewModel>();
+                foreach (var order in orders.ToList())
+                {
+                    var items = await CartITemRepo.Get();
+                    var itemsVM = items.Where(i => i.OrderID == order.ID).ToList()
+                        .Select(i =>
+                        {
+                            var pdr = ProducRepo.Get(i.ProductID).Result;
+                            return i.ToViewModel(pdr.Price);
+                        }).ToList();
+                    ordersData.Add(order.ToViewModel(itemsVM));
+                }
+                Result.Data = ordersData;
                 Result.Message = "Success";
             }
             return Ok(Result);

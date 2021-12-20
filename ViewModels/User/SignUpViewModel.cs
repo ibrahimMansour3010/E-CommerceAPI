@@ -1,4 +1,5 @@
-﻿using Models.Customer;
+﻿using Microsoft.AspNetCore.Http;
+using Models.Customer;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -10,6 +11,7 @@ namespace ViewModels.Customer
 {
     public class SignUpViewModel
     {
+        public IFormFile ImageFile { get; set; }
         [Required]
         public string Firstname { get; set; }
         public string Lastname { get; set; }

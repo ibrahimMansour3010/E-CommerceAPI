@@ -1,5 +1,6 @@
 ﻿using CloudinaryDotNet;
 using CloudinaryDotNet.Actions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -55,14 +56,24 @@ namespace AdminPanel.Controllers
 
             if (ModelState.IsValid)
             {
+                var path = Path.Combine(
+                  Directory.GetCurrentDirectory(), "wwwroot",
+                  model.ImageFile.FileName);
 
-                model.ImageURL = Path.GetFullPath(model.ImageFile.FileName);
+                using (var stream = new FileStream(path, FileMode.Create))
+                {
+                    await model.ImageFile.CopyToAsync(stream);
+                }
+                model.ImageURL = Path.GetFullPath(path);
                     
 
                 // insert image into cloudinary
                 var result =  Cloudinary.Upload(new ImageUploadParams() 
                 { File = new FileDescription(model.ImageURL) });
                 model.ImageURL = result.Url.ToString();
+
+                System.IO.File.Delete(path);
+
                 // insert into database
                 await CatRepo.Add(model.ToCategoryModel());
                 return RedirectToAction("Index", "Category");

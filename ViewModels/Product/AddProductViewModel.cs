@@ -1,4 +1,5 @@
-﻿using Models.Product;
+﻿using Microsoft.AspNetCore.Http;
+using Models.Product;
 using Models.ProductImage;
 using System;
 using System.Collections.Generic;
@@ -16,9 +17,11 @@ namespace ViewModels.Product
         public int Quantity { get; set; }
         public float Price { get; set; }
         public string MainImage { get; set; }
+        public IFormFile ImageFile { get; set; }
         public string CategoryID { get; set; }
         public string AdmainID { get; set; }
         public List<string>  Images { get; set; }
+        public string ImageURL { get; set; }
     }
     public static class ProductViewModelExtensions
     {

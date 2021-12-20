@@ -7,7 +7,7 @@
 @model List<GetEditProductViewModel>
 
 
-<div class="vw-100 m-auto">
+<div class="m-auto">
 
     <a class="btn btn-success" asp-controller="Product" asp-action="Add">New</a>
     <table class="table table-bordered table-hover">
@@ -37,14 +37,12 @@
                     <td>
                         @foreach (var image in @item.Images)
                         {
-                            <img src="@("~/Image/"+image)" width="100" class="img-fluid" asp-append-version="true" />
+                            <img src="@image" width="100" class="img-fluid" asp-append-version="true" />
                         }
                     </td>
                     <td class="text-center">
-
                         <a class="btn btn-info" href="~/Product/Edit?id=@item.ID">Edit</a>
                         <a class="btn btn-danger" href="~/Product/delete?id=@item.ID">Delete</a>
-
                     </td>
                 </tr>
             }
@@ -52,3 +50,4 @@
     </table>
 
 </div>
+

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Models.Department;
 using Repository;
 using System;
@@ -49,7 +50,7 @@ namespace AdminPanel.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit([FromForm]GetEditDepartmentViewModel model)
+        public async Task<IActionResult> Edit([FromForm] GetEditDepartmentViewModel model)
         {
             try
             {
@@ -65,7 +66,7 @@ namespace AdminPanel.Controllers
             }
         }
         [HttpGet]
-        public async Task<IActionResult> Delete([FromQuery]string id)
+        public async Task<IActionResult> Delete([FromQuery] string id)
         {
             try
             {

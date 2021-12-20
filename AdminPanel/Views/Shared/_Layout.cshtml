@@ -36,7 +36,7 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Profile" asp-action="Index">Profile</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Logout">Logout</a>
+                            <a class="nav-link text-dark" id="logoutBTN" href="">Logout</a>
                         </li>
                     </ul>
                 </div>
@@ -58,5 +58,20 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
+    <script type="text/javascript">
+    window.addEventListener("load", () => {
+        if (!localStorage.getItem("Token")) {
+            window.location.href = '@Url.Action("Login","Admin")';
+        }
+    });
+        document.getElementById("logoutBTN").addEventListener("click", () => {
+            if (localStorage.getItem("Token")) {
+                localStorage.removeItem("Token");
+                window.location.href = '@Url.Action("Login","Admin")';
+            } else {
+                alert("There is No User Logged In");
+            }
+        })
+    </script>
 </body>
 </html>
