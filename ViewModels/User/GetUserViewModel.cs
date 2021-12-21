@@ -18,10 +18,11 @@ namespace ViewModels.User
         public string Email { get; set; }
         public string PhoneNumeber { get; set; }
         public string UserName { get; set; }
+        public string Role { get; set; }
     }
     public static class GetUserViewModelExtension
     {
-        public static GetUserViewModel ToViewModel (this ApplicationUserEntity applicationUserEntity)
+        public static GetUserViewModel ToViewModel (this ApplicationUserEntity applicationUserEntity,string role)
         {
             return new GetUserViewModel()
             {
@@ -33,7 +34,8 @@ namespace ViewModels.User
                 PhoneNumeber = applicationUserEntity.PhoneNumber,
                 UserName = applicationUserEntity.UserName,
                 Gender = applicationUserEntity.Gender,
-                Image = applicationUserEntity.Image
+                Image = applicationUserEntity.Image,
+                Role = role
             };
         }
     }

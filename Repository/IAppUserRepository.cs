@@ -12,7 +12,7 @@ namespace Repository
     {
         Task<Result> Signup(SignUpViewModel signUpViewModel);
         Task<Result> Login(LoginViewModel loginViewModel);
-        Task<Result> GetCustomerData(string id);
+        Task<Result> UserData(string id);
         Task<Result> EditProfile(EditCusomerViewModel signUpViewModel);
         Task<Result> ForegetPassword(string Email);
         Task<Result> RestPassword(ResetPasswordViewModel resetPasswordViewModel);

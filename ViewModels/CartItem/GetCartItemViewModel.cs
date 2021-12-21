@@ -14,12 +14,13 @@ namespace ViewModels.CartItem
         public float Price { get; set; }
         public DateTime Date { get; set; }
         public string ProductID { get; set; }
+        public string ProductName { get; set; }
 
     }
     public static class GetEditCartItemViewModelExtensions
     {
 
-        public static GetCartItemViewModel ToViewModel(this CartItemEntity cartItemEntity,float price,int? discount)
+        public static GetCartItemViewModel ToViewModel(this CartItemEntity cartItemEntity,float price,int? discount ,string name)
         {
             var vm = new GetCartItemViewModel();
             vm.ID = cartItemEntity.ID;
@@ -27,6 +28,7 @@ namespace ViewModels.CartItem
             vm.Date = cartItemEntity.Date;
             vm.ProductID = cartItemEntity.ProductID;
             vm.Price = cartItemEntity.Amount * (price - ( price*discount??0)/100) ;
+            vm.ProductName = name;
             return vm;
         }
         public static CartItemEntity ToCartItemEntity(this GetCartItemViewModel model)

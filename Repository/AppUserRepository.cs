@@ -52,7 +52,7 @@ namespace Repository
                 {
 
                     Result.IsSuccess = true;
-                    Result.Data = user.ToViewModel();
+                    Result.Data = user.ToViewModel(signUpViewModel.UserRole);
                     Result.Message = "User Has Been Created Successfully";
 
                 }
@@ -120,10 +120,11 @@ namespace Repository
             }
             return Result;
         }
-        public async Task<Result> GetCustomerData(string id)
+        public async Task<Result> UserData(string id)
         {
             var user = await UserManager.FindByIdAsync(id);
-            GetUserViewModel vm = user.ToViewModel();
+            var role = await UserManager.GetRolesAsync(user);
+            GetUserViewModel vm = user.ToViewModel(role.FirstOrDefault());
 
             if (user == null)
             {
@@ -134,11 +135,7 @@ namespace Repository
             else
             {
                 Result.IsSuccess = true;
-                Result.Data = new
-                {
-                    User = vm,
-                    Role = await UserManager.GetRolesAsync(user)
-                };
+                Result.Data = vm;
                 Result.Message = "User Data Retrieved Successfully";
             }
             return Result;
@@ -146,7 +143,8 @@ namespace Repository
         public async Task<Result> EditProfile(EditCusomerViewModel editCusomerViewModel)
         {
             var user = await UserManager.FindByIdAsync(editCusomerViewModel.Id);
-            GetUserViewModel vm = user.ToViewModel();
+            var role = await UserManager.GetRolesAsync(user);
+            GetUserViewModel vm = user.ToViewModel(role.FirstOrDefault());
             if (user == null)
             {
                 Result.IsSuccess = false;

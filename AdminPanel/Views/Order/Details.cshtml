@@ -13,26 +13,26 @@
     <div class="container  ">
         <div class="row">
             <div class="col-12">
-                <table class="w-100">
-                    <tr class="text-right">
-                        <td><label for="CustomerName" class="form-label p-1">AdmainID :  </label></td>
+                <table class="w-75 m-auto">
+                    <tr >
+                        <td><label for="CustomerName" class="form-label p-1">Customer Name :  </label></td>
                         <td><input type="text" readonly id="CustomerName" value="@ViewBag.Name" class="form-control"></td>
                     </tr>
-                    <tr class="text-right">
+                    <tr >
                         <td><label for="Status" class="form-label p-1">Status :  </label></td>
                         <td><input type="text" readonly id="Status" value="@Model.Status" class="form-control"></td>
                     </tr>
-                    <tr class="text-right">
+                    <tr >
                         <td><label for="Date" class="form-label p-1">Date :  </label></td>
                         <td><input type="text" readonly id="Date" value="@Model.OrderDate" class="form-control"></td>
                     </tr>
-                    <tr class="text-right">
+                    <tr >
                         <td><label for="TotalPrice" class="form-label p-1">TotalPrice :  </label></td>
                         <td><input type="text" readonly id="TotalPrice" value="@Model.TotalPrice" class="form-control"></td>
                     </tr>
-                    <tr>
+                    <tr class="mt-5">
                         <td colspan="2" >
-                            <table>
+                            <table class="table table-dark">
                                 <tr>
                                     <th>Product</th>
                                     <th>Amout</th>
@@ -41,7 +41,7 @@
                                 @foreach (var item in Model.Items)
                                 {
                                     <tr>
-                                        <td>@item.ProductID</td>
+                                        <td>@item.ProductName</td>
                                         <td>@item.Amount</td>
                                         <td>@item.Price</td>
                                     </tr>

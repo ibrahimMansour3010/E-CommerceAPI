@@ -34,7 +34,13 @@ namespace AdminPanel.Controllers
         public async Task<IActionResult> Index()
         {
             var allOrders = await OrderRepo.Get();
-            return View(allOrders.Select(i=>i.ToAdminViewModel()));
+            var ordersVM = allOrders.Select(i=> {
+                var customer = AppRepo.UserData(i.CustomerID).Result;
+                var ViewModel = (customer.Data) as GetUserViewModel;
+                string name = ViewModel.Firstname + " " + ViewModel.Lastname;
+                return i.ToAdminViewModel(name);
+            });
+            return View(ordersVM);
         }
         [HttpGet]
         public async Task<IActionResult> Details([FromQuery]string id)
@@ -46,15 +52,14 @@ namespace AdminPanel.Controllers
             foreach (var ItemModel in items)
             {
                 var product = await ProductRepo.Get(ItemModel.ProductID);
-                //var UserModel = AppRepo.GetCustomerData(order.CustomerID)
-                //                    .Result.Data;
-                //var UserData = (UserModel.User) as GetUserViewModel;
-                //string Username = UserData.Firstname + " " + UserData.Lastname;
-                //ViewBag.Name = Username;
-                Items.Add(ItemModel.ToViewModel(product.Price, product.Discount));
+                Items.Add(ItemModel.ToViewModel(product.Price, product.Discount, product.Name));
             };
-
-            return View(Items);
+            var orderData = order.ToViewModel(Items);
+            var UserModel = await AppRepo.UserData(order.CustomerID);
+            var UserData = (UserModel.Data) as GetUserViewModel;
+            string Username = UserData.Firstname + " " + UserData.Lastname;
+            ViewBag.Name = Username;
+            return View(orderData);
         }
     }
 }

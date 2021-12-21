@@ -15,11 +15,12 @@ namespace ViewModels.Order
         public OrderStatus Status { get; set; }
         public DateTime OrderDate { get; set; }
         public string CustomerID{ get; set; }
+        public string CustomerName{ get; set; }
         public List<GetCartItemViewModel> Items { get; set; }
     }
     public static class GetOrderViewModelForAdminExtensions
     {
-        public static GetOrderViewModelForAdmin ToAdminViewModel(this OrderEntity entity)
+        public static GetOrderViewModelForAdmin ToAdminViewModel(this OrderEntity entity,string name)
         {
             var model = new GetOrderViewModelForAdmin();
             model.ID = entity.ID;
@@ -27,6 +28,7 @@ namespace ViewModels.Order
             model.Status = entity.Status;
             model.TotalPrice = entity.TotalPrice;
             model.CustomerID = entity.CustomerID;
+            model.CustomerName = name ;
             return model;
         }
     }

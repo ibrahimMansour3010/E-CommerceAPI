@@ -30,7 +30,7 @@ namespace API.Controllers
             try
             {
                 string id = User.Claims.FirstOrDefault(i => i.Type == "UserID").Value;
-                Result = await CustomerRepository.GetCustomerData(id);
+                Result = await CustomerRepository.UserData(id);
                 return Ok(Result);
             }
             catch (Exception ex)

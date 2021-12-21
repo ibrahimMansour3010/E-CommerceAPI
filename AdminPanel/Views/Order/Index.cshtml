@@ -14,26 +14,27 @@
 
         <thead>
             <tr class="text-center">
-                <th>ID</th>
+                <th>index</th>
+                <th>Customer Name</th>
+                <th>Total Price</th>
                 <th>Status</th>
                 <th>Date</th>
-                <th>Total Price</th>
-                <th>CustomerID</th>
                 <th>Settings</th>
             </tr>
         </thead>
         <tbody>
-            @foreach (var item in Model)
+            @foreach (var item in Model.Select((value, index) =>(value,index) ) )
             {
                 <tr class="text-center">
-                    <td>@item.ID</td>
-                    <td>@item.Status</td>
-                    <td>@item.TotalPrice</td>
-                    <td>@item.CustomerID</td>
+                    <td>@item.index</td>
+                    <td>@item.value.CustomerName</td>
+                    <td>@item.value.TotalPrice</td>
+                    <td>@item.value.Status</td>
+                    <td>@item.value.OrderDate</td>
                     <td class="text-center">
-                        <a class="btn btn-info" href="~/Order/Details?id=@item.ID">Details</a>
-                        <a class="btn btn-info" href="~/Order/Eidt?id=@item.ID">Edit</a>
-                        <a class="btn btn-danger" href="~/Order/delete?id=@item.ID">Delete</a>
+                        <a class="btn btn-info" href="~/Order/Details?id=@item.value.ID">Details</a>
+                        <a class="btn btn-info" href="~/Order/Eidt?id=@item.value.ID">Edit</a>
+                        <a class="btn btn-danger" href="~/Order/delete?id=@item.value.ID">Delete</a>
                     </td>
                 </tr>
             }

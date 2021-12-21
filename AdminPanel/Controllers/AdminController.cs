@@ -45,7 +45,7 @@ namespace AdminPanel.Controllers
         public async Task<IActionResult> Index()
         {
             var allusers = await UserManager.GetUsersInRoleAsync("Admin");
-            return View(allusers.Select(i=>i.ToViewModel()).ToList());
+            return View(allusers.Select(i=>i.ToViewModel("Admin")).ToList());
         }
 
         [HttpGet]
