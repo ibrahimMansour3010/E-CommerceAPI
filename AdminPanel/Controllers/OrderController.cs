@@ -40,7 +40,26 @@ namespace AdminPanel.Controllers
                 string name = ViewModel.Firstname + " " + ViewModel.Lastname;
                 return i.ToAdminViewModel(name);
             });
+            ViewBag.OrderStatuses = new List<OrderStatus>() 
+            { 
+                OrderStatus.Sent,
+                OrderStatus.Pending,
+                OrderStatus.Delivered, 
+            };
             return View(ordersVM);
+        }
+        [HttpGet]
+        public List<GetOrderViewModelForAdmin> getOrders([FromQuery]OrderStatus Status)
+        {
+            var allOrders = OrderRepo.Get().Result;
+            var ordersVM = allOrders.Select(i => {
+                var customer = AppRepo.UserData(i.CustomerID).Result;
+                var ViewModel = (customer.Data) as GetUserViewModel;
+                string name = ViewModel.Firstname + " " + ViewModel.Lastname;
+                return i.ToAdminViewModel(name);
+            });
+            var res = ordersVM.Where(i => i.Status == Status).ToList();
+            return res;
         }
         [HttpGet]
         public async Task<IActionResult> Details([FromQuery]string id)
