@@ -12,7 +12,8 @@ namespace Models.Order
     public enum OrderStatus{
         Sent,
         Pending,
-        Delivered
+        Delivered,
+        Cancel
     }
     public class OrderEntity : BaseModel
     {

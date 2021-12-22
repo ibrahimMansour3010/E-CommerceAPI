@@ -34,25 +34,41 @@ namespace AdminPanel.Controllers
         public async Task<IActionResult> Index()
         {
             var allOrders = await OrderRepo.Get();
-            var ordersVM = allOrders.Select(i=> {
+            var ordersVM = allOrders.Select(i =>
+            {
                 var customer = AppRepo.UserData(i.CustomerID).Result;
                 var ViewModel = (customer.Data) as GetUserViewModel;
                 string name = ViewModel.Firstname + " " + ViewModel.Lastname;
                 return i.ToAdminViewModel(name);
             });
-            ViewBag.OrderStatuses = new List<OrderStatus>() 
-            { 
+            ViewBag.OrderStatuses = new List<OrderStatus>()
+            {
                 OrderStatus.Sent,
                 OrderStatus.Pending,
-                OrderStatus.Delivered, 
+                OrderStatus.Delivered,
             };
             return View(ordersVM);
         }
         [HttpGet]
-        public List<GetOrderViewModelForAdmin> getOrders([FromQuery]OrderStatus Status)
+        public List<GetOrderViewModelForAdmin> getAllOrders()
         {
             var allOrders = OrderRepo.Get().Result;
-            var ordersVM = allOrders.Select(i => {
+            var ordersVM = allOrders.Select(i =>
+            {
+                var customer = AppRepo.UserData(i.CustomerID).Result;
+                var ViewModel = (customer.Data) as GetUserViewModel;
+                string name = ViewModel.Firstname + " " + ViewModel.Lastname;
+                return i.ToAdminViewModel(name);
+            });
+            var res = ordersVM.ToList();
+            return res;
+        }
+        [HttpGet]
+        public List<GetOrderViewModelForAdmin> getOrders([FromQuery] OrderStatus Status)
+        {
+            var allOrders = OrderRepo.Get().Result;
+            var ordersVM = allOrders.Select(i =>
+            {
                 var customer = AppRepo.UserData(i.CustomerID).Result;
                 var ViewModel = (customer.Data) as GetUserViewModel;
                 string name = ViewModel.Firstname + " " + ViewModel.Lastname;
@@ -62,7 +78,7 @@ namespace AdminPanel.Controllers
             return res;
         }
         [HttpGet]
-        public async Task<IActionResult> Details([FromQuery]string id)
+        public async Task<IActionResult> Details([FromQuery] string id)
         {
             var order = await OrderRepo.Get(id);
             var items = await CartItemRepo.Get();
@@ -79,6 +95,34 @@ namespace AdminPanel.Controllers
             string Username = UserData.Firstname + " " + UserData.Lastname;
             ViewBag.Name = Username;
             return View(orderData);
+        }
+        [HttpGet]
+        public async Task<IActionResult> Edit([FromQuery] string id)
+        {
+            var order = await OrderRepo.Get(id);
+            EditOrderStatusViewModel model = new EditOrderStatusViewModel()
+            {
+                ID = id,
+                OrderStatus=order.Status
+            };
+            ViewBag.orderID = id;
+            return View(model);
+        }
+        [HttpPost]
+        public async Task<IActionResult> Edit([FromForm] EditOrderStatusViewModel model)
+        {
+            var order = await OrderRepo.Get(model.ID);
+            order.Status = model.OrderStatus;
+            order = await OrderRepo.Update(order);
+            return RedirectToAction("Index","Order");
+        }
+        [HttpGet]
+        public async Task<IActionResult> Delete([FromQuery] string id)
+        {
+            var order = await OrderRepo.Get(id);
+            order.Status = OrderStatus.Cancel;
+            order = await OrderRepo.Update(order);
+            return RedirectToAction("Index","Order");
         }
     }
 }

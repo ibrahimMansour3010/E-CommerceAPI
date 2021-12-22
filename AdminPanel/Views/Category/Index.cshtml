@@ -3,8 +3,8 @@
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-@using Models.ProductCategory
-@model IEnumerable<CategoryEntity>
+@using ViewModels.Category
+@model IEnumerable<GetCatViewModelForAdmin>
 
 
 <div class="w-75 m-auto">
@@ -14,7 +14,8 @@
 
         <thead>
             <tr class="text-center">
-                <th>Name</th>
+                <th>Category Name</th>
+                <th>Department Name</th>
                 <th>Image</th>
                 <th class="text-center">Settigns</th>
             </tr>
@@ -24,6 +25,7 @@
             {
                 <tr class="text-center">
                     <td>@item.CategoryName</td>
+                    <td>@item.DepartmentName</td>
                     <td > <img src="@item.ImageURL" width="200" class="img-fluid" asp-append-version="true" /> </td>
                     <td class="text-center" >
 

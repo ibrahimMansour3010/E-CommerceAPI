@@ -41,8 +41,11 @@ namespace AdminPanel.Controllers
         public async Task<IActionResult> Index()
         {
             var Products = await ProductRepo.Get();
-            var ProductsModel = Products.Select(i => i.ToUserViewModel(AllProdctImages)).ToList();
-            return View(ProductsModel);
+            var ProductsModel = Products.Select((pdr) => {
+                var cat = CatRepo.Get(pdr.CategoryID).Result;
+                return pdr.ToViewModelForAdmin(cat.CategoryName);
+            });
+            return View(ProductsModel.ToList());
         }
         [HttpGet]
         public async Task<IActionResult> Add()
@@ -99,8 +102,22 @@ namespace AdminPanel.Controllers
         [HttpPost]
         public async Task<IActionResult> image(List<AddProductImageViewModel> models)
         {
-
             return View();
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Edit(string id)
+        {
+            var product = await ProductRepo.Get(id);
+            ViewBag.Cats = await CatRepo.Get();
+            return View(product.ToUserViewModel(AllProdctImages));
+        }
+        [HttpPost]
+        public async Task<IActionResult> Edit(GetEditProductViewModel model)
+        {
+            var product = await ProductRepo.Get(model.ID);
+            await ProductRepo.Update(model.ToEntityModel());
+            return RedirectToAction("Index","Product") ;
         }
     }
 }

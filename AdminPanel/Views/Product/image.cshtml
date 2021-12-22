@@ -6,6 +6,8 @@
 
 
 @using ViewModels.ProductImage
+@using Microsoft.AspNetCore.Http;
+
 @model List<AddProductImageViewModel>
 
 
@@ -13,17 +15,17 @@
     <div class="row">
         <div class="col-12">
             <button class="btn btn-secondary" type="button" onclick="addImage()">New One</button>
-            <form  asp-action="image" asp-controller="Product" method="post" class="w-50 m-auto mt-5" enctype="multipart/form-data">
+            <form asp-action="image" asp-controller="Product" method="post" class="w-50 m-auto mt-5" enctype="multipart/form-data">
                 <table class="w-100" id="tbl">
 
                     <tr class="text-right" hidden>
-                        <td><label for="Description" class="form-label p-1">Description :  </label></td>
-                        <td> <input type="text" value="" /> </td>
+                        <td><label for="ProductID" class="form-label p-1">ProductID :  </label></td>
+                        <td> <input type="text" id="ProductID" value="@ViewBag.ProductID" /> </td>
                     </tr>
                     <tr class="text-right">
                         <td><label for="Image" class="form-label p-1">Image :  </label></td>
                         <td>
-                            <input id="Image" type="file" class="imageFile" accept="Image/*" />
+                            <input id="Image" type="file" class="imageFile" onchange="getImg(event)" accept="Image/*" />
                         </td>
                     </tr>
                     <tr class="text-right" id="endOfTbl">
@@ -34,33 +36,22 @@
                     </tr>
                 </table>
             </form>
+            <button onclick="Show()">Show OBJ </button>
         </div>
     </div>
 </div>
 
-<script type="text/javascript">
-    window.addEventListener("load", () => {
-        if (localStorage.getItem("Token")) {
-            var id = String(JSON.parse(atob(localStorage
-                .getItem("Token").split('.')[1])).UserID);
-            document.getElementById("AdmainID").value = id;
-        }
-    });
-
-</script>
 
 @section Scripts{
 
     <script>
         function addImage() {
-            alert("hi");
-
             var tr = document.createElement("tr");
             tr.innerHTML = `
 
                             <td><label for="Image" class="form-label p-1">Image :  </label></td>
                             <td>
-                                <input id="Image" type="file" class="imageFile" accept="Image/*" />
+                                <input id="Image" type="file"  onchange="getImg(event)" class="imageFile" accept="Image/*" />
                             </td>
 
                 `;
@@ -71,7 +62,7 @@
             e.preventDefault();
             var files = document.querySelectorAll(".imageFile");
             @*for (var file in files) {
-                @{ 
+                @{
                     var model = new AddProductImageViewModel();
                     model.ProductID = ViewBag.ProductID;
                     model.ImageFile = file;
@@ -79,6 +70,27 @@
             }*@
             document.forms[0].submit();
         })
+        //$(".imageFile").each((i,ele) => {
+        //    $(ele).change(function () {
+        //        console.log($(ele).val());
+        //    });
+        //});
+        let model = {
+            productID: "",
+            images: []
+        };
+
+        let productID = $("#ProductID").val();
+        let images = new Array();
+        function getImg(event) {
+            images.push($(event.target).val().toString());
+        }
+
+        function Show() {
+            model.productID = productID;
+            model.images = images;
+            console.log(model);
+        }
     </script>
 
 }

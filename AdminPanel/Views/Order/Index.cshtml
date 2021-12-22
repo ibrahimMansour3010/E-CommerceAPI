@@ -10,11 +10,12 @@
 
 <div class="m-auto">
 
-    @*<partial name="_OrderStatus" model="@ViewBag.OrderStatuses"/>*@
     <select id="statuses" class="custom-select w-25 mb-3">
+        <option value=-1>All</option>
         <option value=0>@OrderStatus.Sent</option>
         <option value=1>@OrderStatus.Pending</option>
         <option value=2>@OrderStatus.Delivered</option>
+        <option value=3>@OrderStatus.Cancel</option>
     </select>
 
     <table class="table table-bordered table-hover">
@@ -40,8 +41,8 @@
                     <td>@item.value.OrderDate</td>
                     <td class="text-center">
                         <a class="btn btn-info" href="~/Order/Details?id=@item.value.ID">Details</a>
-                        <a class="btn btn-info" href="~/Order/Eidt?id=@item.value.ID">Edit</a>
-                        <a class="btn btn-danger" href="~/Order/delete?id=@item.value.ID">Delete</a>
+                        <a class="btn btn-info" href="~/Order/Edit?id=@item.value.ID">Edit</a>
+                        <a class="btn btn-danger" href="~/Order/delete?id=@item.value.ID">Cancel</a>
                     </td>
                 </tr>
             }
@@ -52,7 +53,13 @@
 <script src="~/lib/jquery/dist/jquery.js"></script>
 <script type="text/javascript">
     $("#statuses").change(function () {
-        $.get('/Order/getOrders?Status=' + $("#statuses option:selected").val(), function (data, status) {
+        let url = "" ;
+        if ($("#statuses option:selected").val() == -1) {
+            url = '/Order/getAllOrders' ;
+        } else {
+            url = '/Order/getOrders?Status=' + $("#statuses option:selected").val();
+        }
+        $.get(url, function (data, status) {
             $("#tblbody").empty();
             for (var i in data) {
                 console.log(data[i]);
@@ -67,6 +74,9 @@
                     case 2:
                         status =  "@OrderStatus.Delivered";
                         break;
+                    case 3:
+                        status =  "@OrderStatus.Cancel";
+                        break;
                     default:
                 }
                 let tr = `
@@ -79,8 +89,8 @@
 
                     <td class="text-center">
                         <a class="btn btn-info" href="/Order/Details?id=${data[i].id}">Details</a>
-                        <a class="btn btn-info" href="/Order/Eidt?id=${data[i].id}">Edit</a>
-                        <a class="btn btn-danger" href="/Order/delete?id=${data[i].id}">Delete</a>
+                        <a class="btn btn-info" href="/Order/Edit?id=${data[i].id}">Edit</a>
+                        <a class="btn btn-danger" href="/Order/delete?id=${data[i].id}">Cancel</a>
                         </td>
                     </tr>
                 `;

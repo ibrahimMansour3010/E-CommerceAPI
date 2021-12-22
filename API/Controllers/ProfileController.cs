@@ -14,7 +14,7 @@ namespace API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-
+    [Authorize]
     public class ProfileController : ControllerBase
     {
         IAppUserRepository CustomerRepository;

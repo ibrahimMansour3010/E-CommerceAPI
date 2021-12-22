@@ -41,7 +41,12 @@ namespace AdminPanel.Controllers
         public async Task<IActionResult> Index()
         {
             var cats = await CatRepo.Get();
-            return View(cats);
+            var ctsVM = cats.Select((cat) =>
+            {
+                var dept = DeptRepo.Get(cat.DepartmentID).Result;
+                return cat.ToViewModelAdmin(dept.DepartmentName);
+            });
+            return View(ctsVM.ToList());
         }
         [HttpGet]
         public async Task<IActionResult> Add()
@@ -65,10 +70,10 @@ namespace AdminPanel.Controllers
                     await model.ImageFile.CopyToAsync(stream);
                 }
                 model.ImageURL = Path.GetFullPath(path);
-                    
+
 
                 // insert image into cloudinary
-                var result =  Cloudinary.Upload(new ImageUploadParams() 
+                var result = Cloudinary.Upload(new ImageUploadParams()
                 { File = new FileDescription(model.ImageURL) });
                 model.ImageURL = result.Url.ToString();
 
@@ -84,7 +89,7 @@ namespace AdminPanel.Controllers
         public async Task<IActionResult> Delete([FromQuery] string id)
         {
             var cat = await CatRepo.Get(id);
-            var publicID = cat.ImageURL.Split('/')[cat.ImageURL.Split('/').Length-1];
+            var publicID = cat.ImageURL.Split('/')[cat.ImageURL.Split('/').Length - 1];
             publicID = publicID.Substring(0, publicID.IndexOf('.'));
 
             Cloudinary.Destroy(new DeletionParams(publicID));
@@ -106,30 +111,29 @@ namespace AdminPanel.Controllers
             var enity = await CatRepo.Get(model.ID);
             if (model.ImageFile != null)
             {
+                // save image in wwwroot
+                var path = Path.Combine(
+                         Directory.GetCurrentDirectory(), "wwwroot",
+                         model.ImageFile.FileName);
 
-                var newPath = Path.Combine(HostEnvironment.WebRootPath, "Image", model.ImageFile.FileName);
-                if (!System.IO.File.Exists(newPath))
+                using (var stream = new FileStream(path, FileMode.Create))
                 {
-                    // remove old file from wwwroor
-                    var oldPath = Path.Combine(HostEnvironment.WebRootPath, "Image", enity.ImageURL);
-                    System.IO.File.Delete(oldPath);
-                    // add new path
-                    string wwwroot = HostEnvironment.WebRootPath;
-                    string filename = Path.GetFileNameWithoutExtension(model.ImageFile.FileName);
-                    string extension = Path.GetExtension(model.ImageFile.FileName);
-                    model.ImageURL = filename = filename + DateTime.Now.ToString("hhmmssfffffff") + extension;
-                    string path = Path.Combine(wwwroot + "/Image/", filename);
-                    using (var fileStream = new FileStream(path, FileMode.Create))
-                    {
-                        await model.ImageFile.CopyToAsync(fileStream);
-                    }
+                    await model.ImageFile.CopyToAsync(stream);
                 }
-                // updaate in db
+                // save image in cloudinary
+                model.ImageURL = Path.GetFullPath(path);
+                // insert image into cloudinary
+                var result = Cloudinary.Upload(new ImageUploadParams()
+                { File = new FileDescription(model.ImageURL) });
+                model.ImageURL = result.Url.ToString();
+                // delete image from wwwroot
+                System.IO.File.Delete(path);
             }
             else
             {
                 model.ImageURL = enity.ImageURL;
             }
+            // updaate in db
             enity = model.ToEntityModel();
             await CatRepo.Update(enity);
 

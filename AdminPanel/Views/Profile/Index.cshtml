@@ -4,5 +4,106 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Profile</h1>
+@using ViewModels.Customer
+@model EditCusomerViewModel
 
+<form asp-controller="Profile" asp-action="Edit"  id="editUser" class="w-50 m-auto mt-3" enctype="multipart/form-data">
+    <table class="w-100">
+
+        <tr class="text-end" hidden>
+            <td><label for="AdmainID" class="form-label p-1">AdmainID  </label></td>
+            <td><input type="text" asp-for="Id" id="AdmainID" name="Id" class="form-control"></td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <!-- uploaded pic shown here -->
+                <img id="profilePic" src="http://placehold.it/150x150" width="200">
+
+                <input type="file" asp-for="ImageFile" accept="Image/*" id="profileIMG" />
+            </td>
+        </tr>
+        <tr class="text-end">
+            <td><label for="Firstname" class="form-label p-1">Firstname  </label></td>
+            <td><input type="text" asp-for="Firstname" id="Firstname" name="Firstname" class="form-control"></td>
+        </tr>
+        <tr class="text-end">
+            <td><label for="Lastname" class="form-label p-1">Lastname  </label></td>
+            <td><input type="text" asp-for="Lastname" id="Lastname" name="Lastname" class="form-control"></td>
+        </tr>
+        <tr class="text-end">
+            <td><label for="Email" class="form-label p-1">Email  </label></td>
+            <td><input type="email" asp-for="Email" id="Email" name="Email" class="form-control"></td>
+        </tr>
+        <tr class="text-end">
+            <td><label for="Username" class="form-label p-1">Username  </label></td>
+            <td><input type="text" asp-for="UserName" id="Username" name="Username" class="form-control"></td>
+        </tr>
+        <tr class="text-end">
+            <td><label for="Address" class="form-label p-1">Address  </label></td>
+            <td><input type="text" asp-for="Address" id="Address" name="Address" class="form-control"></td>
+        </tr>
+        <tr class="text-end">
+            <td><label for="Street" class="form-label p-1">Gender  </label></td>
+            <td class="text-center">
+                <input type="radio" id="Male" asp-for="Gender" name="Gender" value="0">
+                <label for="Male" class="m-1">Male</label>
+                <input type="radio" id="Female" asp-for="Gender" name="Gender" value="1">
+                <label for="Female">Female</label>
+            </td>
+        </tr>
+        <tr class="text-end">
+            <td><label for="PhoneNumeber" class="form-label p-1">Phone  </label></td>
+            <td><input type="tel" id="PhoneNumeber" asp-for="PhoneNumeber" name="PhoneNumeber" class="form-control"></td>
+        </tr>
+
+        <tr class="text-end">
+            <td colspan="2" class="text-center">
+                <input type="submit" class="btn btn-success m-2" value="Save">
+                <button onclick="Logout()" class="btn btn-danger">Logout</button>
+
+            </td>
+        </tr>
+    </table>
+</form>
+
+
+<script type="text/javascript">
+    window.addEventListener("load", () => {
+        if (localStorage.getItem("Token")) {
+            $.ajax({
+                url: "https://localhost:44386/api/Profile/MyProfile",
+                type: "GET",
+                headers:
+                {
+                    'Authorization': "bearer " + localStorage.getItem("Token")
+                },
+                success: (result) => {
+
+                    $("#AdmainID").val(result.data.id);
+                    $("#profilePic").attr("src", result.data.image);
+                    $("#Firstname").val(result.data.firstname);
+                    $("#Lastname").val(result.data.lastname);
+                    $("#Email").val(result.data.email);
+                    $("#Username").val(result.data.userName);
+                    $("#Address").val(result.data.address);
+                    $("#PhoneNumeber").val(result.data.phoneNumeber);
+                    if (result.data.gender == 0) {
+                        $("#Male").attr("checked","true");
+                    } else {
+                        $("#Female").attr("checked", "true");
+                    }
+                }
+            });
+        }
+    });
+    var file = document.getElementById("profileIMG");
+    file.onchange = evt => {
+        var reader = new FileReader();
+        reader.readAsDataURL(file.files[0]);
+        reader.onload = evt => {
+            document.getElementById("profilePic").src = evt.target.result;
+        }
+    };
+
+   
+</script>

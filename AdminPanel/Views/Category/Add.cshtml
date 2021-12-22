@@ -32,7 +32,7 @@
                     </tr>
 
                     <tr class="text-right">
-                        <td><label for="ImageFile" class="form-label p-1">Image Name :  </label></td>
+                        <td><<img id="prevImg" src="http://placehold.it/150" width="200" class="img-fluid" asp-append-version="true" /></td>
                         <td><input type="file" id="ImageFile"  asp-for="ImageFile" accept="Image/*"></td>
                     </tr>
 
@@ -47,3 +47,14 @@
         </div>
     </div>
 </div>
+
+<script>
+    var file = document.getElementById("ImageFile");
+    file.onchange = evt => {
+        var reader = new FileReader();
+        reader.readAsDataURL(file.files[0]);
+        reader.onload = evt => {
+            document.getElementById("prevImg").src = evt.target.result;
+        }
+    }
+</script>

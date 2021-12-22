@@ -1,0 +1,41 @@
+﻿
+@using ViewModels.Order
+@using Models.Order
+@model EditOrderStatusViewModel
+
+
+
+<div class="container  ">
+    <div class="row">
+        <div class="col-12">
+            <form asp-controller="Order" asp-action="Edit" method="post" class="w-50 m-auto mt-5" enctype="multipart/form-data">
+                <table class="w-100">
+
+                    <tr class="text-right">
+                        <td><label for="orderID" class="form-label p-1">Order ID :  </label></td>
+                        <td><input type="text" id="orderID" asp-for="ID" name="ID" value="@ViewBag.orderID" class="form-control"></td>
+                    </tr>
+                    <tr class="text-right">
+                        <td><label for="deptName" class="form-label p-1">Department Name :  </label></td>
+                        <td>
+                            <select name="OrderStatus" asp-for="OrderStatus" class="custom-select" id="orderID">
+                                <option value=0>@OrderStatus.Sent</option>
+                                <option value=1>@OrderStatus.Pending</option>
+                                <option value=2>@OrderStatus.Delivered</option>
+                                <option value=3>@OrderStatus.Cancel</option>
+                            </select>
+                        </td>
+                    </tr>
+
+                   
+                    <tr class="text-right">
+                        <td class="text-center" colspan="2">
+                            <input type="submit" class="btn btn-success m-2" value="Save">
+                            <input type="reset" class="btn btn-danger m-2" value="Cancel">
+                        </td>
+
+                </table>
+            </form>
+        </div>
+    </div>
+</div>

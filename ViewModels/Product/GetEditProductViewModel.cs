@@ -36,5 +36,18 @@ namespace ViewModels.Product
             return usernm;
             
         }
+        public static ProductEntity ToEntityModel (this GetEditProductViewModel model)
+        {
+            ProductEntity entity = new ProductEntity();
+            entity.ID = model.ID;
+            entity.Name = model.Name;
+            entity.Price = model.Price;
+            entity.Quantity = model.Quantity;
+            entity.Description = model.Description;
+            entity.Discount = model.Discount;
+            entity.CategoryID = model.CategoryID;
+            return entity;
+            
+        }
     }
 }

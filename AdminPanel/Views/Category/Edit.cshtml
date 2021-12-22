@@ -45,10 +45,9 @@
                     </tr>
 
                     <tr class="text-right">
-                        <td><label for="ImageFile" class="form-label p-1">Image :  </label></td>
+                        <td><img id="prevImg" src="@(Model.ImageURL)" width="200" class="img-fluid" asp-append-version="true" /></td>
                         <td>
-                            <img id="prevImg" src="@("~/Image/"+Model.ImageURL)" width="200px" class="img-fluid" asp-append-version="true" />
-                            <br />
+                            
                             <input type="file" asp-for="ImageFile" id="ImageFile" accept="Image/*">
                         </td>
                     </tr>

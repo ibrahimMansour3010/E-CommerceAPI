@@ -1,4 +1,5 @@
-﻿using Models.Customer;
+﻿using Microsoft.AspNetCore.Http;
+using Models.Customer;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,5 +19,6 @@ namespace ViewModels.Customer
         public string Email { get; set; }
         public string PhoneNumeber { get; set; }
         public string UserName { get; set; }
+        public IFormFile ImageFile{ get; set; }
     }
 }

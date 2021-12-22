@@ -103,6 +103,11 @@ namespace API
             {
                 endPoint.MapControllers();
             });
+            using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
+            {
+                var context = serviceScope.ServiceProvider.GetService<Context>();
+                context.Database.Migrate();
+            }
         }
     }
 }

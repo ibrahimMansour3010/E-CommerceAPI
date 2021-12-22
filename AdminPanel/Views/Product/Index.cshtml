@@ -4,7 +4,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @using ViewModels.Product
-@model List<GetEditProductViewModel>
+@model List<GetProductViewModelForAdmin>
 
 
 <div class="m-auto">
@@ -18,9 +18,6 @@
                 <th>Category</th>
                 <th>Quantity</th>
                 <th>Price</th>
-                <th>Discount</th>
-                <th>Description</th>
-                <th>Images</th>
                 <th>Settings</th>
             </tr>
         </thead>
@@ -29,17 +26,10 @@
             {
                 <tr class="text-center">
                     <td>@item.Name</td>
-                    <td>@item.CategoryID</td>
+                    <td>@item.CategoryName</td>
                     <td>@item.Quantity</td>
                     <td>@item.Price</td>
-                    <td>@item.Discount</td>
-                    <td>@item.Description</td>
-                    <td>
-                        @foreach (var image in @item.Images)
-                        {
-                            <img src="@image" width="100" class="img-fluid" asp-append-version="true" />
-                        }
-                    </td>
+
                     <td class="text-center">
                         <a class="btn btn-info" href="~/Product/Edit?id=@item.ID">Edit</a>
                         <a class="btn btn-info" href="~/Product/image?id=@item.ID">Add Image</a>

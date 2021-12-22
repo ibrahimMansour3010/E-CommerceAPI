@@ -1,0 +1,77 @@
+﻿
+
+@using ViewModels.Product
+@model GetEditProductViewModel
+
+
+
+<div class="container  ">
+    <div class="row">
+        <div class="col-12">
+            <form asp-controller="Product" asp-action="Edit" method="post" class="w-50 m-auto mt-5" enctype="multipart/form-data">
+                <table class="w-100">
+
+                    <tr class="text-right" hidden>
+                        <td><label for="ProductID" class="form-label p-1">Product ID:  </label></td>
+                        <td><input type="text" id="ProductID" asp-for="ID" name="ID" class="form-control"></td>
+                    </tr>
+                    <tr class="text-right" >
+                        <td><label for="Name" class="form-label p-1">Product Name:  </label></td>
+                        <td><input type="text" id="Name" asp-for="Name" name="Name" class="form-control"></td>
+                    </tr>
+                    <tr class="text-right">
+                        <td><label for="CategoryID" class="form-label p-1">Category Name :  </label></td>
+                        <td>
+                            <select name="CategoryID" asp-for="CategoryID" class="custom-select" id="CategoryID">
+                                @foreach (var item in @ViewBag.Cats)
+                                {
+                                    @if (item.ID == Model.CategoryID)
+                                    {
+
+                                        <option value="@item.ID" selected>@item.CategoryName </option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@item.ID">@item.CategoryName </option>
+
+                                    }
+                                }
+                            </select>
+                        </td>
+                    </tr>
+                    <tr class="text-right">
+                        <td><label for="Quantity" class="form-label p-1">Quantity :  </label></td>
+                        <td><input type="number" id="Quantity" asp-for="Quantity" name="Quantity" class="form-control"></td>
+                    </tr>
+
+                    <tr class="text-right">
+                        <td><label for="Price" class="form-label p-1">Price :  </label></td>
+                        <td><input type="number" id="Price" asp-for="Price" name="Price" class="form-control"></td>
+                    </tr>
+                    
+                    <tr class="text-right">
+                        <td><label for="Discount" class="form-label p-1">Discount :  </label></td>
+                        <td><input type="number" id="Discount" asp-for="Discount" name="Discount" class="form-control"></td>
+                    </tr>
+                    
+
+                    <tr class="text-right">
+                        <td><label for="Description" class="form-label p-1">Description :  </label></td>
+                        <td>
+                            <textarea id="Description" asp-for="Description" name="Description" class="form-control">
+
+                            </textarea>
+                        </td>
+                    </tr>
+
+                    <tr class="text-right">
+                        <td class="text-center" colspan="2">
+                            <input type="submit" class="btn btn-success m-2" value="Save">
+                            <input type="reset" class="btn btn-danger m-2" value="Cancel">
+                        </td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+    </div>
+</div>
