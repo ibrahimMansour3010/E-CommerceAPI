@@ -100,9 +100,10 @@ namespace AdminPanel.Controllers
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> image(List<AddProductImageViewModel> models)
+        public async Task<IActionResult> image(AddProductImageViewModelAdmin model)
         {
-            return View();
+            return RedirectToAction("Index", "Product");
+
         }
 
         [HttpGet]

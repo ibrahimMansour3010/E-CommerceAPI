@@ -16,7 +16,7 @@ namespace ViewModels.User
         public string Image { get; set; }
         public string Address { get; set; }
         public string Email { get; set; }
-        public string PhoneNumeber { get; set; }
+        public string PhoneNumber { get; set; }
         public string UserName { get; set; }
         public string Role { get; set; }
     }
@@ -31,7 +31,7 @@ namespace ViewModels.User
                 Lastname = applicationUserEntity.Lastname,
                 Email = applicationUserEntity.Email,
                 Address = applicationUserEntity.Address,
-                PhoneNumeber = applicationUserEntity.PhoneNumber,
+                PhoneNumber = applicationUserEntity.PhoneNumber,
                 UserName = applicationUserEntity.UserName,
                 Gender = applicationUserEntity.Gender,
                 Image = applicationUserEntity.Image,

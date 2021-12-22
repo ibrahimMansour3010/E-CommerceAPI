@@ -15,7 +15,7 @@
     <div class="row">
         <div class="col-12">
             <button class="btn btn-secondary" type="button" onclick="addImage()">New One</button>
-            <form asp-action="image" asp-controller="Product" method="post" class="w-50 m-auto mt-5" enctype="multipart/form-data">
+            <form asp-action="Edit" asp-controller="Product" method="post" class="w-50 m-auto mt-5" enctype="multipart/form-data">
                 <table class="w-100" id="tbl">
 
                     <tr class="text-right" hidden>
@@ -91,6 +91,19 @@
             model.images = images;
             console.log(model);
         }
+        document.forms[0].addEventListener("submit", (e) => {
+            e.preventDefault();
+            model.productID = productID;
+            model.images = images;
+            console.log(JSON.stringify(model));
+            let url = '/Product/image';
+            $.ajax({
+                url: url,
+                type: 'Post',
+                contentType:'application/json',
+                data: JSON.stringify(model),
+            })
+        })
     </script>
 
 }
