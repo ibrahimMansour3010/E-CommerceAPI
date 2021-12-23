@@ -1,4 +1,5 @@
-﻿using CloudinaryDotNet;
+﻿using AdminPanel.Helpers;
+using CloudinaryDotNet;
 using CloudinaryDotNet.Actions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -42,10 +43,25 @@ namespace AdminPanel.Controllers
             Cloudinary = new Cloudinary(account);
         }
         [HttpGet]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int page = 1)
         {
-            var allusers = await UserManager.GetUsersInRoleAsync("Admin");
-            return View(allusers.Select(i=>i.ToViewModel("Admin")).ToList());
+            var allusers = UserManager.Users;
+            List<GetUserViewModel> ListOfUsers = new List<GetUserViewModel>();
+            foreach (var item in allusers)
+            {
+                string role = (await UserManager.GetRolesAsync(item))[0];
+                ListOfUsers.Add(item.ToViewModel(role));
+            }
+            int pageSize = 3;
+            if (page < 1)
+                page = 1;
+            int resCount = ListOfUsers.Count();
+            var pager = new Pager(resCount, page, pageSize);
+            var resSkip = (page - 1) * pageSize;
+
+            var data = ListOfUsers.Skip(resSkip).Take(pager.PageSize).ToList();
+            ViewBag.Pager = pager;
+            return View(data);
         }
 
         [HttpGet]
