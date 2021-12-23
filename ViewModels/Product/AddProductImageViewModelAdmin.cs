@@ -10,6 +10,6 @@ namespace ViewModels.Product
     public class AddProductImageViewModelAdmin
     {
         public string productID{ get; set; }
-        public IEnumerable<string> images { get; set; }
+        public IFormFile imgFile { get; set; }
     }
 }

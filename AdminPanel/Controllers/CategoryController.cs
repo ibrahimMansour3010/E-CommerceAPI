@@ -1,4 +1,5 @@
-﻿using CloudinaryDotNet;
+﻿using AdminPanel.Helpers;
+using CloudinaryDotNet;
 using CloudinaryDotNet.Actions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
@@ -38,7 +39,7 @@ namespace AdminPanel.Controllers
             Cloudinary = new Cloudinary(account);
 
         }
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int page= 1)
         {
             var cats = await CatRepo.Get();
             var ctsVM = cats.Select((cat) =>
@@ -46,7 +47,17 @@ namespace AdminPanel.Controllers
                 var dept = DeptRepo.Get(cat.DepartmentID).Result;
                 return cat.ToViewModelAdmin(dept.DepartmentName);
             });
-            return View(ctsVM.ToList());
+            
+            int pageSize = 3;
+            if (page < 1)
+                page = 1;
+            int resCount = ctsVM.Count();
+            var pager = new Pager(resCount, page, pageSize);
+            var resSkip = (page - 1) * pageSize;
+
+            var data = ctsVM.Skip(resSkip).Take(pager.PageSize).ToList();
+            ViewBag.Pager = pager;
+            return View(data);
         }
         [HttpGet]
         public async Task<IActionResult> Add()

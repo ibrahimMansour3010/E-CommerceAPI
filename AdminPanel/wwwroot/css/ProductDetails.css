@@ -1,0 +1,161 @@
+﻿.container-fluid {
+    width: 80%;
+    padding: 0;
+}
+
+.mainimg {
+    width: 100%;
+    background: #f5f2f2;
+    overflow: hidden;
+    padding: 0;
+    padding-bottom: 1px;
+}
+
+    .mainimg img {
+        width: 100%;
+        margin: 0;
+        vertical-align: middle;
+        background-color: white;
+    }
+
+.imgslist {
+    margin-top: 10px;
+}
+
+    .imgslist ul {
+        display: table;
+        padding: 0;
+        margin: 0;
+    }
+
+        .imgslist ul li {
+            width: 100px;
+            cursor: pointer;
+            border: 1px solid #e5e5e5;
+            border-radius: 2px;
+            overflow: hidden;
+            display: inline-block;
+            vertical-align: middle;
+            margin-right: 5px;
+            margin-bottom: 5px;
+        }
+
+li img {
+    border: 1px solid #e5e5e5;
+    width: 100%;
+    vertical-align: middle;
+    // height: 100px;
+}
+
+.active {
+    border: 1px solid #fcbf14;
+}
+
+.notactive {
+    border: 1px solid #e5e5e5;
+}
+
+.idparag {
+    color: white;
+    background-color: #57c27b;
+    border-radius: 50px;
+    margin-top: 10px;
+    font-size: 12px;
+    line-height: 1.44;
+    text-transform: uppercase;
+    padding: 0 7px;
+    height: 17px;
+    display: inline-block;
+}
+
+.discount {
+    text-transform: uppercase;
+    border-radius: 10px;
+    display: inline-block;
+}
+
+    .discount span {
+        display: inline-block;
+        font-size: 15px;
+        padding: 10px;
+        font-weight: bold;
+    }
+
+.details {
+    display: block;
+}
+
+.btn {
+    height: 46px;
+    font-size: 16px;
+    font-weight: 500;
+    width: 44%;
+    border-radius: 6px;
+}
+
+.buy {
+    color: white;
+    background-color: #003680;
+    border-color: #682c7f #59266c #491f59;
+    border-style: solid;
+    border-width: 1px;
+    background: linear-gradient(180deg, #6594d4, #003680);
+}
+
+.cart {
+    color: #783392;
+    background-color: #fcbf14;
+    border-color: #f3b403 #daa203 #c18f02;
+    border-style: solid;
+    border-width: 1px;
+    background: linear-gradient(180deg, #fdd86f, #fcbf14);
+}
+
+.lockicon {
+    border: 1px solid #0249ab;
+    width: 35px;
+    height: 35px;
+    border-radius: 50px;
+    margin-right: 10px;
+    padding: 3px;
+}
+
+.lockparg span {
+    font-size: 14px;
+}
+
+.lockparg {
+    line-height: 18px;
+}
+
+.delivery p {
+    color: #555;
+    font-size: 15px;
+    padding-left: 8px;
+    display: inline-block;
+    font-weight: 500;
+}
+
+.delivery a {
+    color: #555;
+}
+
+h3 {
+    font-size: 16px;
+    font-weight: 700;
+    color: #333;
+    margin: 0;
+    line-height: 1.1;
+    padding: 12px 15px;
+    border-bottom: 1px solid #ddd;
+}
+
+.card-body li {
+    list-style: disc;
+}
+
+@media (max-width: 750px) {
+    .lock {
+        width: 10%;
+    }
+}

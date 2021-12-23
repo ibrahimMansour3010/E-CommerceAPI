@@ -5,35 +5,33 @@
 }
 
 
-@using ViewModels.ProductImage
-@using Microsoft.AspNetCore.Http;
+@using ViewModels.Product
 
-@model List<AddProductImageViewModel>
+@model AddProductImageViewModelAdmin
 
 
 <div class="container  ">
     <div class="row">
         <div class="col-12">
-            <button class="btn btn-secondary" type="button" onclick="addImage()">New One</button>
-            <form  method="post" class="w-50 m-auto mt-5" enctype="multipart/form-data">
+            <form asp-controller="Product" asp-action="image" method="post" class="w-50 m-auto mt-5" enctype="multipart/form-data">
                 <table class="w-100" id="tbl">
 
                     <tr class="text-right" hidden>
                         <td><label for="ProductID" class="form-label p-1">ProductID :  </label></td>
-                        <td> <input type="text" id="ProductID" value="@ViewBag.ProductID" /> </td>
+                        <td> <input type="text" id="ProductID" asp-for="productID" value="@ViewBag.ProductID" /> </td>
                     </tr>
                     <tr class="text-right">
                         <td>
-                            <img src="http://placehold.it/150" class="img-fluid" />
+                            <img src="http://placehold.it/150" class="img-fluid" width="300" />
                         </td>
                         <td>
-                            <input id="Image" type="file" class="imageFile" onchange="getImg(event)" accept="Image/*" />
+                            <input  type="file" asp-for="imgFile" class="imageFile" onchange="getImg(event)" accept="Image/*" />
                         </td>
                     </tr>
                     <tr class="text-right">
                         <td class="text-center" colspan="2">
                             <input type="submit" class="btn btn-success m-2" value="Add">
-                            <input type="reset" class="btn btn-danger m-2" value="Cancel">
+                            <a class="btn btn-danger m-2" asp-controller="Product" asp-action="Index">Cancel</a>
                         </td>
                     </tr>
                 </table>
@@ -46,31 +44,8 @@
 @section Scripts{
 
     <script>
-        function addImage() {
-            var tr = document.createElement("tr");
-            tr.innerHTML = `
-
-                                <td><img src="http://placehold.it/150" class="img-fluid" /></td>
-                                <td>
-                                    <input id="Image" type="file"  onchange="getImg(event)" class="imageFile" accept="Image/*" />
-                                </td>
-
-                    `;
-            tr.classList.add("text-right");
-            document.getElementById("tbl").insertBefore(tr, document.getElementById("tbl").lastChild);
-        }
-
-        let model = {
-            productID: "",
-            images: []
-        };
-
-        let productID = $("#ProductID").val();
-        let images = new Array();
+     
         function getImg(event) {
-            let imageURL = $(event.target).val().toString();
-            images.push($(event.target)[0].files[0].name);
-            $(event.target).parent().siblings("td").children("img").attr("src");
             var reader = new FileReader();
             reader.readAsDataURL($(event.target)[0].files[0]);
             reader.onload = evt => {
@@ -78,25 +53,5 @@
             }
         }
 
-        document.forms[0].addEventListener("submit", (e) => {
-            e.preventDefault();
-            model.productID = productID;
-            model.images = images;
-            console.log(model);
-            console.log();
-            fetch("http://localhost:51642/Product/image", {
-                method: "post",
-                body: JSON.stringify(model),
-                headers: {
-                    "Content-Type": "application/json",
-                },
-            })
-            //$.ajax({
-            //    url: '/Product/image',
-            //    type: 'POST',
-            //    contentType: "application/json",
-            //    data: JSON.stringify(model.productID)
-            //});
-        })
     </script>
 }

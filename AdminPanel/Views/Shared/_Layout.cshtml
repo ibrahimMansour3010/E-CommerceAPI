@@ -6,33 +6,86 @@
     <title>@ViewData["Title"] - AdminPanel</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
+    <link href="~/css/sidebar.css" rel="stylesheet" />
+    <style>
+        .table-bordered td, .table-bordered th {
+
+            vertical-align: middle;
+        }
+        
+    </style>
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container">
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a  class="nav-link text-dark" asp-area="" asp-controller="Department" asp-action="Index">Department</a>
+    @*<header>
+            <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+                <div class="container">
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                            aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                        <ul class="navbar-nav flex-grow-1">
+                            <li class="nav-item">
+                                <a  class="nav-link text-dark" asp-area="" asp-controller="Department" asp-action="Index">Department</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Category" asp-action="Index">Category</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Product" asp-action="Index">Product</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Order" asp-action="Index">Order</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="Index">Admin</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Profile" asp-action="Index">Profile</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" id="logoutBTN" href="">Logout</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </header>*@
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-2">
+                <div class="sidebar-container">
+                    <div class="sidebar-logo">
+                        Admin Panel
+                    </div>
+                    <ul class="sidebar-navigation">
+                        <li class="active">
+                            <a class="nav-link " asp-area="" asp-controller="Department" asp-action="Index">
+                                Department
+                            </a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Category" asp-action="Index">Category</a>
+                        <li>
+                            <a class="nav-link" asp-area="" asp-controller="Category" asp-action="Index">
+                                Category
+                            </a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Product" asp-action="Index">Product</a>
+                        <li>
+                            <a class="nav-link" asp-area="" asp-controller="Product" asp-action="Index">
+                                Product
+                            </a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Order" asp-action="Index">Order</a>
+                        <li>
+                            <a class="nav-link" asp-area="" asp-controller="Order" asp-action="Index">
+                                Order
+                            </a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="Index">Admin</a>
+                        <li>
+                            <a class="nav-link" asp-area="" asp-controller="Admin" asp-action="Index">
+                                Admin
+                            </a>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item ">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Profile" asp-action="Index">Profile</a>
                         </li>
                         <li class="nav-item">
@@ -41,19 +94,13 @@
                     </ul>
                 </div>
             </div>
-        </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
+            <div class="col-10 mt-5">
+                @RenderBody()
+            </div>
+        </div>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2021 - AdminPanel - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
-    </footer>
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
@@ -64,6 +111,12 @@
         if (!localStorage.getItem("Token")) {
             window.location.href = '@Url.Action("Login","Admin")';
         }
+        $(".sidebar-navigation li a").each(function (inde,elem) {
+            let nav = sessionStorage.getItem("nav");
+            if (nav == $(elem).text()) {
+                $(elem).parent().addClass("active").siblings().removeClass("active");
+            }
+        });
     });
         document.getElementById("logoutBTN").addEventListener("click", () => {
             if (localStorage.getItem("Token")) {
@@ -73,6 +126,9 @@
                 alert("There is No User Logged In");
             }
         })
+        $(".sidebar-navigation li a").click(function () {
+            sessionStorage.setItem("nav", $(this).text());
+        });
     </script>
 </body>
 </html>

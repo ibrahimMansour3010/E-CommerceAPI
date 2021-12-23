@@ -1,0 +1,62 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@using ViewModels.Product
+@model GetEditProductViewModel
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-xl-8">
+            <a class="btn btn-info" href="~/Product/image?id=@Model.ID">Add Image</a>
+
+            <div class="w-100" style="height:60vh">
+                <img src="@Model.Images[0]" id="mainIMG" style="height:50vh">
+            </div>
+            <div>
+                <div class="w-100">
+                    @foreach (var item in Model.Images)
+                    {
+                        <img src="@item" class="p-2 w-25 h-25 img-fluid d-inline-block" onclick="styleProductImage(event)">
+                    }
+
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-4">
+            <div>
+                <p class="badge-dark w-100">ID# @Model.ID</p>
+            </div>
+            <div class="discount shadow-sm">
+                <span class="text-primary">@Model.Discount% </span><span class="text-dark ps-0">Discount</span>
+            </div>
+            <div class="mt-4">
+                <h2>@Model.Name</h2>
+            </div>
+            <div class="fw-bold">
+                <span class="text-dark fs-5">Category Name : @ViewBag.CatName</span>
+            </div>
+            <div class="fw-bold">
+                <span class="text-dark fs-5">Price : @Model.Price</span>
+            </div>
+            
+            <div class="fw-bold">
+                <span class="text-dark fs-5">Quantity : @Model.Quantity</span>
+            </div>
+
+            <div class="bg-white">
+                <h3>Description</h3>
+            </div>
+            <div class="card-body">
+                <p class="card-text">@Model.Description</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+    function styleProductImage(event) {
+        document.getElementById("mainIMG").src = event.target.src;
+        event.target.style.borderColor = "#fcbf14";
+    }
+</script>

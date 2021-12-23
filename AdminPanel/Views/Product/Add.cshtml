@@ -46,9 +46,11 @@
                         <td><input type="number" id="Discount" name="Discount" asp-for="Discount" class="form-control"></td>
                     </tr>
                     <tr class="text-right">
-                        <td><label for="Image" class="form-label p-1">Image :  </label></td>
                         <td>
-                            <input id="Image" type="file" asp-for="ImageFile" accept="Image/*"/>
+                            <img src="http://placehold.it/100" id="mainIMG" class="img-fluid"  width="150" />
+                        </td>
+                        <td>
+                            <input id="ImageFile" type="file" asp-for="ImageFile" onchange="getImg(event)" accept="Image/*" />
                         </td>
                     </tr>
                     <tr class="text-right">
@@ -61,7 +63,7 @@
                     <tr class="text-right">
                         <td class="text-center" colspan="2">
                             <input type="submit" class="btn btn-success m-2" value="Add">
-                            <input type="reset" class="btn btn-danger m-2" value="Cancel">
+                            <a class="btn btn-danger m-2" asp-controller="Product" asp-action="Index">Cancel</a>
                         </td>
                     </tr>
                 </table>
@@ -78,4 +80,11 @@
             document.getElementById("AdmainID").value = id;
         }
     });
+    function getImg(event) {
+        var reader = new FileReader();
+        reader.readAsDataURL($(event.target)[0].files[0]);
+        reader.onload = evt => {
+            $(event.target).parent().siblings("td").children("img").attr("src", evt.target.result);
+        }
+    }
 </script>

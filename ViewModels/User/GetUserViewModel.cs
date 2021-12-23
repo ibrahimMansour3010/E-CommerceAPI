@@ -1,4 +1,5 @@
-﻿using Models.Customer;
+﻿using Microsoft.AspNetCore.Http;
+using Models.Customer;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,15 +11,22 @@ namespace ViewModels.User
     public class GetUserViewModel
     {
         public string Id { get; set; }
+        public IFormFile ImageFile { get; set; }
+
         public string Firstname { get; set; }
         public string Lastname { get; set; }
-        public Gender Gender { get; set; }
-        public string Image { get; set; }
-        public string Address { get; set; }
+
         public string Email { get; set; }
-        public string PhoneNumber { get; set; }
-        public string UserName { get; set; }
-        public string Role { get; set; }
+
+        public string Username { get; set; }
+
+        public string Password { get; set; }
+        public Gender Gender { get; set; }
+        public string Address { get; set; }
+        public string Phone { get; set; }
+        public string Image { get; set; }
+        public string UserRole { get; set; }
+
     }
     public static class GetUserViewModelExtension
     {
@@ -31,11 +39,11 @@ namespace ViewModels.User
                 Lastname = applicationUserEntity.Lastname,
                 Email = applicationUserEntity.Email,
                 Address = applicationUserEntity.Address,
-                PhoneNumber = applicationUserEntity.PhoneNumber,
-                UserName = applicationUserEntity.UserName,
+                Phone = applicationUserEntity.PhoneNumber,
+                Username = applicationUserEntity.UserName,
                 Gender = applicationUserEntity.Gender,
                 Image = applicationUserEntity.Image,
-                Role = role
+                UserRole = role
             };
         }
     }

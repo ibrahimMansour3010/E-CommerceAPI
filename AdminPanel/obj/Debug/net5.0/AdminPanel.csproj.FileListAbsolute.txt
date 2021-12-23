@@ -187,3 +187,4 @@ C:\Users\Ibrahim Mansour\source\repos\E-CommerceAPI\AdminPanel\obj\Debug\net5.0\
 C:\Users\Ibrahim Mansour\source\repos\E-CommerceAPI\AdminPanel\obj\Debug\net5.0\ref\AdminPanel.dll
 C:\Users\Ibrahim Mansour\source\repos\E-CommerceAPI\AdminPanel\obj\Debug\net5.0\AdminPanel.pdb
 C:\Users\Ibrahim Mansour\source\repos\E-CommerceAPI\AdminPanel\obj\Debug\net5.0\AdminPanel.genruntimeconfig.cache
+C:\Users\Ibrahim Mansour\source\repos\E-CommerceAPI\AdminPanel\obj\Debug\net5.0\Razor\Views\Product\Details.cshtml.g.cs

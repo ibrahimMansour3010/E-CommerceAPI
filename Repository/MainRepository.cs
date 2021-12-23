@@ -4,6 +4,7 @@ using Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -52,7 +53,7 @@ namespace Repository
         }
         public async Task<T> Delete(string id)
         {
-            T entity = Get(id).Result;
+            T entity = await Get(id);
             Table.Remove(entity);
             await Context.SaveChangesAsync();
             return entity;
@@ -62,6 +63,11 @@ namespace Repository
             Table.RemoveRange(entity);
             await Context.SaveChangesAsync();
             return entity;
+        }
+
+        public IEnumerable<T> Find(Expression<Func<T, bool>> expression)
+        {
+            return Context.Set<T>().Where(expression);
         }
     }
 }

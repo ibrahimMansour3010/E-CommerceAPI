@@ -1,7 +1,10 @@
-﻿using CloudinaryDotNet;
+﻿using AdminPanel.Helpers;
+using CloudinaryDotNet;
 using CloudinaryDotNet.Actions;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Models.CartItem;
 using Models.Product;
 using Models.ProductCategory;
 using Models.ProductImage;
@@ -21,6 +24,7 @@ namespace AdminPanel.Controllers
         IMainRepository<ProductEntity> ProductRepo;
         IMainRepository<ProductImageEntity> ImageRepo;
         IMainRepository<CategoryEntity> CatRepo;
+        IMainRepository<CartItemEntity> ItemRepo;
         List<ProductImageEntity> AllProdctImages;
         public const string CLOUD_NAME = "dv83pikdc";
         public const string API_KEY = "523772437256571";
@@ -28,7 +32,8 @@ namespace AdminPanel.Controllers
         public static Cloudinary Cloudinary;
         public ProductController(IMainRepository<ProductEntity> productRepo,
             IMainRepository<ProductImageEntity> imageRepo,
-            IMainRepository<CategoryEntity> catRepo)
+            IMainRepository<CategoryEntity> catRepo,
+            IMainRepository<CartItemEntity> itemRepo)
         {
             ProductRepo = productRepo;
             ImageRepo = imageRepo;
@@ -37,15 +42,28 @@ namespace AdminPanel.Controllers
 
             Account account = new Account(CLOUD_NAME, API_KEY, API_SECRIT);
             Cloudinary = new Cloudinary(account);
+
+            ItemRepo = itemRepo;
         }
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int page=1)
         {
+
             var Products = await ProductRepo.Get();
-            var ProductsModel = Products.Select((pdr) => {
+            var ProductsModel = Products.Select((pdr) =>
+            {
                 var cat = CatRepo.Get(pdr.CategoryID).Result;
                 return pdr.ToViewModelForAdmin(cat.CategoryName);
-            });
-            return View(ProductsModel.ToList());
+            }).ToList();
+            int pageSize = 5;
+            if (page < 1)
+                page = 1;
+            int resCount = ProductsModel.Count();
+            var pager = new Pager(resCount, page, pageSize);
+            var resSkip = (page - 1) * pageSize;
+
+            var data = ProductsModel.Skip(resSkip).Take(pager.PageSize).ToList();
+            ViewBag.Pager = pager;
+            return View(data);
         }
         [HttpGet]
         public async Task<IActionResult> Add()
@@ -85,27 +103,62 @@ namespace AdminPanel.Controllers
 
             System.IO.File.Delete(path);
 
-            return RedirectToAction("Index","Product");
+            return RedirectToAction("Index", "Product");
         }
         [HttpGet]
         public async Task<IActionResult> Delete(string id)
         {
+            var items = await ItemRepo.Get();
+
+            await ItemRepo.Delete(items.Where(i => i.ProductID == id));
             await ProductRepo.Delete(id);
-            return View();
+            return RedirectToAction("Index", "Product");
         }
         [HttpGet]
-        public async Task<IActionResult> image(string id)
+        public IActionResult image(string id)
         {
             ViewBag.ProductID = id;
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> image([FromBody]AddProductImageViewModelAdmin model)
+        public async Task<IActionResult> image([FromForm] AddProductImageViewModelAdmin model)
         {
-            return RedirectToAction("Index", "Product");
 
+            string imgURL = await saveiMG(model.imgFile);
+            if (imgURL != null)
+            {
+                AddProductImageViewModel model1 = new AddProductImageViewModel()
+                {
+                    ProductID = model.productID,
+                    ImageURL = imgURL
+                };
+                await ImageRepo.Add(model1.ToModel());
+            }
+            return RedirectToAction("Details", "Product",new { id=model.productID});
         }
+        private async Task<string> saveiMG(IFormFile ImageFile)
+        {
+            string ImageURL = "";
+            if (ImageFile == null)
+                return null;
+            var path = Path.Combine(
+                         Directory.GetCurrentDirectory(), "wwwroot",
+                         ImageFile.FileName);
 
+            using (var stream = new FileStream(path, FileMode.Create))
+            {
+                await ImageFile.CopyToAsync(stream);
+            }
+            // save image in cloudinary
+            ImageURL = Path.GetFullPath(path);
+            // insert image into cloudinary
+            var result = Cloudinary.Upload(new ImageUploadParams()
+            { File = new FileDescription(ImageURL) });
+            ImageURL = result.Url.ToString();
+            // delete image from wwwroot
+            System.IO.File.Delete(path);
+            return ImageURL;
+        }
         [HttpGet]
         public async Task<IActionResult> Edit(string id)
         {
@@ -118,7 +171,15 @@ namespace AdminPanel.Controllers
         {
             var product = await ProductRepo.Get(model.ID);
             await ProductRepo.Update(model.ToEntityModel());
-            return RedirectToAction("Index","Product") ;
+            return RedirectToAction("Index", "Product");
+        }
+        [HttpGet]
+        public async Task<IActionResult> Details (string id)
+        {
+            var product = await ProductRepo.Get(id);
+            string categoryName = CatRepo.Find(i => i.ID == product.CategoryID).FirstOrDefault().CategoryName;
+            ViewBag.CatName = categoryName;
+            return View(product.ToUserViewModel(AllProdctImages));
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AdminPanel.Helpers;
+using Microsoft.AspNetCore.Mvc;
 using Models.CartItem;
 using Models.Customer;
 using Models.Order;
@@ -31,7 +32,7 @@ namespace AdminPanel.Controllers
             AppRepo = appRepo;
         }
         [HttpGet]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int page = 1)
         {
             var allOrders = await OrderRepo.Get();
             var ordersVM = allOrders.Select(i =>
@@ -46,8 +47,19 @@ namespace AdminPanel.Controllers
                 OrderStatus.Sent,
                 OrderStatus.Pending,
                 OrderStatus.Delivered,
+                OrderStatus.Cancel,
             };
-            return View(ordersVM);
+
+            int pageSize = 5;
+            if (page < 1)
+                page = 1;
+            int resCount = ordersVM.Count();
+            var pager = new Pager(resCount, page, pageSize);
+            var resSkip = (page - 1) * pageSize;
+
+            var data = ordersVM.Skip(resSkip).Take(pager.PageSize).ToList();
+            ViewBag.Pager = pager;
+            return View(data);
         }
         [HttpGet]
         public List<GetOrderViewModelForAdmin> getAllOrders()
@@ -103,7 +115,7 @@ namespace AdminPanel.Controllers
             EditOrderStatusViewModel model = new EditOrderStatusViewModel()
             {
                 ID = id,
-                OrderStatus=order.Status
+                OrderStatus = order.Status
             };
             ViewBag.orderID = id;
             return View(model);
@@ -112,17 +124,86 @@ namespace AdminPanel.Controllers
         public async Task<IActionResult> Edit([FromForm] EditOrderStatusViewModel model)
         {
             var order = await OrderRepo.Get(model.ID);
-            order.Status = model.OrderStatus;
-            order = await OrderRepo.Update(order);
-            return RedirectToAction("Index","Order");
+            if (model.OrderStatus == OrderStatus.Delivered)
+            {
+                var items = CartItemRepo.Find(i => i.OrderID == order.ID);
+                List<ProductEntity> ProductsList = new List<ProductEntity>();
+                foreach (var item in items)
+                {
+                    var product = await ProductRepo.Get(item.ProductID);
+                    if (item.Amount <= product.Quantity)
+                    {
+                        product.Quantity -= item.Amount;
+                        ProductsList.Add(product);
+                    }
+                    else
+                    {
+                        order.Status = OrderStatus.Cancel;
+                        break;
+                    }
+                    order.Status = OrderStatus.Delivered;
+                }
+                if (order.Status == OrderStatus.Delivered)
+                {
+                    await ProductRepo.Update(ProductsList);
+                }
+                order = await OrderRepo.Update(order);
+            }
+            else if (model.OrderStatus == OrderStatus.Cancel)
+            {
+                if (order.Status == OrderStatus.Delivered)
+                {
+                    var items = CartItemRepo.Find(i => i.OrderID == order.ID);
+                    List<ProductEntity> ProductsList = new List<ProductEntity>();
+                    foreach (var item in items)
+                    {
+                        var product = await ProductRepo.Get(item.ProductID);
+
+                        product.Quantity += item.Amount;
+                        ProductsList.Add(product);
+
+                        order.Status = OrderStatus.Cancel;
+                    }
+                    if (order.Status == OrderStatus.Cancel)
+                    {
+                        await ProductRepo.Update(ProductsList);
+                    }
+                    order = await OrderRepo.Update(order);
+                }
+            }
+            else
+            {
+                order.Status = model.OrderStatus;
+                order = await OrderRepo.Update(order);
+            }
+
+            return RedirectToAction("Index", "Order");
         }
         [HttpGet]
         public async Task<IActionResult> Delete([FromQuery] string id)
         {
-            var order = await OrderRepo.Get(id);
-            order.Status = OrderStatus.Cancel;
-            order = await OrderRepo.Update(order);
-            return RedirectToAction("Index","Order");
+            await OrderRepo.Delete(id);
+            return RedirectToAction("Index", "Order");
+        }
+        [HttpGet]
+        public List<GetOrderViewModelForAdmin> Customer([FromQuery] string Name)
+        {
+            var users = AppRepo.GetAllUsers(i => i.Firstname.Contains(Name) || i.Lastname.Contains(Name));
+            List<OrderEntity> ListOfUsers = new List<OrderEntity>();
+            foreach (var item in users)
+            {
+                var orders = OrderRepo.Find(i => i.CustomerID == item.Id);
+                foreach (var order in orders)
+                {
+                    ListOfUsers.Add(order);
+                }
+            }
+            var data = ListOfUsers.Select(order => {
+                var user = AppRepo.GetAllUsers(u => u.Id == order.CustomerID).FirstOrDefault();
+
+                return order.ToAdminViewModel(user.Firstname + " " + user.Lastname);
+            }).ToList();
+            return data;
         }
     }
 }

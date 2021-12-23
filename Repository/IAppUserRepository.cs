@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using ViewModels.Customer;
@@ -17,5 +18,6 @@ namespace Repository
         Task<Result> ForegetPassword(string Email);
         Task<Result> RestPassword(ResetPasswordViewModel resetPasswordViewModel);
         Task Logout();
+        IQueryable<ApplicationUserEntity> GetAllUsers(Expression<Func<ApplicationUserEntity, bool>> expression);
     }
 }

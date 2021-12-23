@@ -11,12 +11,12 @@
             <form asp-controller="Order" asp-action="Edit" method="post" class="w-50 m-auto mt-5" enctype="multipart/form-data">
                 <table class="w-100">
 
-                    <tr class="text-right">
+                    <tr class="text-right" hidden>
                         <td><label for="orderID" class="form-label p-1">Order ID :  </label></td>
                         <td><input type="text" id="orderID" asp-for="ID" name="ID" value="@ViewBag.orderID" class="form-control"></td>
                     </tr>
                     <tr class="text-right">
-                        <td><label for="deptName" class="form-label p-1">Department Name :  </label></td>
+                        <td><label for="orderID" class="form-label p-1">Order Status :  </label></td>
                         <td>
                             <select name="OrderStatus" asp-for="OrderStatus" class="custom-select" id="orderID">
                                 <option value=0>@OrderStatus.Sent</option>
@@ -31,7 +31,7 @@
                     <tr class="text-right">
                         <td class="text-center" colspan="2">
                             <input type="submit" class="btn btn-success m-2" value="Save">
-                            <input type="reset" class="btn btn-danger m-2" value="Cancel">
+                            <a class="btn btn-danger m-2" asp-controller="Order" asp-action="Index">Cancel</a>
                         </td>
 
                 </table>

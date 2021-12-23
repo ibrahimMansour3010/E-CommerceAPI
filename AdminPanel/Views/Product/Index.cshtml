@@ -1,10 +1,18 @@
-﻿
+﻿@using ViewModels.Product
+@using AdminPanel.Helpers
+@model List<GetProductViewModelForAdmin>
+
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    Pager pager = new Pager();
+    int pageNumber = 0;
+    if (ViewBag.Pager != null)
+    {
+        pager = ViewBag.Pager;
+        pageNumber = pager.CurrentPage;
+    }
 }
-@using ViewModels.Product
-@model List<GetProductViewModelForAdmin>
 
 
 <div class="m-auto">
@@ -31,14 +39,28 @@
                     <td>@item.Price</td>
 
                     <td class="text-center">
+                        <a class="btn btn-dark" href="~/Product/Details?id=@item.ID">Details</a>
                         <a class="btn btn-info" href="~/Product/Edit?id=@item.ID">Edit</a>
-                        <a class="btn btn-info" href="~/Product/image?id=@item.ID">Add Image</a>
                         <a class="btn btn-danger" href="~/Product/delete?id=@item.ID">Delete</a>
                     </td>
                 </tr>
             }
         </tbody>
     </table>
-
+    <div>
+        @if (pager.TotalPages > 0)
+        {
+            <ul class="pagination">
+                @for (int i = pager.StartPage; i <= pager.EndPage; i++)
+                {
+                    <li class="page-item @(i == pager.CurrentPage ? "active" :"" )">
+                        <a class="page-link" asp-controller="Product" asp-action="Index" asp-route-page="@i">
+                            @i
+                        </a>
+                    </li>
+                }
+            </ul>
+        }
+    </div>
 </div>
 

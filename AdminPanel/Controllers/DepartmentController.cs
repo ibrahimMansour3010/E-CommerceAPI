@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AdminPanel.Helpers;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Models.Department;
 using Repository;
@@ -17,10 +18,19 @@ namespace AdminPanel.Controllers
         {
             DeptRep = deptRep;
         }
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int page = 1)
         {
             var depts = await DeptRep.Get();
-            return View(depts);
+            int pageSize = 5;
+            if (page < 1)
+                page = 1;
+            int resCount = depts.Count();
+            var pager = new Pager(resCount, page, pageSize);
+            var resSkip = (page - 1) * pageSize;
+
+            var data = depts.Skip(resSkip).Take(pager.PageSize).ToList();
+            ViewBag.Pager = pager;
+            return View(data);
         }
         [HttpGet]
         public IActionResult Add()
@@ -43,10 +53,11 @@ namespace AdminPanel.Controllers
 
         }
         [HttpGet]
-        public IActionResult Edit([FromQuery] string id)
+        public async Task<IActionResult> Edit([FromQuery] string id)
         {
             ViewBag.DeptID = id;
-            return View();
+            var dept = await DeptRep.Get(id);
+            return View(dept.ToDeptViewModel());
         }
 
         [HttpPost]

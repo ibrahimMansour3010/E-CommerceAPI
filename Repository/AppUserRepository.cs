@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
@@ -161,8 +162,8 @@ namespace Repository
                 user.Lastname = editCusomerViewModel.Lastname;
                 user.Email = editCusomerViewModel.Email;
                 user.Gender = editCusomerViewModel.Gender;
-                user.UserName = editCusomerViewModel.UserName;
-                user.PhoneNumber = editCusomerViewModel.PhoneNumber;
+                user.UserName = editCusomerViewModel.Username;
+                user.PhoneNumber = editCusomerViewModel.Phone;
                 user.Address = editCusomerViewModel.Address;
 
                 var res = await UserManager.UpdateAsync(user);
@@ -233,6 +234,10 @@ namespace Repository
         public async Task Logout()
         {
             await SignInManager.SignOutAsync();
+        }
+        public IQueryable<ApplicationUserEntity> GetAllUsers(Expression<Func<ApplicationUserEntity, bool>> expression)
+        {
+            return UserManager.Users.Where(expression);
         }
     }
 }
