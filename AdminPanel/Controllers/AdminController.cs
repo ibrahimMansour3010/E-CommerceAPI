@@ -45,21 +45,22 @@ namespace AdminPanel.Controllers
         [HttpGet]
         public async Task<IActionResult> Index(int page = 1)
         {
-            var allusers = UserManager.Users;
-            List<GetUserViewModel> ListOfUsers = new List<GetUserViewModel>();
-            foreach (var item in allusers)
-            {
-                string role = (await UserManager.GetRolesAsync(item))[0];
-                ListOfUsers.Add(item.ToViewModel(role));
-            }
+            var allusers = await UserManager.GetUsersInRoleAsync("Admin");
+            //List<GetUserViewModel> ListOfUsers = new List<GetUserViewModel>();
+            //foreach (var item in allusers)
+            //{
+            //    string role = (await UserManager.GetRolesAsync(item))[0];
+            //    ListOfUsers.Add(item.ToViewModel(role));
+            //}
+            var users = allusers.Select(i => i.ToViewModel("Admin"));
             int pageSize = 3;
             if (page < 1)
                 page = 1;
-            int resCount = ListOfUsers.Count();
+            int resCount = users.Count();
             var pager = new Pager(resCount, page, pageSize);
             var resSkip = (page - 1) * pageSize;
 
-            var data = ListOfUsers.Skip(resSkip).Take(pager.PageSize).ToList();
+            var data = users.Skip(resSkip).Take(pager.PageSize).ToList();
             ViewBag.Pager = pager;
             return View(data);
         }
@@ -201,6 +202,21 @@ namespace AdminPanel.Controllers
                 }
             }
             return View();
+        }
+        [HttpGet]
+        public async Task<List<GetUserViewModel>> GetUsersByRoles(string Role)
+        {
+            List<ApplicationUserEntity> allusers = new List<ApplicationUserEntity>();
+            if (Role == null || Role == "")
+            {
+                allusers = ( UserManager.Users).ToList();
+                return allusers.Select(i => i.ToViewModel("")).ToList();
+            }
+            else
+            {
+                allusers = (await UserManager.GetUsersInRoleAsync(Role)).ToList();
+            }
+            return allusers.Select(i=>i.ToViewModel(Role)).ToList();
         }
     }
 }
