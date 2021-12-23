@@ -15,7 +15,7 @@
     <div class="row">
         <div class="col-12">
             <button class="btn btn-secondary" type="button" onclick="addImage()">New One</button>
-            <form asp-action="Edit" asp-controller="Product" method="post" class="w-50 m-auto mt-5" enctype="multipart/form-data">
+            <form  method="post" class="w-50 m-auto mt-5" enctype="multipart/form-data">
                 <table class="w-100" id="tbl">
 
                     <tr class="text-right" hidden>
@@ -23,12 +23,14 @@
                         <td> <input type="text" id="ProductID" value="@ViewBag.ProductID" /> </td>
                     </tr>
                     <tr class="text-right">
-                        <td><label for="Image" class="form-label p-1">Image :  </label></td>
+                        <td>
+                            <img src="http://placehold.it/150" class="img-fluid" />
+                        </td>
                         <td>
                             <input id="Image" type="file" class="imageFile" onchange="getImg(event)" accept="Image/*" />
                         </td>
                     </tr>
-                    <tr class="text-right" id="endOfTbl">
+                    <tr class="text-right">
                         <td class="text-center" colspan="2">
                             <input type="submit" class="btn btn-success m-2" value="Add">
                             <input type="reset" class="btn btn-danger m-2" value="Cancel">
@@ -36,7 +38,6 @@
                     </tr>
                 </table>
             </form>
-            <button onclick="Show()">Show OBJ </button>
         </div>
     </div>
 </div>
@@ -49,32 +50,16 @@
             var tr = document.createElement("tr");
             tr.innerHTML = `
 
-                            <td><label for="Image" class="form-label p-1">Image :  </label></td>
-                            <td>
-                                <input id="Image" type="file"  onchange="getImg(event)" class="imageFile" accept="Image/*" />
-                            </td>
+                                <td><img src="http://placehold.it/150" class="img-fluid" /></td>
+                                <td>
+                                    <input id="Image" type="file"  onchange="getImg(event)" class="imageFile" accept="Image/*" />
+                                </td>
 
-                `;
+                    `;
             tr.classList.add("text-right");
             document.getElementById("tbl").insertBefore(tr, document.getElementById("tbl").lastChild);
         }
-        document.forms[0].addEventListener("submit", (e) => {
-            e.preventDefault();
-            var files = document.querySelectorAll(".imageFile");
-            @*for (var file in files) {
-                @{
-                    var model = new AddProductImageViewModel();
-                    model.ProductID = ViewBag.ProductID;
-                    model.ImageFile = file;
-                }
-            }*@
-            document.forms[0].submit();
-        })
-        //$(".imageFile").each((i,ele) => {
-        //    $(ele).change(function () {
-        //        console.log($(ele).val());
-        //    });
-        //});
+
         let model = {
             productID: "",
             images: []
@@ -83,27 +68,35 @@
         let productID = $("#ProductID").val();
         let images = new Array();
         function getImg(event) {
-            images.push($(event.target).val().toString());
+            let imageURL = $(event.target).val().toString();
+            images.push($(event.target)[0].files[0].name);
+            $(event.target).parent().siblings("td").children("img").attr("src");
+            var reader = new FileReader();
+            reader.readAsDataURL($(event.target)[0].files[0]);
+            reader.onload = evt => {
+                $(event.target).parent().siblings("td").children("img").attr("src", evt.target.result);
+            }
         }
 
-        function Show() {
-            model.productID = productID;
-            model.images = images;
-            console.log(model);
-        }
         document.forms[0].addEventListener("submit", (e) => {
             e.preventDefault();
             model.productID = productID;
             model.images = images;
-            console.log(JSON.stringify(model));
-            let url = '/Product/image';
-            $.ajax({
-                url: url,
-                type: 'Post',
-                contentType:'application/json',
-                data: JSON.stringify(model),
+            console.log(model);
+            console.log();
+            fetch("http://localhost:51642/Product/image", {
+                method: "post",
+                body: JSON.stringify(model),
+                headers: {
+                    "Content-Type": "application/json",
+                },
             })
+            //$.ajax({
+            //    url: '/Product/image',
+            //    type: 'POST',
+            //    contentType: "application/json",
+            //    data: JSON.stringify(model.productID)
+            //});
         })
     </script>
-
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,7 +9,7 @@ namespace ViewModels.Product
 {
     public class AddProductImageViewModelAdmin
     {
-        public string ProductID{ get; set; }
-        public string [] Images{ get; set; }
+        public string productID{ get; set; }
+        public IEnumerable<string> images { get; set; }
     }
 }

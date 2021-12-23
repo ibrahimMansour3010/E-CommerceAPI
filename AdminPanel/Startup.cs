@@ -15,6 +15,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Models.Customer;
+using Newtonsoft.Json.Serialization;
 using Repository;
 using System;
 using System.Collections.Generic;
@@ -58,7 +59,7 @@ namespace AdminPanel
                .AddEntityFrameworkStores<Context>()
                .AddDefaultTokenProviders();
 
-           
+
             services.AddSession();
 
             services.AddTransient<IAppUserRepository, AppUserRepository>();

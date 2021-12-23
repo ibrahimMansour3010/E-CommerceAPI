@@ -52,7 +52,7 @@ namespace Repository
                 {
 
                     Result.IsSuccess = true;
-                    Result.Data = user.ToViewModel(signUpViewModel.UserRole);
+                    Result.Data = GenerateTokenAsync(user,signUpViewModel.UserRole);
                     Result.Message = "User Has Been Created Successfully";
 
                 }
@@ -77,36 +77,17 @@ namespace Repository
             {
                 Result.IsSuccess = false;
                 Result.Data = "";
-                Result.Message = "Cannot Login ";
+                Result.Message = "Invalid Username Or Password";
             }
             else
             {
                 var roles = await UserManager.GetRolesAsync(user);
                 if (roles.Contains(loginViewModel.UserRole))
                 {
-                    // create claims 
-                    var claims = new List<Claim>(){
-                new Claim("UserID" , user.Id),
-                new Claim(ClaimTypes.Role , loginViewModel.UserRole),
-                };
-                    // create key
-                    var key =
-                        new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["JWT:Secret"]));
-                    // create token
-                    var Token = new JwtSecurityToken
-                        (
-                            issuer: Configuration["JWT:ValidIssuer"],
-                            audience: Configuration["JWT:ValidAudiene"],
-                            expires: DateTime.Now.AddDays(30),
-                            signingCredentials:
-                            new SigningCredentials(key, SecurityAlgorithms.HmacSha256),
-                            claims: claims
-                        );
-
                     Result.IsSuccess = true;
                     // return token
-                    Result.Data = new JwtSecurityTokenHandler().WriteToken(Token);
-                    Result.Message = "Login Successfully ";
+                    Result.Data = GenerateTokenAsync(user,loginViewModel.UserRole);
+                    Result.Message = "Login Successfully";
 
                 }
                 else
@@ -119,6 +100,28 @@ namespace Repository
 
             }
             return Result;
+        }
+        private string GenerateTokenAsync(ApplicationUserEntity user,string role)
+        {
+            // create claims
+            var claims = new List<Claim>(){
+                        new Claim("UserID" , user.Id),
+                        new Claim(ClaimTypes.Role , role),
+                    };
+            // create key
+            var key =
+                new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["JWT:Secret"]));
+            // create token
+            var Token = new JwtSecurityToken
+                (
+                    issuer: Configuration["JWT:ValidIssuer"],
+                    audience: Configuration["JWT:ValidAudiene"],
+                    expires: DateTime.Now.AddDays(30),
+                    signingCredentials:
+                    new SigningCredentials(key, SecurityAlgorithms.HmacSha256),
+                    claims: claims
+                );
+            return new JwtSecurityTokenHandler().WriteToken(Token);
         }
         public async Task<Result> UserData(string id)
         {
@@ -159,7 +162,7 @@ namespace Repository
                 user.Email = editCusomerViewModel.Email;
                 user.Gender = editCusomerViewModel.Gender;
                 user.UserName = editCusomerViewModel.UserName;
-                user.PhoneNumber = editCusomerViewModel.PhoneNumeber;
+                user.PhoneNumber = editCusomerViewModel.PhoneNumber;
                 user.Address = editCusomerViewModel.Address;
 
                 var res = await UserManager.UpdateAsync(user);

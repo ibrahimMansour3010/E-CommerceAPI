@@ -100,7 +100,7 @@ namespace AdminPanel.Controllers
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> image(AddProductImageViewModelAdmin model)
+        public async Task<IActionResult> image([FromBody]AddProductImageViewModelAdmin model)
         {
             return RedirectToAction("Index", "Product");
 

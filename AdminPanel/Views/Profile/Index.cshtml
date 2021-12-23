@@ -52,8 +52,8 @@
             </td>
         </tr>
         <tr class="text-end">
-            <td><label for="PhoneNumeber" class="form-label p-1">Phone  </label></td>
-            <td><input type="tel" id="PhoneNumeber" asp-for="PhoneNumeber" name="PhoneNumeber" class="form-control"></td>
+            <td><label for="PhoneNumber" class="form-label p-1">Phone  </label></td>
+            <td><input type="tel" id="PhoneNumber" asp-for="PhoneNumber" name="PhoneNumber" class="form-control"></td>
         </tr>
 
         <tr class="text-end">
@@ -86,7 +86,7 @@
                     $("#Email").val(result.data.email);
                     $("#Username").val(result.data.userName);
                     $("#Address").val(result.data.address);
-                    $("#PhoneNumeber").val(result.data.phoneNumeber);
+                    $("#PhoneNumeber").val(result.data.phoneNumber);
                     if (result.data.gender == 0) {
                         $("#Male").attr("checked","true");
                     } else {
