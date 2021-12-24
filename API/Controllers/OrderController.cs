@@ -139,7 +139,9 @@ namespace API.Controllers
             try
             {
                 string id = User.Claims.FirstOrDefault(i => i.Type == "UserID").Value;
-                var order = await OrderRepo.Add(OrderVM.ToOrderEntity());
+                var order = OrderVM.ToOrderEntity();
+                order.CustomerID = id;
+                order = await OrderRepo.Add(order);
                 List<CartItemEntity> Items = new List<CartItemEntity>();
                 foreach (var item in OrderVM.Items)
                 {
