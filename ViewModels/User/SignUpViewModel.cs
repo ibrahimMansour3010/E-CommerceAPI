@@ -3,6 +3,7 @@ using Models.Customer;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,6 +12,7 @@ namespace ViewModels.Customer
 {
     public class SignUpViewModel
     {
+        [NotMapped]
         public IFormFile ImageFile { get; set; }
         [Required]
         public string Firstname { get; set; }
