@@ -106,6 +106,7 @@ namespace AdminPanel.Controllers
             var UserData = (UserModel.Data) as GetUserViewModel;
             string Username = UserData.Firstname + " " + UserData.Lastname;
             ViewBag.Name = Username;
+            ViewBag.Address = UserData.Address;
             return View(orderData);
         }
         [HttpGet]

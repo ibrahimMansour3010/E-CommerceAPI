@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Models.CartItem;
 using Models.Order;
@@ -15,6 +16,7 @@ namespace API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class OrderController : ControllerBase
     {
         IMainRepository<OrderEntity> OrderRepo;
@@ -137,7 +139,6 @@ namespace API.Controllers
             try
             {
                 string id = User.Claims.FirstOrDefault(i => i.Type == "UserID").Value;
-                OrderVM.CustomerID = id;
                 var order = await OrderRepo.Add(OrderVM.ToOrderEntity());
                 List<CartItemEntity> Items = new List<CartItemEntity>();
                 foreach (var item in OrderVM.Items)

@@ -13,7 +13,6 @@ namespace ViewModels.Order
         public OrderStatus Status { get; set; }
         public DateTime OrderDate { get; set; }
 
-        public virtual string CustomerID { get; set; }
         public List<AddCartItemViewModel> Items { get; set; }
     }
     public static class AddOrderViewModelExtensoions
@@ -22,7 +21,6 @@ namespace ViewModels.Order
         {
             return new OrderEntity()
             {
-                CustomerID = orderVM.CustomerID,
                 Status = orderVM.Status,
                 OrderDate = orderVM.OrderDate
             };
