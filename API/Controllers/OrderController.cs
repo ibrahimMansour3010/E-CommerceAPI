@@ -103,9 +103,11 @@ namespace API.Controllers
             }
             return Ok(Result);
         }
-        [HttpGet("Customer/{id}")]
-        public async Task<IActionResult> GetOrderSent(string id)
+        [HttpGet("Customer")]
+        public async Task<IActionResult> GetOrderSent()
         {
+            string id = User.Claims.FirstOrDefault(i => i.Type == "UserID").Value;
+
             var orders = (await OrderRepo.Get()).Where(i => i.CustomerID == id);
             if (orders.Count() == 0)
             {
