@@ -107,7 +107,7 @@ namespace Repository
             // create claims
             var claims = new List<Claim>(){
                         new Claim("UserID" , user.Id),
-                        new Claim(ClaimTypes.Role , role),
+                        new Claim("Role" , role),
                     };
             // create key
             var key =

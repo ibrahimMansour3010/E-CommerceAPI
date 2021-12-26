@@ -87,9 +87,14 @@
     })
     .then((res) => res.json())
     .then((res) => {
-    console.log(res)
-    localStorage.setItem("Token", res.data);
-    window.location.href = '@Url.Action("Index", "Department")';
+        console.log(res)
+        if (!res.isSuccess) {
+            alert("Invalid Username Or Password");
+        } else {
+            alert("Welcome : " + u);
+            localStorage.setItem("Token", res.data);
+            window.location.href = '@Url.Action("Index", "Department")';
+        }
     });
     });
 

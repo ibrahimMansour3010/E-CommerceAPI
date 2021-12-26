@@ -9,10 +9,8 @@
     <link href="~/css/sidebar.css" rel="stylesheet" />
     <style>
         .table-bordered td, .table-bordered th {
-
             vertical-align: middle;
         }
-        
     </style>
 </head>
 <body>
@@ -106,11 +104,16 @@
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script src="~/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
-    <script type="text/javascript">
-    window.addEventListener("load", () => {
-        if (!localStorage.getItem("Token")) {
-            window.location.href = '@Url.Action("Login","Admin")';
-        }
+<script type="text/javascript">
+        window.addEventListener("load", () => {
+            if (!localStorage.getItem("Token")) {
+                alert("You Have To Login");
+                window.location.href = '@Url.Action("Login","Admin")';
+            } else if (JSON.parse(atob(localStorage.getItem("Token").split('.')[1])).Role != 'Admin') {
+                alert("Your Are No An Admin");
+                window.location.href = '@Url.Action("Login","Admin")';
+            }
+
         $(".sidebar-navigation li a").each(function (inde,elem) {
             let nav = sessionStorage.getItem("nav");
             if (nav == $(elem).text()) {
@@ -121,6 +124,7 @@
         document.getElementById("logoutBTN").addEventListener("click", () => {
             if (localStorage.getItem("Token")) {
                 localStorage.removeItem("Token");
+
                 window.location.href = '@Url.Action("Login","Admin")';
             } else {
                 alert("There is No User Logged In");
@@ -129,6 +133,6 @@
         $(".sidebar-navigation li a").click(function () {
             sessionStorage.setItem("nav", $(this).text());
         });
-    </script>
+</script>
 </body>
 </html>
