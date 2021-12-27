@@ -170,12 +170,12 @@ namespace API.Controllers
 
                 if (Result.IsSuccess)
                 {
-                    var itemsVMT = items.Select(async i =>
+                    var itemsVMT = items.Select( i =>
                     {
-                        var PDR = await ProducRepo.Get(i.ProductID);
+                        var PDR =  ProducRepo.Get(i.ProductID).Result;
                         return i.ToViewModel(PDR.Price, PDR.Discount,PDR.Name);
                     }).ToList();
-                    var itemsVM = itemsVMT.Select(i => i.Result).ToList();
+                    var itemsVM = itemsVMT.Select(i => i).ToList();
                     Items.Clear();
                     order.TotalPrice = itemsVM.Sum(i => i.Price);
                     order = await OrderRepo.Update(order);

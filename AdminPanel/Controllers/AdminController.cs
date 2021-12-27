@@ -42,18 +42,26 @@ namespace AdminPanel.Controllers
             Account account = new Account(CLOUD_NAME, API_KEY, API_SECRIT);
             Cloudinary = new Cloudinary(account);
         }
-        [HttpGet]
-        public async Task<IActionResult> Index(int page = 1)
+        [HttpGet("users")]
+        public async Task<IActionResult> Index([FromQuery]int page = 1, string role = "All")
         {
-            var allusers = await UserManager.GetUsersInRoleAsync("Admin");
-            //List<GetUserViewModel> ListOfUsers = new List<GetUserViewModel>();
-            //foreach (var item in allusers)
-            //{
-            //    string role = (await UserManager.GetRolesAsync(item))[0];
-            //    ListOfUsers.Add(item.ToViewModel(role));
-            //}
+            IList<ApplicationUserEntity> allusers = null;
+            if (role == "All")
+            {
+                allusers =  UserManager.Users.AsEnumerable<ApplicationUserEntity>().ToList();
+            }
+            else if(role == "Admin")
+            {
+                allusers = await UserManager.GetUsersInRoleAsync("Admin");
+
+            }
+            else if(role == "Customer")
+            {
+                allusers = await UserManager.GetUsersInRoleAsync("Customer");
+
+            }
             var users = allusers.Select(i => i.ToViewModel("Admin"));
-            int pageSize = 3;
+            int pageSize = 1;
             if (page < 1)
                 page = 1;
             int resCount = users.Count();
@@ -193,7 +201,7 @@ namespace AdminPanel.Controllers
         public async Task<IActionResult> ResetPassword(ResetPasswordViewModel model)
         {
             var user = await UserManager.FindByEmailAsync(model.Email);
-            if(user != null)
+            if (user != null)
             {
                 var res = await UserManager.ResetPasswordAsync(user, model.Token, model.Password);
                 if (res.Succeeded)
@@ -209,14 +217,14 @@ namespace AdminPanel.Controllers
             List<ApplicationUserEntity> allusers = new List<ApplicationUserEntity>();
             if (Role == null || Role == "")
             {
-                allusers = ( UserManager.Users).ToList();
+                allusers = (UserManager.Users).ToList();
                 return allusers.Select(i => i.ToViewModel("")).ToList();
             }
             else
             {
                 allusers = (await UserManager.GetUsersInRoleAsync(Role)).ToList();
             }
-            return allusers.Select(i=>i.ToViewModel(Role)).ToList();
+            return allusers.Select(i => i.ToViewModel(Role)).ToList();
         }
     }
 }

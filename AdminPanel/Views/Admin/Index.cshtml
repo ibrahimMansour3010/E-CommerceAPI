@@ -20,11 +20,11 @@
 
     <div>
         <a class="btn btn-success float-left" asp-controller="Admin" asp-action="CreateAccount">New</a>
-        @*<select id="roles" class="custom-select float-right w-25">
-            <option value=-1>All</option>
-            <option value=0>Admin</option>
-            <option value=1>Customer</option>
-        </select>*@
+        <select id="roles" class="custom-select float-right w-25">
+            <option value=0>All</option>
+            <option value=1>Admin</option>
+            <option value=2>Customer</option>
+        </select>
     </div>
     <div style="clear:both"></div>
     <table class="table table-bordered mt-2 table-hover">
@@ -77,9 +77,7 @@
                 @for (int i = pager.StartPage; i <= pager.EndPage; i++)
                 {
                     <li class="page-item @(i == pager.CurrentPage ? "active" :"" )">
-                        <a class="page-link" asp-controller="Admin" asp-action="Index" asp-route-page="@i">
-                            @i
-                        </a>
+                        <button class="page-link" onclick="changePag(@i)">@i</button>
                     </li>
                 }
             </ul>
@@ -93,43 +91,24 @@
             if (!localStorage.getItem("Token")) {
                 window.location.href = '@Url.Action("Login","Admin")';
             }
+            if (sessionStorage.getItem('selectedRole')) {
+
+            let selectedRole = sessionStorage.getItem('selectedRole');
+                document.getElementById("roles").value = selectedRole;
+            }
         });
 
-    //$("#roles").change(function () {
-    //    let role = $("#roles option:selected").text();
-    //    let url;
-    //    if (role != "All") {
-    //        url = "/Admin/GetUsersByRoles?Role=" + role;
-    //    } else {
-    //        url = "/Admin/GetUsersByRoles?Role=" + role;
-    //    }
-    //    $.get(url, function (data) {
-    //        for (var i in data) {
-    //            $("#tblbody").empty();
-
-    //            console.log(data[i]);
-    //            if (data[i].Image == "") {
-    //                data[i].Image = "http://placehold.it/100";
-    //            }
-    //            let tr = `
-    //            <tr class="text-center">
-    //                <td>${data[i].firstname}</td>
-    //                <td>${data[i].lastname}</td>
-    //                <td>${data[i].email}</td>
-    //                <td>${data[i].username}</td>
-    //                <td>${data[i].gender}</td>
-    //                <td>${data[i].address}</td>
-    //                <td>${data[i].Phone}</td>
-    //                <td>
-    //                    <img src=${data[i].image} width="100" class="img-fluid" asp-append-version="true" />
-
-    //                </td>
-
-    //            </tr>
-    //            `;
-    //                $("#tblbody").append(tr);
-    //        }
-    //    })
-    //    return false;
-    //});
+    function changePag(page) {
+        window.location.href = "/users?page=" + page + "&role=" + $("#roles option:selected").text();
+    }
+    $("#roles").change(function () {
+        let role = $("#roles option:selected").text();
+        sessionStorage.setItem('selectedRole', $("#roles option:selected").val());
+        if (role == "All") {
+            window.location.href = "/users?page=1";
+        } else {
+            window.location.href = `/users?page=1&role=${role}`;
+        }
+        $(".page-link")[0].setAttribute("href", `/users?role=${role}`);
+    });
 </script>
