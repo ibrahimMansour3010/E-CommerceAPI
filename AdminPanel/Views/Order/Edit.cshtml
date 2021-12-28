@@ -16,13 +16,12 @@
                         <td><input type="text" id="orderID" asp-for="ID" name="ID" value="@ViewBag.orderID" class="form-control"></td>
                     </tr>
                     <tr class="text-right">
-                        <td><label for="orderID" class="form-label p-1">Order Status :  </label></td>
+                        <td><label for="orderStatus" class="form-label p-1">Order Status :  </label></td>
                         <td>
-                            <select name="OrderStatus" asp-for="OrderStatus" class="custom-select" id="orderID">
-                                <option value=0>@OrderStatus.Sent</option>
-                                <option value=1>@OrderStatus.Pending</option>
-                                <option value=2>@OrderStatus.Delivered</option>
-                                <option value=3>@OrderStatus.Cancel</option>
+                            <select asp-for="OrderStatus" class="custom-select" id="orderStatus">
+                                <option value=0>@OrderStatus.Pending</option>
+                                <option value=1>@OrderStatus.Delivered</option>
+                                <option value=2>@OrderStatus.Cancel</option>
                             </select>
                         </td>
                     </tr>

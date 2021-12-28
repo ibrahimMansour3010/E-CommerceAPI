@@ -48,7 +48,7 @@
                 @for (int i = pager.StartPage; i <= pager.EndPage; i++)
                 {
                     <li class="page-item @(i == pager.CurrentPage ? "active" :"" )">
-                        <a class="page-link" asp-controller="Category" asp-action="Index" asp-route-page="@i">
+                        <a class="page-link" asp-controller="Department" asp-action="Index" asp-route-page="@i">
                             @i
                         </a>
                     </li>

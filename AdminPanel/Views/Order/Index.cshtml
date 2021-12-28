@@ -19,7 +19,6 @@
 
     <select id="statuses" class="custom-select w-25 mb-3 float-left">
         <option value=-1>All</option>
-        <option value=0>@OrderStatus.Sent</option>
         <option value=1>@OrderStatus.Pending</option>
         <option value=2>@OrderStatus.Delivered</option>
         <option value=3>@OrderStatus.Cancel</option>
@@ -89,15 +88,12 @@
                 let status;
                 switch (data[i].status) {
                     case 0:
-                        status = "@OrderStatus.Sent";
-                        break;
-                    case 1:
                         status = "@OrderStatus.Pending";
                         break;
-                    case 2:
+                    case 1:
                         status =  "@OrderStatus.Delivered";
                         break;
-                    case 3:
+                    case 2:
                         status =  "@OrderStatus.Cancel";
                         break;
                     default:
@@ -134,15 +130,12 @@
                 let status;
                 switch (data[i].status) {
                     case 0:
-                        status = "@OrderStatus.Sent";
-                        break;
-                    case 1:
                         status = "@OrderStatus.Pending";
                         break;
-                    case 2:
+                    case 1:
                         status =  "@OrderStatus.Delivered";
                         break;
-                    case 3:
+                    case 2:
                         status =  "@OrderStatus.Cancel";
                         break;
                     default:

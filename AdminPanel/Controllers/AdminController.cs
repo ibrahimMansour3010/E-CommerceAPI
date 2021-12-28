@@ -60,8 +60,8 @@ namespace AdminPanel.Controllers
                 allusers = await UserManager.GetUsersInRoleAsync("Customer");
 
             }
-            var users = allusers.Select(i => i.ToViewModel("Admin"));
-            int pageSize = 1;
+            var users = allusers.OrderBy(i=>i.Firstname).Select(i => i.ToViewModel("Admin"));
+            int pageSize = 3;
             if (page < 1)
                 page = 1;
             int resCount = users.Count();

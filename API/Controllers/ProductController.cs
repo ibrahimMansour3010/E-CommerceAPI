@@ -36,14 +36,14 @@ namespace API.Controllers
                 IEnumerable<ProductEntity> allProducts;
                 if (PageSize == 0)
                 {
-                    allProducts = await ProductRepo.Get();
+                    allProducts = (await ProductRepo.Get()).Where(i => i.Quantity != 0);
                 }
                 else
                 {
-                    allProducts = (await ProductRepo.Get()).Skip(--PageNumber * PageSize).Take(PageSize);
+                    allProducts = (await ProductRepo.Get()).Where(i => i.Quantity != 0).Skip(--PageNumber * PageSize).Take(PageSize);
 
                 }
-                var allProductModels = allProducts.Select(i => i.ToUserViewModel(AllProdctImages));
+                var allProductModels = allProducts.Where(i=>i.Quantity != 0).Select(i => i.ToUserViewModel(AllProdctImages));
                 Result.Data = allProductModels;
                 return Ok(Result);
             }
@@ -91,7 +91,7 @@ namespace API.Controllers
         {
             try
             {
-                var allProducts = (await ProductRepo.Get()).Where(i => i.CategoryID == CategoryID);
+                var allProducts = (await ProductRepo.Get()).Where(i => i.CategoryID == CategoryID && i.Quantity != 0);
                 if (allProducts == null)
                 {
                     Result.IsSuccess = false;
@@ -121,7 +121,7 @@ namespace API.Controllers
         {
             try
             {
-                var product = (await ProductRepo.Get()).Where(i => i.Name.Contains(Name));
+                var product = (await ProductRepo.Get()).Where(i => i.Name.Contains(Name) && i.Quantity != 0);
                 if (product == null)
                 {
                     Result.IsSuccess = false;

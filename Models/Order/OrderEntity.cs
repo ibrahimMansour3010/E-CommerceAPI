@@ -10,7 +10,6 @@ namespace Models.Order
 {
     [Flags]
     public enum OrderStatus{
-        Sent,
         Pending,
         Delivered,
         Cancel

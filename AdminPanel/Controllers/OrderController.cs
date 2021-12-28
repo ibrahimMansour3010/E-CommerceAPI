@@ -34,7 +34,7 @@ namespace AdminPanel.Controllers
         [HttpGet]
         public async Task<IActionResult> Index(int page = 1)
         {
-            var allOrders = await OrderRepo.Get();
+            var allOrders = (await OrderRepo.Get()).OrderByDescending(i=>i.OrderDate);
             var ordersVM = allOrders.Select(i =>
             {
                 var customer = AppRepo.UserData(i.CustomerID).Result;
@@ -44,7 +44,6 @@ namespace AdminPanel.Controllers
             });
             ViewBag.OrderStatuses = new List<OrderStatus>()
             {
-                OrderStatus.Sent,
                 OrderStatus.Pending,
                 OrderStatus.Delivered,
                 OrderStatus.Cancel,
@@ -171,6 +170,13 @@ namespace AdminPanel.Controllers
                     }
                     order = await OrderRepo.Update(order);
                 }
+                else
+                {
+                    order.Status = model.OrderStatus;
+                    order = await OrderRepo.Update(order);
+                }
+                return RedirectToAction("Index", "Order");
+
             }
             else
             {
